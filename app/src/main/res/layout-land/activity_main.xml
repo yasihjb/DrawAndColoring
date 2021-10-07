@@ -14,15 +14,13 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         />
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/_65sdp"
-        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_100sdp"
         >
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_draw"
             android:layout_width="@dimen/_147sdp"
@@ -32,8 +30,9 @@
             android:textSize="@dimen/_27ssp"
             android:background="@drawable/main_page_draw_button"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"/>
 
+            android:layout_alignParentTop="true"/>
+<!--        android:layout_marginTop="@dimen/_60sdp"-->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_paint"
             android:layout_width="@dimen/_147sdp"
@@ -46,7 +45,6 @@
             android:background="@drawable/main_page_paint_button"
             android:layout_marginTop="@dimen/_35sdp"
             />
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_gallery"
             android:layout_width="@dimen/_147sdp"
@@ -59,7 +57,6 @@
             android:background="@drawable/main_page_gallery_button"
             android:layout_marginTop="@dimen/_35sdp"
             />
-
     </RelativeLayout>
 
 </RelativeLayout>
