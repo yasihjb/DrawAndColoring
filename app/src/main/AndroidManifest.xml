@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DrawAndColoring">
         <activity
+            android:name=".ShowActivity"
+            android:exported="false" />
+        <activity
             android:name=".GalleryActivity"
             android:exported="false" />
-        <activity android:name=".PaintActivity"></activity>
+        <activity android:name=".PaintActivity" />
         <activity android:name=".DrawActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

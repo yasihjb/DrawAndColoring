@@ -2,6 +2,7 @@ package com.example.drawandcoloring;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -27,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean insertData(byte[] bitmap,String id){
+    public boolean InsertData(byte[] bitmap, String id){
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put(KEY_VIEW_DATA,bitmap);
@@ -40,4 +41,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    public boolean DeleteData(String id){
+        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
+        long result=sqLiteDatabase.delete(TABLE_NAME,"Id=?",new String[]{id});
+        if (result==-1){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public boolean UpdateViewData(byte[] bitmap, String id){
+        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
+
+        ContentValues cv=new ContentValues();
+        cv.put(KEY_VIEW_DATA,bitmap);
+        long result=sqLiteDatabase.update(TABLE_NAME,cv,"Id=?",new String[]{id});
+        if (result==-1){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public boolean UpdateViewDataAndId(byte[] bitmap, String oldId, String newID){
+        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
+
+        ContentValues cv=new ContentValues();
+        cv.put(KEY_VIEW_DATA,bitmap);
+        cv.put(KEY_VIEW_ID,newID);
+        long result=sqLiteDatabase.update(TABLE_NAME,cv,"Id=?",new String[]{oldId});
+        if (result==-1){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public Cursor getAllData(){
+        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
+        Cursor result=sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME,null);
+        return result;
+    }
+
+    public Cursor getData(String id){
+        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
+        Cursor result=sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+KEY_VIEW_ID+" ="+id,null);
+        return result;
+    }
+
+
+
 }

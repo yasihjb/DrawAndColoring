@@ -19,20 +19,23 @@ import com.divyanshu.draw.widget.DrawView;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class DrawActivity extends AppCompatActivity implements View.OnClickListener ,StatusBarColor{
     ImageView back,save,pallet,pencil,paint_roller,eraser;
     ColorPicker colorPicker;
-    Color selectedColor;
+    int selectedColor;
     int color_alpha,color_red,color_green,color_blue;
     DrawView drawView;
     Bitmap bitmap;
+    DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
-
-
-
+        databaseHelper=new DatabaseHelper(this);
         setStatusBarColor(R.color.draw);
 
         color_red=255;
@@ -60,7 +63,8 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
                 color_red=Color.red(color);
                 color_green=Color.green(color);
                 color_blue=Color.blue(color);
-                drawView.setColor(Color.argb(color_alpha,color_red,color_green,color_blue));
+                selectedColor=Color.argb(color_alpha,color_red,color_green,color_blue);
+                drawView.setColor(selectedColor);
                 colorPicker.dismiss();
             }
         });
@@ -96,6 +100,16 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
             System.out.println(bitmap);
+            Calendar calendar=Calendar.getInstance(Locale.getDefault());
+            StringBuilder sb=new StringBuilder();
+            sb.append(calendar.get(Calendar.YEAR));
+            sb.append(calendar.get(Calendar.MONTH));
+            sb.append(calendar.get(Calendar.DAY_OF_MONTH));
+            sb.append(calendar.get(Calendar.HOUR_OF_DAY));
+            sb.append(calendar.get(Calendar.MINUTE));
+            sb.append(calendar.get(Calendar.SECOND));
+            System.out.println(sb);
+            databaseHelper.InsertData(DatabaseBitmapUtility.getBytes(bitmap),sb.toString());
         }else if (view.getId()==pallet.getId()){
 //            Toast.makeText(this, "Pallet", Toast.LENGTH_SHORT).show();
             colorPicker.show();

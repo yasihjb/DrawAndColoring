@@ -1,27 +1,49 @@
 package com.example.drawandcoloring;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class GalleryActivity extends AppCompatActivity implements StatusBarColor, View.OnClickListener {
     ImageView back;
     RecyclerView gallery_recycler_view;
+    TextView empty;
+    DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+        databaseHelper=new DatabaseHelper(this);
         back=findViewById(R.id.back);
         gallery_recycler_view=findViewById(R.id.gallery_recycler_view);
+        gallery_recycler_view.setVisibility(View.VISIBLE);
+        empty=findViewById(R.id.empty);
+        empty.setVisibility(View.GONE);
         setStatusBarColor(R.color.gallery);
         getWindow().setBackgroundDrawableResource(R.color.white);
         back.setOnClickListener(this);
+
+        Cursor cursor=databaseHelper.getAllData();
+        if (cursor.getCount()==0){
+            IfDbIsEmptyDoThis();
+        }else {
+            empty.setVisibility(View.GONE);
+            gallery_recycler_view.setVisibility(View.VISIBLE);
+            RecyclerViewAdapter_Gallery adapter_gallery=new RecyclerViewAdapter_Gallery(this,cursor);
+            gallery_recycler_view.setLayoutManager(new GridLayoutManager(this,2));
+            gallery_recycler_view.setAdapter(adapter_gallery);
+        }
+
+
     }
 
     @Override
@@ -46,5 +68,10 @@ public class GalleryActivity extends AppCompatActivity implements StatusBarColor
                 break;
 
         }
+    }
+
+    public void IfDbIsEmptyDoThis(){
+        gallery_recycler_view.setVisibility(View.GONE);
+        empty.setVisibility(View.VISIBLE);
     }
 }
