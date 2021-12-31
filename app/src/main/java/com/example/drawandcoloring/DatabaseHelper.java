@@ -91,6 +91,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public byte[] getViewData(String id){
+        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("SELECT "+KEY_VIEW_DATA+" FROM "+TABLE_NAME+" WHERE "+KEY_VIEW_ID+" ="+id,null);
+        cursor.moveToPosition(0);
+        byte[] data=cursor.getBlob(0);
+        return data;
+    }
+
 
 
 }

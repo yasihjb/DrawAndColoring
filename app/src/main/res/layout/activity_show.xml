@@ -14,20 +14,72 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageView
                 android:id="@+id/back"
                 android:layout_width="@dimen/_34sdp"
                 android:layout_height="@dimen/_34sdp"
-                android:src="@drawable/ic_arrow_back"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:scaleType="centerCrop"
+                android:layout_gravity="start"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_gravity="start"
-                android:layout_alignParentStart="true"
-                />
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_arrow_back" />
         </RelativeLayout>
     </Toolbar>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        >
+        <LinearLayout
+            android:id="@+id/buttons_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/_30sdp"
+            android:paddingRight="@dimen/_30sdp">
+            <ImageView
+                android:id="@+id/button_edit"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/ic_edit"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_weight="1"
+                />
+            <ImageView
+                android:id="@+id/button_save_in_gallery"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/ic_save_in_gallery"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                />
+            <ImageView
+                android:id="@+id/button_delete"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/ic_delete"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/show_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/buttons_layout"
+            android:layout_margin="@dimen/_5sdp"
+            />
+
+    </RelativeLayout>
+
 
 
 </RelativeLayout>

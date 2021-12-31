@@ -1,13 +1,16 @@
 package com.example.drawandcoloring;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,10 +55,22 @@ public class RecyclerViewAdapter_Gallery extends RecyclerView.Adapter<RecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView draw;
         TextView id;
+        RelativeLayout parent_layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            parent_layout=itemView.findViewById(R.id.parent_layout);
             draw=itemView.findViewById(R.id.draw);
             id=itemView.findViewById(R.id.draw_id);
+
+            parent_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(context.getApplicationContext(), String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(context.getApplicationContext(),ShowActivity.class);
+                    intent.putExtra("selected_id",id.getText());
+                    context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                }
+            });
         }
     }
 }

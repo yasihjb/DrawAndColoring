@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_delete.xml" value="0.20260416666666667" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_delete_foreground.xml" value="0.20260416666666667" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_edit.xml" value="0.20260416666666667" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_save_in_gallery.xml" value="0.20260416666666667" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/main_page_gallery_button.xml" value="0.20260416666666667" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_draw.xml" value="0.22" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_gallery.xml" value="0.18645833333333334" />
