@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,14 +16,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.divyanshu.draw.widget.DrawView;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class DrawActivity extends AppCompatActivity implements View.OnClickListener ,StatusBarColor{
@@ -28,15 +30,26 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
     ColorPicker colorPicker;
     int selectedColor;
     int color_alpha,color_red,color_green,color_blue;
-    DrawView drawView;
+    RelativeLayout drawView;
     Bitmap bitmap;
     DatabaseHelper databaseHelper;
+    String previous;
+    String selected_id;
+    DrawingView dv;
+    private Paint mPaint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dv =new DrawingView(this);
         setContentView(R.layout.activity_draw);
         databaseHelper=new DatabaseHelper(this);
+
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setDither(true);
+
         setStatusBarColor(R.color.draw);
+        previous=getIntent().getStringExtra("previous");
 
         color_red=255;
         color_blue=255;
@@ -49,8 +62,19 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
         paint_roller=findViewById(R.id.paint_roller);
         eraser=findViewById(R.id.eraser);
         drawView=findViewById(R.id.draw_view);
+        drawView.addView(dv);
         drawView.setDrawingCacheEnabled(true);
         drawView.buildDrawingCache(true);
+
+        if (previous.equals("main")){
+
+        }else if (previous.equals("show")){
+            selected_id=getIntent().getStringExtra("selected_id");
+            System.out.println(selected_id);
+//            byte[] data=databaseHelper.getViewData(selected_id);
+            Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(databaseHelper.getViewData(selected_id)));
+            drawView.setBackgroundDrawable(drawable);
+        }
 
         int defaultColorR=color_red;
         int defaultColorG=color_green;
@@ -63,8 +87,8 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
                 color_red=Color.red(color);
                 color_green=Color.green(color);
                 color_blue=Color.blue(color);
-                selectedColor=Color.argb(color_alpha,color_red,color_green,color_blue);
-                drawView.setColor(selectedColor);
+//                selectedColor=Color.argb();
+                dv.setColor(color_red,color_green,color_blue);
                 colorPicker.dismiss();
             }
         });
@@ -80,36 +104,46 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view.getId()==back.getId()){
-            Intent intent_back=new Intent(this,MainActivity.class);
-            startActivity(intent_back.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+//            Intent intent_back=new Intent(this,MainActivity.class);
+//            startActivity(intent_back.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
             finish();
         }else if (view.getId()==save.getId()){
-            Toast.makeText(this, "Save", Toast.LENGTH_SHORT).show();
             bitmap=drawView.getDrawingCache();
-            int height=drawView.getHeight();
-            int width=drawView.getWidth();
-            Log.i("Height",String.valueOf(height));
-            Log.i("Width",String.valueOf(width));
-            for (int i=0;i<width;i++){
-                for (int j=0;j<height;j++){
-                    int pixel=bitmap.getPixel(i,j);
-                    int red=Color.red(pixel);
-                    int green=Color.green(pixel);
-                    int blue=Color.blue(pixel);
-                    int alpha=Color.alpha(pixel);
-                }
+            if(previous.equals("main")){
+//                int height=drawView.getHeight();
+//                int width=drawView.getWidth();
+//                Log.i("Height",String.valueOf(height));
+//                Log.i("Width",String.valueOf(width));
+//                for (int i=0;i<width;i++){
+//                    for (int j=0;j<height;j++){
+//                        int pixel=bitmap.getPixel(i,j);
+//                        int red=Color.red(pixel);
+//                        int green=Color.green(pixel);
+//                        int blue=Color.blue(pixel);
+//                        int alpha=Color.alpha(pixel);
+//                    }
+//                }
+                System.out.println(bitmap);
+                Calendar calendar=Calendar.getInstance(Locale.getDefault());
+                StringBuilder sb=new StringBuilder();
+                sb.append(calendar.get(Calendar.YEAR));
+                sb.append(calendar.get(Calendar.MONTH));
+                sb.append(calendar.get(Calendar.DAY_OF_MONTH));
+                sb.append(calendar.get(Calendar.HOUR_OF_DAY));
+                sb.append(calendar.get(Calendar.MINUTE));
+                sb.append(calendar.get(Calendar.SECOND));
+                System.out.println(sb);
+                databaseHelper.InsertData(DatabaseBitmapUtility.getBytes(bitmap),sb.toString());
+                finish();
+            }else if (previous.equals("show")){
+                databaseHelper.UpdateViewData(DatabaseBitmapUtility.getBytes(bitmap),selected_id);
+//                Intent intent=new Intent(this,ShowActivity.class);
+//                intent.putExtra("selected_id",selected_id);
+//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                finish();
             }
-            System.out.println(bitmap);
-            Calendar calendar=Calendar.getInstance(Locale.getDefault());
-            StringBuilder sb=new StringBuilder();
-            sb.append(calendar.get(Calendar.YEAR));
-            sb.append(calendar.get(Calendar.MONTH));
-            sb.append(calendar.get(Calendar.DAY_OF_MONTH));
-            sb.append(calendar.get(Calendar.HOUR_OF_DAY));
-            sb.append(calendar.get(Calendar.MINUTE));
-            sb.append(calendar.get(Calendar.SECOND));
-            System.out.println(sb);
-            databaseHelper.InsertData(DatabaseBitmapUtility.getBytes(bitmap),sb.toString());
+
+
         }else if (view.getId()==pallet.getId()){
 //            Toast.makeText(this, "Pallet", Toast.LENGTH_SHORT).show();
             colorPicker.show();
@@ -118,7 +152,7 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
         }else if (view.getId()==paint_roller.getId()){
             Toast.makeText(this, "Paint Roller", Toast.LENGTH_SHORT).show();
         }else if (view.getId()==eraser.getId()){
-            drawView.setColor(Color.parseColor("#ffffff"));
+            dv.setColor(255,255,255);
         }
     }
 

@@ -2,10 +2,12 @@ package com.example.drawandcoloring;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,10 +37,39 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
         ShowDataInView();
 
         button_back.setOnClickListener(this);
+        button_edit.setOnClickListener(this::onClick);
+        button_delete.setOnClickListener(this::onClick);
 
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("Status: ","onResume");
+        ShowDataInView();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i("Status: ","onRestart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("Status: ","onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("Status: ","onStop");
+    }
+
+
 
     private void ShowDataInView() {
         byte[] data=databaseHelper.getViewData(selected_id);
@@ -65,6 +96,14 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
     @Override
     public void onClick(View view) {
         if (view.getId()==button_back.getId()){
+            finish();
+        }else if (view.getId()==button_edit.getId()){
+            Intent intent=new Intent(this,DrawActivity.class);
+            intent.putExtra("previous","show");
+            intent.putExtra("selected_id",selected_id);
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+        }else if (view.getId()==button_delete.getId()){
+            databaseHelper.DeleteData(selected_id);
             finish();
         }
     }

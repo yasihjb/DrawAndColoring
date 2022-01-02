@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean DeleteData(String id){
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
-        long result=sqLiteDatabase.delete(TABLE_NAME,"Id=?",new String[]{id});
+        long result=sqLiteDatabase.delete(TABLE_NAME,KEY_VIEW_ID+"=?",new String[]{id});
         if (result==-1){
             return false;
         }else {
@@ -57,7 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues cv=new ContentValues();
         cv.put(KEY_VIEW_DATA,bitmap);
-        long result=sqLiteDatabase.update(TABLE_NAME,cv,"Id=?",new String[]{id});
+        long result=sqLiteDatabase.update(TABLE_NAME,cv,KEY_VIEW_ID+"=?",new String[]{id});
         if (result==-1){
             return false;
         }else {

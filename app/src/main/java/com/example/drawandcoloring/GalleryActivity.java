@@ -32,6 +32,14 @@ public class GalleryActivity extends AppCompatActivity implements StatusBarColor
         getWindow().setBackgroundDrawableResource(R.color.white);
         back.setOnClickListener(this);
 
+        ShowData();
+
+
+
+
+    }
+
+    private void ShowData() {
         Cursor cursor=databaseHelper.getAllData();
         if (cursor.getCount()==0){
             IfDbIsEmptyDoThis();
@@ -42,7 +50,12 @@ public class GalleryActivity extends AppCompatActivity implements StatusBarColor
             gallery_recycler_view.setLayoutManager(new GridLayoutManager(this,2));
             gallery_recycler_view.setAdapter(adapter_gallery);
         }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ShowData();
 
     }
 

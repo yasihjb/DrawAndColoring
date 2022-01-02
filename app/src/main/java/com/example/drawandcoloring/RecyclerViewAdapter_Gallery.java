@@ -38,7 +38,7 @@ public class RecyclerViewAdapter_Gallery extends RecyclerView.Adapter<RecyclerVi
         if (all.getCount()!=0){
             all.moveToPosition(position);
             byte[] data=all.getBlob(0);
-            Log.i("output",data.toString());
+//            Log.i("output",data.toString());
             holder.draw.setImageBitmap(DatabaseBitmapUtility.getView(data));
             holder.id.setText(all.getString(1));
         }else if (all.getCount()==0){

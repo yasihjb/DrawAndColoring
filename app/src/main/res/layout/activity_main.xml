@@ -59,6 +59,14 @@
             android:background="@drawable/main_page_gallery_button"
             android:layout_marginTop="@dimen/_35sdp"
             />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/check"
+            android:layout_width="@dimen/_147sdp"
+            android:layout_height="@dimen/_52sdp"
+            android:layout_below="@id/button_gallery"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="check"
+            />
 
     </RelativeLayout>
 

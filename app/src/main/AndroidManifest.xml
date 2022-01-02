@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DrawAndColoring">
         <activity
+            android:name=".CheckActivity"
+            android:exported="false" />
+        <activity
             android:name=".ShowActivity"
             android:exported="false" />
         <activity
