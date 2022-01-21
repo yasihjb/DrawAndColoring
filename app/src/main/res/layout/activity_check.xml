@@ -14,7 +14,7 @@
         android:text="Save"
         android:background="@color/gallery"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/paint_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

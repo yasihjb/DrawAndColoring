@@ -20,7 +20,7 @@ import java.util.Locale;
 public class CheckActivity extends AppCompatActivity {
     DrawingView dv ;
     private Paint mPaint;
-    LinearLayout paint_view;
+    RelativeLayout paint_view;
     DatabaseHelper databaseHelper;
     Button save;
     Bitmap bitmap;
@@ -28,12 +28,12 @@ public class CheckActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dv = new DrawingView(this);
-        databaseHelper=new DatabaseHelper(this);
         setContentView(R.layout.activity_check);
+        paint_view=findViewById(R.id.paint_view);
+        dv = new DrawingView(this,paint_view);
+        databaseHelper=new DatabaseHelper(this);
         save=findViewById(R.id.save);
         mPaint = new Paint();
-        paint_view=findViewById(R.id.paint_view);
         paint_view.addView(dv);
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);

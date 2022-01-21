@@ -12,4 +12,17 @@
     <color name="paint">#292C79</color>
     <color name="gallery">#2DB88E</color>
     <color name="toolbox">#DEDEE0</color>
+
+    <color name="pink">#ff00ff</color>
+    <color name="green">#66ff33</color>
+    <color name="light_blue">#66ccff</color>
+    <color name="dark_blue">#0000cc</color>
+    <color name="yellow">#ffff00</color>
+    <color name="purple">#990099</color>
+    <color name="red">#ff0000</color>
+    <color name="gray">#808080</color>
+    <color name="brown">#8B4513</color>
+    <color name="khaki">#F0E68C</color>
+    <color name="olive">#808000</color>
+
 </resources>

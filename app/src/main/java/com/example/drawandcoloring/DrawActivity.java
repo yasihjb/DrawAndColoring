@@ -1,8 +1,10 @@
 package com.example.drawandcoloring;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -11,8 +13,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -25,23 +31,38 @@ import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 import java.util.Calendar;
 import java.util.Locale;
 
+import dev.sasikanth.colorsheet.ColorSheet;
+
 public class DrawActivity extends AppCompatActivity implements View.OnClickListener ,StatusBarColor{
     ImageView back,save,pallet,pencil,paint_roller,eraser;
     ColorPicker colorPicker;
     int selectedColor;
     int color_alpha,color_red,color_green,color_blue;
     RelativeLayout drawView;
-    Bitmap bitmap;
+    Bitmap bitmap,fill_bitmap;
     DatabaseHelper databaseHelper;
     String previous;
     String selected_id;
     DrawingView dv;
     private Paint mPaint;
+    ColorSheet colorSheet;
+
+    public static String STATUS="draw";
+    public static int WIDTH,HEIGHT;
+    public static int[][] view_array;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dv =new DrawingView(this);
+
         setContentView(R.layout.activity_draw);
+        drawView=findViewById(R.id.draw_view);
+        dv =new DrawingView(this,drawView);
+        drawView.addView(dv);
+        drawView.setDrawingCacheEnabled(true);
+        drawView.buildDrawingCache(true);
+
         databaseHelper=new DatabaseHelper(this);
 
         mPaint = new Paint();
@@ -54,6 +75,7 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
         color_red=255;
         color_blue=255;
         color_green=255;
+        colorSheet=new ColorSheet();
 
         back=findViewById(R.id.button_back);
         save=findViewById(R.id.button_save);
@@ -61,20 +83,44 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
         pencil=findViewById(R.id.pencil);
         paint_roller=findViewById(R.id.paint_roller);
         eraser=findViewById(R.id.eraser);
-        drawView=findViewById(R.id.draw_view);
-        drawView.addView(dv);
-        drawView.setDrawingCacheEnabled(true);
-        drawView.buildDrawingCache(true);
+
+        drawView.post(new Runnable() {
+            @Override
+            public void run() {
+                WIDTH=drawView.getWidth();
+                HEIGHT=drawView.getHeight();
+                System.out.println("MAIN:"+"WIDTH="+WIDTH+" HEIGHT="+HEIGHT);
+                view_array=new int[WIDTH+1][HEIGHT+1];
+
+                if (previous.equals("main")){
+
+                    for (int i=0;i<(WIDTH+1);i++){
+                        for (int j=0;j<(HEIGHT+1);j++){
+                            view_array[i][j]=0;
+                        }
+                    }
+
+                }else if (previous.equals("show")){
+                    System.out.println("FELAN HICHI");
+                }
+
+
+            }
+        });
+
 
         if (previous.equals("main")){
+//            drawView.setBackgroundColor(Color.parseColor("#ffffff"));
+//            drawView.setBackgroundDrawable(getResources().getDrawable(R.drawable.default_bg));
 
         }else if (previous.equals("show")){
             selected_id=getIntent().getStringExtra("selected_id");
             System.out.println(selected_id);
-//            byte[] data=databaseHelper.getViewData(selected_id);
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(databaseHelper.getViewData(selected_id)));
             drawView.setBackgroundDrawable(drawable);
         }
+
+
 
         int defaultColorR=color_red;
         int defaultColorG=color_green;
@@ -99,13 +145,14 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
         pencil.setOnClickListener(this::onClick);
         paint_roller.setOnClickListener(this::onClick);
         eraser.setOnClickListener(this::onClick);
+
+
     }
+
 
     @Override
     public void onClick(View view) {
         if (view.getId()==back.getId()){
-//            Intent intent_back=new Intent(this,MainActivity.class);
-//            startActivity(intent_back.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
             finish();
         }else if (view.getId()==save.getId()){
             bitmap=drawView.getDrawingCache();
@@ -145,14 +192,17 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
 
 
         }else if (view.getId()==pallet.getId()){
-//            Toast.makeText(this, "Pallet", Toast.LENGTH_SHORT).show();
             colorPicker.show();
         }else if (view.getId()==pencil.getId()){
-            Toast.makeText(this, "Pencil", Toast.LENGTH_SHORT).show();
+            STATUS="draw";
+            dv.setDefault();
         }else if (view.getId()==paint_roller.getId()){
-            Toast.makeText(this, "Paint Roller", Toast.LENGTH_SHORT).show();
+            STATUS="fill";
+            dv.setDisable();
         }else if (view.getId()==eraser.getId()){
             dv.setColor(255,255,255);
+            STATUS="draw";
+            dv.setDefault();
         }
     }
 
@@ -174,5 +224,13 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void sth() {
+        System.out.println("OPSSSS");
+        WIDTH=drawView.getWidth();
+        HEIGHT=drawView.getHeight();
+        System.out.println("MAIN:"+"WIDTH="+WIDTH+" HEIGHT="+HEIGHT);
+        view_array=new int[WIDTH+1][HEIGHT+1];
     }
 }

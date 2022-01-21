@@ -29,7 +29,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="id"
                 android:textSize="@dimen/_10sdp"
-                android:textColor="@color/black"
+                android:textColor="#00000000"
                 android:textAlignment="center"
                 />
         </RelativeLayout>
