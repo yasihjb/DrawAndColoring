@@ -11,6 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public final static String TABLE_NAME="views_data";
     public final static String KEY_VIEW_DATA ="view_data";
     public final static String KEY_VIEW_ID ="view_id";
+    public final static String KEY_VIEW_TYPE="view_type";//1-paint 2-draw
     public DatabaseHelper(Context context) {
         super(context,DB_NAME,null,1);
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
@@ -19,7 +20,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE "+TABLE_NAME+" (view_data BLOB NOT NULL," +
-                "    view_id   TEXT PRIMARY KEY NOT NULL )" );
+                "    view_id   TEXT PRIMARY KEY NOT NULL," +
+                "    view_type TEXT NOT NULL )" );
     }
 
     @Override
@@ -28,11 +30,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean InsertData(byte[] bitmap, String id){
+    public boolean InsertData(byte[] bitmap, String id,String type){
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put(KEY_VIEW_DATA,bitmap);
         cv.put(KEY_VIEW_ID,id);
+        cv.put(KEY_VIEW_TYPE,type);
         long result=sqLiteDatabase.insert(TABLE_NAME,null,cv);
 
         if (result==-1){
@@ -89,6 +92,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
         Cursor result=sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+KEY_VIEW_ID+" ="+id,null);
         return result;
+    }
+
+    public String getType(String id){
+        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
+        Cursor result=sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+KEY_VIEW_ID+" = "+id,null);
+        result.moveToPosition(0);
+        String type=result.getString(2);
+        return type;
     }
 
     public byte[] getViewData(String id){

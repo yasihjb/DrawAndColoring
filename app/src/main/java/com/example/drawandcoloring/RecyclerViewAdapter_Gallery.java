@@ -56,6 +56,7 @@ public class RecyclerViewAdapter_Gallery extends RecyclerView.Adapter<RecyclerVi
         ImageView draw;
         TextView id;
         RelativeLayout parent_layout;
+        String type;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             parent_layout=itemView.findViewById(R.id.parent_layout);
@@ -65,7 +66,7 @@ public class RecyclerViewAdapter_Gallery extends RecyclerView.Adapter<RecyclerVi
             parent_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context.getApplicationContext(), String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context.getApplicationContext(), String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(context.getApplicationContext(),ShowActivity.class);
                     intent.putExtra("selected_id",id.getText());
                     context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));

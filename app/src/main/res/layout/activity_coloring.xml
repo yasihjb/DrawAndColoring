@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PaintActivity"
+    tools:context=".ColoringActivity"
     android:background="@color/white">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -61,10 +61,11 @@
             android:background="@drawable/toolbox_style"
             android:padding="@dimen/_5sdp">
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
+                android:layout_centerHorizontal="true"
                 >
                 <ImageView
                     android:id="@+id/pallet"
@@ -73,25 +74,26 @@
                     android:src="@drawable/img_pallete"
                     android:clickable="true"
                     android:focusable="true"
-                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
                     android:layout_alignParentStart="true"
                     />
+
                 <ImageView
                     android:id="@+id/pencil"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/img_pencil"
-                    android:layout_marginStart="@dimen/_25sdp"
+                    android:layout_marginStart="@dimen/_45sdp"
                     android:layout_toEndOf="@id/pallet"
                     android:clickable="true"
                     android:focusable="true"
-                    />
+                    android:src="@drawable/img_pencil"
+                    android:visibility="gone"/>
                 <ImageView
                     android:id="@+id/paint_roller"
                     android:layout_width="@dimen/_44sdp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/img_paint_roller"
-                    android:layout_marginStart="@dimen/_25sdp"
+                    android:layout_marginStart="@dimen/_45sdp"
                     android:layout_toEndOf="@id/pencil"
                     android:clickable="true"
                     android:focusable="true"
@@ -101,7 +103,7 @@
                     android:layout_width="@dimen/_43sdp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/img_eraser"
-                    android:layout_marginStart="@dimen/_25sdp"
+                    android:layout_marginStart="@dimen/_45sdp"
                     android:layout_toEndOf="@id/paint_roller"
                     android:clickable="true"
                     android:focusable="true"
@@ -115,10 +117,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/toolbox"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginRight="@dimen/_5sdp">
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            >
 
         </RelativeLayout>
 

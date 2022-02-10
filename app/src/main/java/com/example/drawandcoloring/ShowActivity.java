@@ -1,22 +1,34 @@
 package com.example.drawandcoloring;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Locale;
 
 public class ShowActivity extends AppCompatActivity implements StatusBarColor, View.OnClickListener {
     ImageView button_back,button_edit,button_delete,button_save_in_gallery,show;
     DatabaseHelper databaseHelper;
-    String selected_id;
+    String selected_id,type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +37,9 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
         setStatusBarColor(R.color.gallery);
         selected_id=getIntent().getExtras().getString("selected_id");
         databaseHelper=new DatabaseHelper(this);
+        type=databaseHelper.getType(selected_id);
 
-
+        //ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},111);
 
         button_back =findViewById(R.id.back);
         button_edit=findViewById(R.id.button_edit);
@@ -39,6 +52,7 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
         button_back.setOnClickListener(this);
         button_edit.setOnClickListener(this::onClick);
         button_delete.setOnClickListener(this::onClick);
+        button_save_in_gallery.setOnClickListener(this::onClick);
 
 
 
@@ -98,13 +112,58 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
         if (view.getId()==button_back.getId()){
             finish();
         }else if (view.getId()==button_edit.getId()){
-            Intent intent=new Intent(this,DrawActivity.class);
-            intent.putExtra("previous","show");
-            intent.putExtra("selected_id",selected_id);
-            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+            if(type.equals("draw")){
+                Intent intent=new Intent(this,DrawActivity.class);
+                intent.putExtra("previous","show");
+                intent.putExtra("selected_id",selected_id);
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+            }else if (type.equals("paint")){
+                Intent intent=new Intent(this,ColoringActivity.class);
+                intent.putExtra("previous","show");
+                intent.putExtra("selected_id",selected_id);
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+            }
+
         }else if (view.getId()==button_delete.getId()){
             databaseHelper.DeleteData(selected_id);
             finish();
         }
+        else if (view.getId()==button_save_in_gallery.getId()){
+            Save(selected_id);
+            Toast.makeText(this, "SAVED", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    private void Save(String image_name){
+        BitmapDrawable bitmapDrawable= (BitmapDrawable) show.getDrawable();
+        Bitmap bitmap=bitmapDrawable.getBitmap();
+        FileOutputStream fos=null;
+        File file=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+//        Toast.makeText(this, file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+        File directory=new File(file.getAbsolutePath()+"/Draw And Paint/");
+        if (!directory.exists()){
+            directory.mkdir();
+        }
+        String filename=image_name+".jpg";
+        File outFile=new File(directory,filename);
+        try {
+            fos=new FileOutputStream(outFile);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
+        try {
+            fos.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            fos.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 }

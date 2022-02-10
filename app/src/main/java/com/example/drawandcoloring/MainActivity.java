@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener , StatusBarColor {
     Button button_draw,button_paint,button_gallery,check;
@@ -20,7 +19,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         databaseHelper=new DatabaseHelper(this);
 
-        check=findViewById(R.id.check);
         button_draw=findViewById(R.id.button_draw);
         button_paint=findViewById(R.id.button_paint);
         button_gallery=findViewById(R.id.button_gallery);
@@ -28,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_draw.setOnClickListener(this::onClick);
         button_paint.setOnClickListener(this::onClick);
         button_gallery.setOnClickListener(this::onClick);
-        check.setOnClickListener(this::onClick);
 
     }
 
@@ -39,14 +36,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent_draw.putExtra("previous","main");
             startActivity(intent_draw.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
         }else if (view.getId()==button_paint.getId()){
-            Intent intent_paint=new Intent(this,PaintActivity.class);
+            Intent intent_paint=new Intent(this, PaintsActivity.class);
             startActivity(intent_paint.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
         }else if (view.getId()==button_gallery.getId()){
             Intent intent_gallery=new Intent(this,GalleryActivity.class);
             startActivity(intent_gallery.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-        }else if (view.getId()==check.getId()){
-            Intent intent=new Intent(this,CheckActivity.class);
-            startActivity(intent);
         }
     }
 

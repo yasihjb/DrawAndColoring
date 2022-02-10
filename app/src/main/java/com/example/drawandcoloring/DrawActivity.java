@@ -91,7 +91,6 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
                 HEIGHT=drawView.getHeight();
                 System.out.println("MAIN:"+"WIDTH="+WIDTH+" HEIGHT="+HEIGHT);
                 view_array=new int[WIDTH+1][HEIGHT+1];
-
                 if (previous.equals("main")){
 
                     for (int i=0;i<(WIDTH+1);i++){
@@ -103,7 +102,6 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
                 }else if (previous.equals("show")){
                     System.out.println("FELAN HICHI");
                 }
-
 
             }
         });
@@ -180,7 +178,7 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
                 sb.append(calendar.get(Calendar.MINUTE));
                 sb.append(calendar.get(Calendar.SECOND));
                 System.out.println(sb);
-                databaseHelper.InsertData(DatabaseBitmapUtility.getBytes(bitmap),sb.toString());
+                databaseHelper.InsertData(DatabaseBitmapUtility.getBytes(bitmap),sb.toString(),"draw");
                 finish();
             }else if (previous.equals("show")){
                 databaseHelper.UpdateViewData(DatabaseBitmapUtility.getBytes(bitmap),selected_id);
