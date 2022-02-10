@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import static com.example.drawandcoloring.ColoringActivity.HEIGHT;
 import static com.example.drawandcoloring.ColoringActivity.WIDTH;
+import static com.example.drawandcoloring.ColoringActivity.MODE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +112,13 @@ public class ColoringView extends View {
         int int_y=(int) (y/1);
         Point p=new Point(int_x,int_y);
         layout_bitmap=layout.getDrawingCache();
-        new Fill(layout_bitmap,p,BORDER_COLOR,selected_color).execute();
+        if (MODE.equals("fill")){
+            new Fill(layout_bitmap,p,BORDER_COLOR,selected_color).execute();
+        }
+        if (MODE.equals("eraser")){
+            new Fill(layout_bitmap,p,BORDER_COLOR,Color.parseColor("#ffffff")).execute();
+        }
+
         return true;
     }
 

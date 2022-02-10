@@ -38,6 +38,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     static int WIDTH,HEIGHT;
     DatabaseHelper databaseHelper;
     Bitmap bitmap;
+    public static String MODE="fill";//1-fill 2-eraser
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +98,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         colorPicker.setCallback(new ColorPickerCallback() {
             @Override
             public void onColorChosen(int color) {
+                MODE="fill";
                 color_alpha= Color.alpha(color);
                 color_red=Color.red(color);
                 color_green=Color.green(color);
@@ -113,8 +115,6 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         pencil.setOnClickListener(this::onClick);
         eraser.setOnClickListener(this::onClick);
         paint_board.setOnClickListener(this::onClick);
-
-
 
     }
 
@@ -163,9 +163,9 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         }else if (view.getId()==pencil.getId()){
             Toast.makeText(this, "Pencil", Toast.LENGTH_SHORT).show();
         }else if (view.getId()==paint_roller.getId()){
-            Toast.makeText(this, "Paint Roller", Toast.LENGTH_SHORT).show();
+            MODE="fill";
         }else if (view.getId()==eraser.getId()){
-            Toast.makeText(this, "Eraser", Toast.LENGTH_SHORT).show();
+            MODE="eraser";
         }else if (view.getId()==paint_board.getId()){
 
         }

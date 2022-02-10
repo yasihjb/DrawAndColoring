@@ -155,19 +155,6 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
         }else if (view.getId()==save.getId()){
             bitmap=drawView.getDrawingCache();
             if(previous.equals("main")){
-//                int height=drawView.getHeight();
-//                int width=drawView.getWidth();
-//                Log.i("Height",String.valueOf(height));
-//                Log.i("Width",String.valueOf(width));
-//                for (int i=0;i<width;i++){
-//                    for (int j=0;j<height;j++){
-//                        int pixel=bitmap.getPixel(i,j);
-//                        int red=Color.red(pixel);
-//                        int green=Color.green(pixel);
-//                        int blue=Color.blue(pixel);
-//                        int alpha=Color.alpha(pixel);
-//                    }
-//                }
                 System.out.println(bitmap);
                 Calendar calendar=Calendar.getInstance(Locale.getDefault());
                 StringBuilder sb=new StringBuilder();

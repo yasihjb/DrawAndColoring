@@ -39,8 +39,6 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
         databaseHelper=new DatabaseHelper(this);
         type=databaseHelper.getType(selected_id);
 
-        //ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},111);
-
         button_back =findViewById(R.id.back);
         button_edit=findViewById(R.id.button_edit);
         button_delete=findViewById(R.id.button_delete);
@@ -53,8 +51,6 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
         button_edit.setOnClickListener(this::onClick);
         button_delete.setOnClickListener(this::onClick);
         button_save_in_gallery.setOnClickListener(this::onClick);
-
-
 
     }
 
@@ -87,9 +83,6 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
 
     private void ShowDataInView() {
         byte[] data=databaseHelper.getViewData(selected_id);
-//        Cursor selected=databaseHelper.getData(selected_id);
-//        selected.moveToPosition(0);
-//        byte[] data=selected.getBlob(0);
         show.setImageBitmap(DatabaseBitmapUtility.getView(data));
     }
 
@@ -139,7 +132,6 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
         Bitmap bitmap=bitmapDrawable.getBitmap();
         FileOutputStream fos=null;
         File file=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-//        Toast.makeText(this, file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
         File directory=new File(file.getAbsolutePath()+"/Draw And Paint/");
         if (!directory.exists()){
             directory.mkdir();
