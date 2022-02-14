@@ -8,7 +8,7 @@ import java.io.ByteArrayOutputStream;
 public class DatabaseBitmapUtility {
     public static byte[] getBytes(Bitmap bitmap){
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.WEBP,0,baos);
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
         return baos.toByteArray();
     }
 

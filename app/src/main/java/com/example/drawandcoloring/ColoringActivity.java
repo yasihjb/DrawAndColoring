@@ -2,8 +2,6 @@ package com.example.drawandcoloring;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,7 +19,6 @@ import android.widget.Toast;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Calendar;
@@ -39,6 +35,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     DatabaseHelper databaseHelper;
     Bitmap bitmap;
     public static String MODE="fill";//1-fill 2-eraser
+    public static Bitmap image_bitmap =null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +67,10 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         });
 
         if (previous.equals("show")){
-
             selected_id=getIntent().getStringExtra("selected_id");
+//            image_bitmap =DatabaseBitmapUtility.getView(databaseHelper.getViewData(selected_id));
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(databaseHelper.getViewData(selected_id)));
             paint_board.setBackground(drawable);
-
         }else if (previous.equals("main")){
             paint_uri=getIntent().getStringExtra("paint");
             try {

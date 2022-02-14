@@ -34,7 +34,7 @@ public class RecyclerViewAdapter_Gallery extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.i("length",String.valueOf(all.getCount()));
+//        Log.i("length",String.valueOf(all.getCount()));
         if (all.getCount()!=0){
             all.moveToPosition(position);
             byte[] data=all.getBlob(0);

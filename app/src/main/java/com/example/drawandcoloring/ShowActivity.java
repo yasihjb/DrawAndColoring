@@ -136,7 +136,7 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
         if (!directory.exists()){
             directory.mkdir();
         }
-        String filename=image_name+".jpg";
+        String filename=image_name+".png";
         File outFile=new File(directory,filename);
         try {
             fos=new FileOutputStream(outFile);
@@ -144,7 +144,7 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
         }catch (Exception e){
             e.printStackTrace();
         }
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,fos);
         try {
             fos.flush();
         }catch (Exception e){
