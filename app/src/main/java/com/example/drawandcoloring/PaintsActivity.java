@@ -28,12 +28,15 @@ public class PaintsActivity extends AppCompatActivity implements StatusBarColor,
         back=findViewById(R.id.back);
         recycler_view_paints =findViewById(R.id.recycler_view_paints);
 
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.my_pix2).toString());
         listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p2).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p3).toString());
         listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p4).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p5).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p6).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.cute_bird).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.snake).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.train).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.air_plane).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.bus).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.bee).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.kitty).toString());
         listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.shorti2).toString());
 
         RecyclerViewAdapter_Paints paints_adapter=new RecyclerViewAdapter_Paints(this,listOfPaints);

@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,11 +22,16 @@ import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+import java.util.Stack;
+
+import static com.example.drawandcoloring.ColoringView.undo_size;
 
 public class ColoringActivity extends AppCompatActivity implements StatusBarColor, View.OnClickListener {
-    ImageView save,back,pallet,pencil,paint_roller,eraser;
+    ImageView save,back,pallet,undo,redo,paint_roller,eraser;
     RelativeLayout paint_board;
     String paint_uri,previous,selected_id;
     ColoringView cw;
@@ -35,7 +41,11 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     DatabaseHelper databaseHelper;
     Bitmap bitmap;
     public static String MODE="fill";//1-fill 2-eraser
-    public static Bitmap image_bitmap =null;
+    public static Stack<int[]> undo_array_stack;
+    public static Stack<int[]> redo_array_stack;
+    public static Stack<Bitmap> undo_stack;
+    public static Stack<Bitmap> redo_stack;
+    public static List<int[]> fucking_undo,fucking_redo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +64,20 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         save=findViewById(R.id.button_save);
         back=findViewById(R.id.button_back);
         pallet=findViewById(R.id.pallet);
-        pencil=findViewById(R.id.pencil);
+        undo=findViewById(R.id.undo);
+        redo=findViewById(R.id.redo);
         paint_roller=findViewById(R.id.paint_roller);
         eraser=findViewById(R.id.eraser);
+
+        undo_stack=new Stack<>();
+        redo_stack=new Stack<>();
+
+        undo_array_stack=new Stack<>();
+        redo_array_stack=new Stack<>();
+
+
+        fucking_undo=new ArrayList<>();
+        fucking_redo=new ArrayList<>();
 
         paint_board.post(new Runnable() {
             @Override
@@ -108,9 +129,10 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         back.setOnClickListener(this::onClick);
         paint_roller.setOnClickListener(this::onClick);
         pallet.setOnClickListener(this::onClick);
-        pencil.setOnClickListener(this::onClick);
         eraser.setOnClickListener(this::onClick);
         paint_board.setOnClickListener(this::onClick);
+        undo.setOnClickListener(this::onClick);
+        redo.setOnClickListener(this::onClick);
 
     }
 
@@ -156,14 +178,30 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
             finish();
         }else if (view.getId()==pallet.getId()){
             colorPicker.show();
-        }else if (view.getId()==pencil.getId()){
-            Toast.makeText(this, "Pencil", Toast.LENGTH_SHORT).show();
         }else if (view.getId()==paint_roller.getId()){
             MODE="fill";
         }else if (view.getId()==eraser.getId()){
             MODE="eraser";
         }else if (view.getId()==paint_board.getId()){
 
+        }else if(view.getId()==undo.getId()){
+            Log.i("Event1","UNDO");
+            if (undo_array_stack.size()!=0) {
+                cw.unDo();
+            }else {
+                undo_size=1;
+                Toast.makeText(this, "Stack is Empty ", Toast.LENGTH_SHORT).show();
+            }
+
+        }else if (view.getId()==redo.getId()){
+            Log.i("Event1","reDo");
+            if (redo_array_stack.size()!=0){
+                cw.reDo();
+            }else {
+                Toast.makeText(this, "Stack is Empty", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
+
 }
