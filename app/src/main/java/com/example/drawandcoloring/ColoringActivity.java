@@ -2,10 +2,13 @@ package com.example.drawandcoloring;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +34,7 @@ import java.util.Stack;
 import static com.example.drawandcoloring.ColoringView.undo_size;
 
 public class ColoringActivity extends AppCompatActivity implements StatusBarColor, View.OnClickListener {
-    ImageView save,back,pallet,undo,redo,paint_roller,eraser;
+    ImageView save,back,pallet,undo,redo,paint_roller,eraser,eyedropper;
     RelativeLayout paint_board;
     String paint_uri,previous,selected_id;
     ColoringView cw;
@@ -40,12 +43,15 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     static int WIDTH,HEIGHT;
     DatabaseHelper databaseHelper;
     Bitmap bitmap;
+    ColorPickerDialog colorPickerDialog;
     public static String MODE="fill";//1-fill 2-eraser
     public static Stack<int[]> undo_array_stack;
     public static Stack<int[]> redo_array_stack;
     public static Stack<Bitmap> undo_stack;
     public static Stack<Bitmap> redo_stack;
     public static List<int[]> fucking_undo,fucking_redo;
+    public static RelativeLayout tool_box;
+    GradientDrawable gradientDrawable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +74,8 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         redo=findViewById(R.id.redo);
         paint_roller=findViewById(R.id.paint_roller);
         eraser=findViewById(R.id.eraser);
+        tool_box=findViewById(R.id.toolbox);
+        eyedropper=findViewById(R.id.eyedropper);
 
         undo_stack=new Stack<>();
         redo_stack=new Stack<>();
@@ -78,6 +86,10 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
 
         fucking_undo=new ArrayList<>();
         fucking_redo=new ArrayList<>();
+
+        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
+        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
+        tool_box.setBackgroundDrawable(gradientDrawable);
 
         paint_board.post(new Runnable() {
             @Override
@@ -103,27 +115,42 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
             }
         }
 
+        colorPickerDialog=new ColorPickerDialog(this);
 
-
-        color_red=255;
-        color_blue=255;
-        color_green=255;
-        int defaultColorR=color_red;
-        int defaultColorG=color_green;
-        int defaultColorB=color_blue;
-        colorPicker=new ColorPicker(this,defaultColorR, defaultColorG, defaultColorB);
-        colorPicker.setCallback(new ColorPickerCallback() {
+        colorPickerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
-            public void onColorChosen(int color) {
-                MODE="fill";
-                color_alpha= Color.alpha(color);
-                color_red=Color.red(color);
-                color_green=Color.green(color);
-                color_blue=Color.blue(color);
-                cw.setColor(color_red,color_green,color_blue);
-                colorPicker.dismiss();
+            public void onDismiss(DialogInterface dialog) {
+                int color=colorPickerDialog.getSelectedColor();
+                gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
+                gradientDrawable.setColor(color);
+                tool_box.setBackgroundDrawable(gradientDrawable);
+                int r=Color.red(color);
+                int g=Color.green(color);
+                int b=Color.blue(color);
+                cw.setColor(r,g,b);
+
             }
         });
+
+//        color_red=255;
+//        color_blue=255;
+//        color_green=255;
+//        int defaultColorR=color_red;
+//        int defaultColorG=color_green;
+//        int defaultColorB=color_blue;
+//        colorPicker=new ColorPicker(this,defaultColorR, defaultColorG, defaultColorB);
+//        colorPicker.setCallback(new ColorPickerCallback() {
+//            @Override
+//            public void onColorChosen(int color) {
+//                MODE="fill";
+//                color_alpha= Color.alpha(color);
+//                color_red=Color.red(color);
+//                color_green=Color.green(color);
+//                color_blue=Color.blue(color);
+//                cw.setColor(color_red,color_green,color_blue);
+//                colorPicker.dismiss();
+//            }
+//        });
 
         save.setOnClickListener(this::onClick);
         back.setOnClickListener(this::onClick);
@@ -133,6 +160,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         paint_board.setOnClickListener(this::onClick);
         undo.setOnClickListener(this::onClick);
         redo.setOnClickListener(this::onClick);
+        eyedropper.setOnClickListener(this::onClick);
 
     }
 
@@ -177,7 +205,8 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         }else if (view.getId()==back.getId()){
             finish();
         }else if (view.getId()==pallet.getId()){
-            colorPicker.show();
+            colorPickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            colorPickerDialog.show();
         }else if (view.getId()==paint_roller.getId()){
             MODE="fill";
         }else if (view.getId()==eraser.getId()){
@@ -201,6 +230,8 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
                 Toast.makeText(this, "Stack is Empty", Toast.LENGTH_SHORT).show();
             }
 
+        }else if(view.getId()==eyedropper.getId()){
+            MODE="eyedropper";
         }
     }
 

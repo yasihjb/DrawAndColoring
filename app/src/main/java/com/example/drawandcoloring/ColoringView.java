@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
@@ -24,6 +25,7 @@ import static com.example.drawandcoloring.ColoringActivity.redo_array_stack;
 import static com.example.drawandcoloring.ColoringActivity.redo_stack;
 import static com.example.drawandcoloring.ColoringActivity.undo_array_stack;
 import static com.example.drawandcoloring.ColoringActivity.undo_stack;
+import static com.example.drawandcoloring.ColoringActivity.tool_box;
 
 import androidx.annotation.RequiresApi;
 
@@ -32,7 +34,7 @@ import java.util.List;
 
 public class ColoringView extends View {
     RelativeLayout layout;
-    int selected_color;
+    public static int selected_color;
     int BORDER_COLOR=Color.BLACK;
     int BACKGROUND_COLOR;
     Bitmap layout_bitmap;
@@ -42,6 +44,7 @@ public class ColoringView extends View {
     int[] pixels_for_redo,pixels_for_undo;
     public static int undo_size=1;
     int redo_size=0;
+    GradientDrawable gradientDrawable;
 
     public int getColor(){
         return selected_color;
@@ -49,6 +52,12 @@ public class ColoringView extends View {
 
     public void setColor(int r,int g,int b){
         selected_color= Color.rgb(r,g,b);
+    }
+    public void setColor(int color){
+        selected_color=color;
+    }
+    public void setColor(String color){
+        selected_color=Color.parseColor(color);
     }
 
     public ColoringView(Context context, RelativeLayout layout) {
@@ -73,6 +82,15 @@ public class ColoringView extends View {
             }
             if (MODE.equals("eraser")){
                 new Fill(p,Color.parseColor("#ffffff")).execute();
+            }
+            if (MODE.equals("eyedropper")){
+                Bitmap bitmap=layout.getDrawingCache();
+                int pixel=bitmap.getPixel(int_x,int_y);
+                setColor(pixel);
+                gradientDrawable= (GradientDrawable) getResources().getDrawable(R.drawable.toolbox_style);
+                gradientDrawable.setColor(pixel);
+                tool_box.setBackgroundDrawable(gradientDrawable);
+                MODE="fill";
             }
         }
         return true;
@@ -156,7 +174,7 @@ public class ColoringView extends View {
             pixels_for_undo=new int[WIDTH*HEIGHT];
             pixels_for_redo=new int[WIDTH*HEIGHT];
             pixels_for_redo=redo_array_stack.pop();
-            Log.i("Event1","reDo Size After Pop"+String.valueOf(undo_stack.size()));
+            Log.i("Event1","reDo Size After Pop="+String.valueOf(undo_stack.size()));
             layout_bitmap.getPixels(pixels_for_undo,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
             undo_array_stack.push(pixels_for_undo);
             Log.i("Event1","unDo Size After Push ="+String.valueOf(undo_array_stack.size()));

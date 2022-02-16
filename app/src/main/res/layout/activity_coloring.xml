@@ -82,7 +82,7 @@
                     android:id="@+id/paint_roller"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
                     android:layout_toEndOf="@id/pallet"
                     android:clickable="true"
                     android:focusable="true"
@@ -93,8 +93,8 @@
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/img_eraser"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_toEndOf="@id/paint_roller"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_toEndOf="@id/redo"
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_centerHorizontal="true"
@@ -103,24 +103,36 @@
                     android:id="@+id/undo"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/eraser"
-                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_toEndOf="@id/paint_roller"
+                    android:layout_marginStart="@dimen/_10sdp"
                     android:src="@drawable/ic_undo"
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_centerHorizontal="true"
                     />
+
                 <ImageView
                     android:id="@+id/redo"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/_10sdp"
                     android:layout_toEndOf="@id/undo"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:src="@drawable/ic_redo"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_redo" />
+                <ImageView
+                    android:id="@+id/eyedropper"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/eraser"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:src="@drawable/img_eyedropper"
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_centerHorizontal="true"
                     />
+
             </RelativeLayout>
 
         </RelativeLayout>
