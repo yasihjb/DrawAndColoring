@@ -19,12 +19,9 @@ import android.widget.RelativeLayout;
 import static com.example.drawandcoloring.ColoringActivity.HEIGHT;
 import static com.example.drawandcoloring.ColoringActivity.WIDTH;
 import static com.example.drawandcoloring.ColoringActivity.MODE;
-import static com.example.drawandcoloring.ColoringActivity.fucking_redo;
-import static com.example.drawandcoloring.ColoringActivity.fucking_undo;
+
 import static com.example.drawandcoloring.ColoringActivity.redo_array_stack;
-import static com.example.drawandcoloring.ColoringActivity.redo_stack;
 import static com.example.drawandcoloring.ColoringActivity.undo_array_stack;
-import static com.example.drawandcoloring.ColoringActivity.undo_stack;
 import static com.example.drawandcoloring.ColoringActivity.tool_box;
 
 import androidx.annotation.RequiresApi;
@@ -174,7 +171,7 @@ public class ColoringView extends View {
             pixels_for_undo=new int[WIDTH*HEIGHT];
             pixels_for_redo=new int[WIDTH*HEIGHT];
             pixels_for_redo=redo_array_stack.pop();
-            Log.i("Event1","reDo Size After Pop="+String.valueOf(undo_stack.size()));
+            Log.i("Event1","reDo Size After Pop="+String.valueOf(undo_array_stack.size()));
             layout_bitmap.getPixels(pixels_for_undo,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
             undo_array_stack.push(pixels_for_undo);
             Log.i("Event1","unDo Size After Push ="+String.valueOf(undo_array_stack.size()));

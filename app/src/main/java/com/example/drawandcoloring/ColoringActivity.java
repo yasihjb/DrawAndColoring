@@ -47,8 +47,6 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     public static String MODE="fill";//1-fill 2-eraser
     public static Stack<int[]> undo_array_stack;
     public static Stack<int[]> redo_array_stack;
-    public static Stack<Bitmap> undo_stack;
-    public static Stack<Bitmap> redo_stack;
     public static List<int[]> fucking_undo,fucking_redo;
     public static RelativeLayout tool_box;
     GradientDrawable gradientDrawable;
@@ -77,15 +75,8 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         tool_box=findViewById(R.id.toolbox);
         eyedropper=findViewById(R.id.eyedropper);
 
-        undo_stack=new Stack<>();
-        redo_stack=new Stack<>();
-
         undo_array_stack=new Stack<>();
         redo_array_stack=new Stack<>();
-
-
-        fucking_undo=new ArrayList<>();
-        fucking_redo=new ArrayList<>();
 
         gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
         gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
