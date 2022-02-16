@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if(view.getId()==button_draw.getId()){
-            Intent intent_draw=new Intent(this,DrawActivity.class);
+            Intent intent_draw=new Intent(this, DrawingActivity.class);
             intent_draw.putExtra("previous","main");
             startActivity(intent_draw.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
         }else if (view.getId()==button_paint.getId()){

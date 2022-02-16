@@ -1,29 +1,22 @@
 package com.example.drawandcoloring;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
@@ -33,7 +26,7 @@ import java.util.Locale;
 
 import dev.sasikanth.colorsheet.ColorSheet;
 
-public class DrawActivity extends AppCompatActivity implements View.OnClickListener ,StatusBarColor{
+public class DrawingActivity extends AppCompatActivity implements View.OnClickListener ,StatusBarColor{
     ImageView back,save,pallet,pencil,paint_roller,eraser;
     ColorPicker colorPicker;
     int selectedColor;
@@ -47,9 +40,11 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
     private Paint mPaint;
     ColorSheet colorSheet;
 
-    public static String STATUS="draw";
+    public static String MODE ="draw";
     public static int WIDTH,HEIGHT;
     public static int[][] view_array;
+    GradientDrawable gradientDrawable;
+    RelativeLayout tool_box;
 
 
     @Override
@@ -83,6 +78,11 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
         pencil=findViewById(R.id.pencil);
         paint_roller=findViewById(R.id.paint_roller);
         eraser=findViewById(R.id.eraser);
+        tool_box=findViewById(R.id.toolbox);
+
+        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
+        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
+        tool_box.setBackgroundDrawable(gradientDrawable);
 
         drawView.post(new Runnable() {
             @Override
@@ -179,14 +179,14 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
         }else if (view.getId()==pallet.getId()){
             colorPicker.show();
         }else if (view.getId()==pencil.getId()){
-            STATUS="draw";
+            MODE ="draw";
             dv.setDefault();
         }else if (view.getId()==paint_roller.getId()){
-            STATUS="fill";
+            MODE ="fill";
             dv.setDisable();
         }else if (view.getId()==eraser.getId()){
             dv.setColor(255,255,255);
-            STATUS="draw";
+            MODE ="draw";
             dv.setDefault();
         }
     }
@@ -209,13 +209,5 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void sth() {
-        System.out.println("OPSSSS");
-        WIDTH=drawView.getWidth();
-        HEIGHT=drawView.getHeight();
-        System.out.println("MAIN:"+"WIDTH="+WIDTH+" HEIGHT="+HEIGHT);
-        view_array=new int[WIDTH+1][HEIGHT+1];
     }
 }

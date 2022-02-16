@@ -1,0 +1,858 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_250sdp"
+    android:layout_height="@dimen/_350sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:padding="@dimen/_1sdp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_open_rainbow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_60sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        tools:ignore="MissingConstraints"
+        >
+        <ImageView
+            android:id="@+id/rainbow"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerCrop"
+            android:background="@drawable/rainbow_circle"
+            android:padding="@dimen/_2sdp"
+            />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/cv_open_rainbow"
+        android:layout_alignBottom="@id/cv_open_rainbow"
+        android:fontFamily="@font/chibolddemo_1gd7g"
+        android:text="Palette"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_28ssp"
+       />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/cv_open_rainbow"
+        android:layout_marginTop="@dimen/_5sdp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/group1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_dark_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/dark_red"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/dark_red"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_dark_red"
+                    app:layout_constraintTop_toBottomOf="@id/cv_dark_red"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/red"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/red"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_crimson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_red"
+                    app:layout_constraintStart_toEndOf="@id/cv_red"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/crimson"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/crimson"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_light_coral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_crimson"
+                    app:layout_constraintTop_toBottomOf="@id/cv_crimson"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/light_coral"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/light_coral"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_salmon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_light_coral"
+                    app:layout_constraintStart_toEndOf="@id/cv_light_coral"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/salmon"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/salmon"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_light_salmon1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_salmon"
+                    app:layout_constraintTop_toBottomOf="@id/cv_salmon"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/light_salmon1"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/light_salmon"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/group2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_orange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/orange"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/orange"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_golden_rod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_orange"
+                    app:layout_constraintTop_toBottomOf="@id/cv_orange"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/golden_rod"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/golden_rod"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_yellow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_golden_rod"
+                    app:layout_constraintStart_toEndOf="@id/cv_golden_rod"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/yellow"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/yellow"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_moccasin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_yellow"
+                    app:layout_constraintTop_toBottomOf="@id/cv_yellow"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/moccasin"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/moccasin"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_khaki1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_moccasin"
+                    app:layout_constraintStart_toEndOf="@id/cv_moccasin"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/khaki1"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/khaki"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_dark_khaki1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_khaki1"
+                    app:layout_constraintTop_toBottomOf="@id/cv_khaki1"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/dark_khaki1"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/dark_khaki"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/group3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_dark_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/dark_green"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/dark_green"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_islamic_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_dark_green"
+                    app:layout_constraintTop_toBottomOf="@id/cv_dark_green"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/islamic_green"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/islamic_green"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_chartreuse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_islamic_green"
+                    app:layout_constraintStart_toEndOf="@id/cv_islamic_green"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/chartreuse"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/chartreuse"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_spring_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_chartreuse"
+                    app:layout_constraintTop_toBottomOf="@id/cv_chartreuse"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/spring_green"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/spring_green"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_screaming_green1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_spring_green"
+                    app:layout_constraintStart_toEndOf="@id/cv_spring_green"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/screaming_green1"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/screaming_green"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_olive_drab1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_screaming_green1"
+                    app:layout_constraintTop_toBottomOf="@id/cv_screaming_green1"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/olive_drab1"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/olive_drab"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/group5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group4"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_medium_violet_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/medium_violet_red"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/medium_violet_red"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_hot_pink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_medium_violet_red"
+                    app:layout_constraintTop_toBottomOf="@id/cv_medium_violet_red"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/hot_pink"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/hot_pink"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_pink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_hot_pink"
+                    app:layout_constraintStart_toEndOf="@id/cv_hot_pink"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/pink"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/pink"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_violet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_pink"
+                    app:layout_constraintTop_toBottomOf="@id/cv_pink"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/violet"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/violet"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_medium_orchid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_violet"
+                    app:layout_constraintStart_toEndOf="@id/cv_violet"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/medium_orchid"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/medium_orchid"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_purple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_medium_orchid"
+                    app:layout_constraintTop_toBottomOf="@id/cv_medium_orchid"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/purple"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/purple"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/group6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group5"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/black"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/black"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_saddle_brown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_black"
+                    app:layout_constraintTop_toBottomOf="@id/cv_black"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/saddle_brown"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/saddle_brown"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_saddle_brown"
+                    app:layout_constraintStart_toEndOf="@id/cv_saddle_brown"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/white"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/white"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_white"
+                    app:layout_constraintTop_toBottomOf="@id/cv_white"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/gray"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/gray"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_dim_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_gray"
+                    app:layout_constraintStart_toEndOf="@id/cv_gray"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/dim_gray"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/dim_gray"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_dark_slate_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_dim_gray"
+                    app:layout_constraintTop_toBottomOf="@id/cv_dim_gray"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/dark_slate_gray"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/dark_slate_gray"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/group4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_midnight_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/midnight_blue"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/midnight_blue"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_midnight_blue"
+                    app:layout_constraintTop_toBottomOf="@id/cv_midnight_blue"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/blue"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/blue"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_deep_sky_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_blue"
+                    app:layout_constraintStart_toEndOf="@id/cv_blue"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/deep_sky_blue"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/deep_sky_blue"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_turquoise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_deep_sky_blue"
+                    app:layout_constraintTop_toBottomOf="@id/cv_deep_sky_blue"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/turquoise"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/turquoise"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_aquamarine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintBottom_toTopOf="@id/cv_turquoise"
+                    app:layout_constraintStart_toEndOf="@id/cv_turquoise"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/aquamarine"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/aquamarine"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_light_cyan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_minus15sdp"
+                    app:cardCornerRadius="@dimen/_70sdp"
+                    app:layout_constraintStart_toEndOf="@id/cv_aquamarine"
+                    app:layout_constraintTop_toBottomOf="@id/cv_aquamarine"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:id="@+id/light_cyan"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@color/light_cyan"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

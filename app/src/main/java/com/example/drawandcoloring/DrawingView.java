@@ -12,12 +12,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import static com.example.drawandcoloring.DrawActivity.STATUS;
-import static com.example.drawandcoloring.DrawActivity.WIDTH;
-import static com.example.drawandcoloring.DrawActivity.HEIGHT;
-import static com.example.drawandcoloring.DrawActivity.view_array;
+import static com.example.drawandcoloring.DrawingActivity.MODE;
+import static com.example.drawandcoloring.DrawingActivity.WIDTH;
+import static com.example.drawandcoloring.DrawingActivity.HEIGHT;
+import static com.example.drawandcoloring.DrawingActivity.view_array;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -267,7 +266,7 @@ public class DrawingView extends View {
         float y = event.getY();
         int int_x=(int) (x/1);
         int int_y=(int) (y/1);
-        if(STATUS.equals("draw")){
+        if(MODE.equals("draw")){
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     System.out.println("START:");
@@ -287,9 +286,9 @@ public class DrawingView extends View {
                     invalidate();
                     break;
             }
-            Log.i("STATUS : ",STATUS+" x :"+int_x+"| y :"+int_y);
-        }else if (STATUS.equals("fill")){
-            Log.i("STATUS : ",STATUS+" x :"+int_x+"| y :"+int_y);
+            Log.i("STATUS : ", MODE +" x :"+int_x+"| y :"+int_y);
+        }else if (MODE.equals("fill")){
+            Log.i("STATUS : ", MODE +" x :"+int_x+"| y :"+int_y);
             targetColor=getColor();
             new_flood_fill(x,y,targetColor);
             invalidate();

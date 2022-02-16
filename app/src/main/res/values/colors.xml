@@ -5,33 +5,72 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
 
     <color name="draw">#FFDC04</color>
     <color name="paint">#292C79</color>
     <color name="gallery">#2DB88E</color>
     <color name="toolbox">#DEDEE0</color>
 
-    <color name="red">#ff0000</color>
-    <color name="dark_orange">#ff8000</color>
-    <color name="yellow">#ffff00</color>
-    <color name="chartreuse">#80ff00</color>
-    <color name="spring_green">#00ff80</color>
+
+
+
     <color name="aqua">#00FFFF</color>
-    <color name="blue">#0000FF</color>
     <color name="electric_indigo">#8000FF</color>
     <color name="electric_purple">#BF00FF</color>
-    <color name="fuchsia">#FF00FF</color>
+
     <color name="razzmatazz">#FF0066</color>
-    <color name="islamic_green">#00B300</color>
-    <color name="saddle_brown">#804000</color>
     <color name="maroon">#800000</color>
-    <color name="mardi_gras">#1A001A</color>
-    <color name="violet">#FF99FF</color>
-    <color name="screaming_green">#66FF66</color>
-    <color name="laser_lemon">#FFFF66</color>
     <color name="bittersweet">#FF6666</color>
+    <color name="mardi_gras">#1A001A</color>
+    <color name="fuchsia">#FF00FF</color>
+
+    <color name="laser_lemon">#FFFF66</color>
+    <color name="teal">#008080</color>
+    <color name="dark_orange">#ff8000</color>
+    <!--RED -->
+    <color name="dark_red">#8B0000</color>
+    <color name="red">#ff0000</color>
+    <color name="crimson">#DC143C</color>
+    <color name="light_coral">#F08080</color>
+    <color name="salmon">#FA8072</color>
+    <color name="light_salmon">#FFA07A</color>
+    <!-- YELLOW and ORANGE-->
+    <color name="orange">#FFA500</color>
+    <color name="golden_rod">#DAA520</color>
+    <color name="yellow">#ffff00</color>
+    <color name="moccasin">#FFE4B5</color>
+    <color name="khaki">#BDB76B</color>
+    <color name="dark_khaki">#F0E68C</color>
+    <!-- GREEN-->
+    <color name="dark_green">#006400</color>
+    <color name="islamic_green">#00B300</color>
+    <color name="chartreuse">#80ff00</color>
+    <color name="spring_green">#00ff80</color>
+    <color name="screaming_green">#66FF66</color>
+    <color name="olive_drab">#6B8E23</color>
+    <!--BLUE-->
+    <color name="midnight_blue">#191970</color>
+    <color name="blue">#0000FF</color>
+    <color name="deep_sky_blue">#00BFFF</color>
+    <color name="turquoise">#40E0D0</color>
+    <color name="aquamarine">#7FFFD4</color>
+    <color name="light_cyan">#E0FFFF</color>
+    <!-- PINK and PURPLE-->
+    <color name="medium_violet_red">#C71585</color>
+    <color name="hot_pink">#FF69B4</color>
+    <color name="pink">#FFC0CB</color>
+    <color name="violet">#FF99FF</color>
+    <color name="medium_orchid">#BA55D3</color>
+    <color name="purple">#800080</color>
+    <!-- BLACK and BROWN and GRAY and WHITE-->
+    <color name="black">#FF000000</color>
+    <color name="saddle_brown">#804000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#808080</color>
+    <color name="dim_gray">#696969</color>
+    <color name="dark_slate_gray">#2F4F4F</color>
+
 
 
 </resources>

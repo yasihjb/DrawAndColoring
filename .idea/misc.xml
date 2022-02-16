@@ -9,6 +9,7 @@
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_edit.xml" value="0.20260416666666667" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_palette.xml" value="0.1545" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_palette_background.xml" value="0.1545" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_palette_black.xml" value="0.1545" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_palette_foreground.xml" value="0.20260416666666667" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_redo.xml" value="0.1545" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_save_in_gallery.xml" value="0.20260416666666667" />
@@ -16,6 +17,7 @@
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/main_page_gallery_button.xml" value="0.20260416666666667" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/toolbox_style.xml" value="0.1545" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-land/activity_main.xml" value="0.12291666666666666" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-land/new_colors_palette.xml" value="0.15784832451499117" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-large-land/activity_main.xml" value="0.1" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-large-port/activity_main.xml" value="0.1" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_check.xml" value="0.18645833333333334" />
@@ -26,6 +28,8 @@
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_paint.xml" value="0.18" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_show.xml" value="0.18645833333333334" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/color_picker_dialog.xml" value="0.33" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/colors_palette.xml" value="0.25" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/new_colors_palette.xml" value="0.33" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/recyclerview_gallery_item.xml" value="0.33" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/recyclerview_paints_item.xml" value="0.1" />
       </map>

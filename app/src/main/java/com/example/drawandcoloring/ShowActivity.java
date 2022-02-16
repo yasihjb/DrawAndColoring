@@ -1,19 +1,13 @@
 package com.example.drawandcoloring;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -23,7 +17,6 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Locale;
 
 public class ShowActivity extends AppCompatActivity implements StatusBarColor, View.OnClickListener {
     ImageView button_back,button_edit,button_delete,button_save_in_gallery,show;
@@ -106,7 +99,7 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
             finish();
         }else if (view.getId()==button_edit.getId()){
             if(type.equals("draw")){
-                Intent intent=new Intent(this,DrawActivity.class);
+                Intent intent=new Intent(this, DrawingActivity.class);
                 intent.putExtra("previous","show");
                 intent.putExtra("selected_id",selected_id);
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
