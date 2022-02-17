@@ -3,26 +3,32 @@ package com.example.drawandcoloring;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
-public class ColorPickerDialog extends Dialog implements View.OnClickListener {
+public class ColorPickerDialog extends Dialog implements View.OnClickListener, View.OnTouchListener {
     int selected_color;
     Context context;
     ImageView dark_red,red,crimson,light_coral,salmon,light_salmon,orange,golden_rod,yellow,
             moccasin,khaki,dark_khaki,dark_green,islamic_green,chartreuse,spring_green,screaming_green,
             olive_drab,midnight_blue,blue,deep_sky_blue,turquoise,aquamarine,light_cyan,medium_violet_red,
             hot_pink,pink,violet,medium_orchid,purple,black,saddle_brown,white,gray,dim_gray,dark_slate_gray;
+    ImageView openRainbow,openPalette,rainbow_range,selected_color_frame;
+    RelativeLayout palette_layout,rainbow_layout;
     public ColorPickerDialog(@NonNull Context context) {
         super(context);
         this.context=context;
@@ -69,8 +75,28 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener {
         gray=findViewById(R.id.gray);
         dim_gray=findViewById(R.id.dim_gray);
         dark_slate_gray=findViewById(R.id.dark_slate_gray);
+        rainbow_range=findViewById(R.id.rainbow_range);
+        selected_color_frame=findViewById(R.id.sc);
 
 
+
+        openRainbow=findViewById(R.id.rainbow);
+        openRainbow.setVisibility(View.VISIBLE);
+        palette_layout=findViewById(R.id.palette_layout);
+        palette_layout.setVisibility(View.VISIBLE);
+
+        rainbow_layout=findViewById(R.id.rainbow_layout);
+        rainbow_layout.setVisibility(View.GONE);
+        openPalette=findViewById(R.id.palette);
+        openPalette.setVisibility(View.GONE);
+        rainbow_range.getDrawingCache(true);
+        rainbow_range.buildDrawingCache(true);
+
+        rainbow_range.setOnTouchListener(this::onTouch);
+
+
+        openPalette.setOnClickListener(this::onClick);
+        openRainbow.setOnClickListener(this::onClick);
         dark_slate_gray.setOnClickListener(this::onClick);
         dim_gray.setOnClickListener(this::onClick);
         gray.setOnClickListener(this::onClick);
@@ -111,10 +137,25 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener {
 
     }
 
+
     @SuppressLint("Range")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.palette:
+                System.out.println("this is palette");
+                palette_layout.setVisibility(View.VISIBLE);
+                rainbow_layout.setVisibility(View.GONE);
+                openPalette.setVisibility(View.GONE);
+                openRainbow.setVisibility(View.VISIBLE);
+                break;
+            case R.id.rainbow:
+                System.out.println("this is rainbowwwww");
+                palette_layout.setVisibility(View.GONE);
+                rainbow_layout.setVisibility(View.VISIBLE);
+                openRainbow.setVisibility(View.GONE);
+                openPalette.setVisibility(View.VISIBLE);
+                break;
             case R.id.dark_slate_gray:
                 selected_color=Color.parseColor("#2F4F4F");
                 dismiss();
@@ -219,7 +260,7 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener {
                 selected_color=Color.parseColor("#00ff80");
                 dismiss();
                 break;
-            case R.id.screaming_green:
+            case R.id.screaming_green1:
                 selected_color=Color.parseColor("#66FF66");
                 dismiss();
                 break;
@@ -259,8 +300,6 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener {
                 selected_color=Color.parseColor("#FF69B4");
                 dismiss();
                 break;
-
-
         }
     }
 
@@ -268,4 +307,23 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener {
         return selected_color;
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (v.getId()==rainbow_range.getId()){
+            BitmapDrawable bd = (BitmapDrawable) rainbow_range.getDrawable();
+            Bitmap b = bd.getBitmap();
+            int x= (int) event.getX();
+            int y= (int) event.getY();
+            Log.i("Hello",""+x+"<"+b.getWidth()+"|"+y+"<"+b.getHeight());
+
+            if (x>=0 && x<b.getWidth() && y>=0 && y<b.getHeight()){
+                int pixel=b.getPixel(x,y);
+                selected_color=pixel;
+                selected_color_frame.setBackgroundColor(selected_color);
+                Log.i("Hello",""+selected_color);
+            }
+
+        }
+        return true;
+    }
 }
