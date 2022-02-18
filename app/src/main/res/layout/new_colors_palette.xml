@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/_250sdp"
-    android:layout_height="@dimen/_350sdp"
+    android:layout_height="@dimen/_300sdp"
     android:background="@color/white"
     android:backgroundTint="#FFFFFF"
     android:foregroundTintMode="screen"
@@ -27,8 +27,8 @@
 
         <ImageView
             android:id="@+id/rainbow"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
             android:background="@drawable/rainbow_circle"
             android:clickable="true"
             android:focusable="true"
@@ -39,8 +39,8 @@
 
         <ImageView
             android:id="@+id/palette"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
             android:background="@color/white"
             android:clickable="true"
             android:focusable="true"
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                android:layout_marginTop="@dimen/_30sdp">
+                android:layout_marginTop="@dimen/_5sdp">
                 <ImageView
                     android:id="@+id/rainbow_range"
                     android:layout_width="@dimen/_230sdp"

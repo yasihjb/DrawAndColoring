@@ -287,14 +287,7 @@ public class DrawingView extends View {
                     break;
             }
             Log.i("STATUS : ", MODE +" x :"+int_x+"| y :"+int_y);
-        }else if (MODE.equals("fill")){
-            Log.i("STATUS : ", MODE +" x :"+int_x+"| y :"+int_y);
-            targetColor=getColor();
-            new_flood_fill(x,y,targetColor);
-            invalidate();
         }
-
-
         return true;
     }
 }

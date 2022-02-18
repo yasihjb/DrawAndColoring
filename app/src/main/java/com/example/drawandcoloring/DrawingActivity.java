@@ -182,8 +182,7 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
             MODE ="draw";
             dv.setDefault();
         }else if (view.getId()==paint_roller.getId()){
-            MODE ="fill";
-            dv.setDisable();
+
         }else if (view.getId()==eraser.getId()){
             dv.setColor(255,255,255);
             MODE ="draw";

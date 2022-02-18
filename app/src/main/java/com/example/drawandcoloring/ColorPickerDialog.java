@@ -90,6 +90,7 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener, V
         openPalette=findViewById(R.id.palette);
         openPalette.setVisibility(View.GONE);
         rainbow_range.getDrawingCache(true);
+        rainbow_range.setDrawingCacheEnabled(true);
         rainbow_range.buildDrawingCache(true);
 
         rainbow_range.setOnTouchListener(this::onTouch);
@@ -310,8 +311,20 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener, V
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (v.getId()==rainbow_range.getId()){
-            BitmapDrawable bd = (BitmapDrawable) rainbow_range.getDrawable();
-            Bitmap b = bd.getBitmap();
+//            rainbow_range.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    int width=rainbow_range.getWidth();
+//                    int height=rainbow_range.getHeight();
+//                    int left=rainbow_range.getLeft();
+//                    int top=rainbow_range.getTop();
+//                    int bottom=rainbow_range.getBottom();
+//                    int right=rainbow_range.getRight();
+//                    Log.i("Hello","Width="+width+" Height="+height+" Left="+left+" Top="+top+" Right="+right+" Bottom="+bottom);
+//
+//                }
+//            });
+            Bitmap b = rainbow_range.getDrawingCache();
             int x= (int) event.getX();
             int y= (int) event.getY();
             Log.i("Hello",""+x+"<"+b.getWidth()+"|"+y+"<"+b.getHeight());
