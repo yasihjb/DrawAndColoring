@@ -67,6 +67,7 @@
                 android:layout_marginRight="@dimen/_5sdp"
                 android:layout_centerHorizontal="true"
                 >
+
                 <ImageView
                     android:id="@+id/pallet"
                     android:layout_width="@dimen/_40sdp"
@@ -75,19 +76,18 @@
                     android:layout_marginStart="0dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/img_pallete"
-                    android:layout_centerHorizontal="true"/>
+                    android:src="@drawable/img_pallete" />
 
                 <ImageView
                     android:id="@+id/paint_roller"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_toEndOf="@id/pallet"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/img_paint_roller"
-                    android:layout_centerHorizontal="true"/>
+                    android:src="@drawable/img_paint_roller" />
                 <ImageView
                     android:id="@+id/eraser"
                     android:layout_width="@dimen/_35sdp"
@@ -121,17 +121,17 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:src="@drawable/ic_redo" />
+
                 <ImageView
                     android:id="@+id/eyedropper"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/eraser"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:src="@drawable/img_eyedropper"
+                    android:layout_toEndOf="@id/eraser"
                     android:clickable="true"
                     android:focusable="true"
-                    android:layout_centerHorizontal="true"
-                    />
+                    android:src="@drawable/img_eyedropper" />
 
             </RelativeLayout>
 

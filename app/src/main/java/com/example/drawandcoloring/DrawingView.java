@@ -17,6 +17,7 @@ import static com.example.drawandcoloring.DrawingActivity.WIDTH;
 import static com.example.drawandcoloring.DrawingActivity.HEIGHT;
 import static com.example.drawandcoloring.DrawingActivity.view_array;
 
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -27,19 +28,14 @@ public class DrawingView extends View {
     Path    mPath;
     Paint   mBitmapPaint;
     Context context;
-    int targetColor;
     RelativeLayout layout;
-    Bitmap layout_bitmap;
-    Point point=new Point();
-//    ArrayList<XoY> Queue=new ArrayList<>();
-    Queue<Point> myQueue=new LinkedList<>();
-    //if value equal 0 means it is empty
-    //else if value equal 1 means it is fill
-    //else if value equal 2 means it is wall
-
 
     public void setColor( int r, int g, int b){
         mPaint.setColor(Color.rgb(r,g,b));
+    }
+
+    public void setColor(int color){
+        mPaint.setColor(color);
     }
 
     public int getColor(){
@@ -127,7 +123,6 @@ public class DrawingView extends View {
             mPath.moveTo(x, y);
             mX = x;
             mY = y;
-            import_wall_in_view_array(mX,mY);
         }
     }
 
@@ -143,7 +138,6 @@ public class DrawingView extends View {
                 mPath.quadTo(mX, mY, x2, y2);
                 mX = x;
                 mY = y;
-                import_wall_in_view_array(mX,mY);
             }
         }
     }
@@ -158,136 +152,32 @@ public class DrawingView extends View {
         }
     }
 
-    private void import_wall_in_view_array(float x,float y){
-        if ( x>=0 && y>=0 && x<=WIDTH && y<=HEIGHT) {
-            System.out.println("WIDTH=" + WIDTH + " HEIGHT=" + HEIGHT);
-            int int_x = (int) (x/1);
-            int int_y = (int) (y/1);
-            view_array[int_x][int_y]=(-1); //this is wall
-            System.out.println("VALUE OF X="+int_x+" Y="+int_y+" |"+ view_array[int_x][int_y]);
-        }
-    }
-
-    public void new_flood_fill(float x,float y,int targetColor){
-        System.out.println("WIDTH=" + WIDTH + " HEIGHT=" + HEIGHT);
-        int int_x = (int) (x/1);
-        int int_y = (int) (y/1);
-        System.out.println("X="+int_x+" Y="+int_y);
-        System.out.println("VALUE OF THIS FUCKING ARRAY BEFORE="+view_array[int_x][int_y]);
-        if (view_array[int_x][int_y]==1){
-            return;
-        }
-        myQueue.add(new Point(int_x,int_y));
-        while (myQueue.size()!=0){
-            System.out.println("Queue Size="+myQueue.size());
-            Point xoy=myQueue.peek();
-            int i=xoy.x;
-            int j=xoy.y;
-            System.out.println("VALUE OF THIS FUCKING ARRAY BEFORE="+view_array[i][j]);
-            if (i<0 || i>WIDTH || j<0 || j>HEIGHT || view_array[i][j]==1 ){
-                myQueue.remove(xoy);
-                continue;
-            }else {
-                view_array[i][j]=1;
-                if (view_array[i+1][j]!=-1  && !myQueue.contains(new Point(i+1,j))){
-                    myQueue.add(new Point(i+1,j));
-                }
-                if (view_array[i-1][j]!=-1  && !myQueue.contains(new Point(i-1,j))){
-                    myQueue.add(new Point(i-1,j));
-                }
-                if (view_array[i][j+1]!=-1 &&  !myQueue.contains(new Point(i,j+1))){
-                    myQueue.add(new Point(i,j+1));
-                }
-                if (view_array[i][j-1]!=-1  && !myQueue.contains(new Point(i,j-1))){
-                    myQueue.add(new Point(i,j-1));
-                }
-                myQueue.remove(xoy);
-            }
-
-        }
-    }
-
-//    public void flood_fill(float x,float y ,int targetColor ){
-//        if (x>=0 && y>=0 && x<=WIDTH && y<=HEIGHT) {
-//            System.out.println("WIDTH=" + WIDTH + " HEIGHT=" + HEIGHT);
-//            int int_x = (int) (x/1);
-//            int int_y = (int) (y/1);
-//            System.out.println("X="+int_x+" Y="+int_y);
-////            mPath.moveTo(int_x, int_y);
-////            mPaint.setColor(targetColor);
-//            layout_bitmap = layout.getDrawingCache();
-//            System.out.println("VALUE OF THIS FUCKING ARRAY BEFORE="+view_array[int_x][int_y]);
-//            if (view_array[int_x][int_y]==(-1)){//if pixel is wall
-//                System.out.println("this is fucking wall");
-//                return;
-//            }
-//            else if (view_array[int_x][int_y]==1){//if pixel is fill
-//                return;
-//            }
-//
-//            view_array[int_x][int_y] = 1;
-//            flood_fill(int_x+1, int_y, targetColor);
-//            flood_fill(int_x, int_y+1, targetColor);
-//            flood_fill(int_x-1, int_y, targetColor);
-//            flood_fill(int_x, int_y-1, targetColor);
-//            System.out.println("VALUE OF THIS FUCKING ARRAY AFTER="+view_array[int_x][int_y]);
-//
-//        }
-//    }
-
-    private void fill(float x,float y){
-        mPath.moveTo(x,y);
-        mPath.lineTo(x+1,y+1);
-        int xx= (int) (x/1);
-        int yy= (int) (y/1);
-        System.out.println("X: "+xx+" Y: "+yy);
-        layout_bitmap=layout.getDrawingCache();
-        int b=layout_bitmap.getPixel(xx+1,yy+1);
-        System.out.println("Value :"+b);
-        int blue=Color.blue(b);
-        int green=Color.green(b);
-        int red=Color.red(b);
-        int alpha=Color.alpha(b);
-        System.out.println("COLORS: BLUE="+blue+" RED="+red+" GREEN="+green+" ALPHA="+alpha);
-        mCanvas.drawPath(mPath, mPaint);
-        mPath.reset();
-        targetColor =getColor();
-
-    }
-
-    @Override
-    public boolean performClick() {
-        return super.performClick();
-    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-        int int_x=(int) (x/1);
-        int int_y=(int) (y/1);
-        if(MODE.equals("draw")){
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    System.out.println("START:");
-                    touch_start(x, y);
-//                    import_wall_in_view_array(x,y);
-                    invalidate();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    System.out.println("MOVE:");
-                    touch_move(x, y);
-//                    import_wall_in_view_array(x,y);
-                    invalidate();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    System.out.println("END:");
-                    touch_up();
-                    invalidate();
-                    break;
+            float x = event.getX();
+            float y = event.getY();
+            int int_x = (int) (x / 1);
+            int int_y = (int) (y / 1);
+            if (MODE.equals("draw")) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        System.out.println("START:");
+                        touch_start(x, y);
+                        invalidate();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        System.out.println("MOVE:");
+                        touch_move(x, y);
+                        invalidate();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        System.out.println("END:");
+                        touch_up();
+                        invalidate();
+                        break;
+                }
+                Log.i("STATUS : ", MODE + " x :" + int_x + "| y :" + int_y);
             }
-            Log.i("STATUS : ", MODE +" x :"+int_x+"| y :"+int_y);
-        }
         return true;
     }
 }

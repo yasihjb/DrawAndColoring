@@ -2,21 +2,28 @@ package com.example.drawandcoloring;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
@@ -26,26 +33,23 @@ import java.util.Locale;
 
 import dev.sasikanth.colorsheet.ColorSheet;
 
-public class DrawingActivity extends AppCompatActivity implements View.OnClickListener ,StatusBarColor{
-    ImageView back,save,pallet,pencil,paint_roller,eraser;
-    ColorPicker colorPicker;
-    int selectedColor;
-    int color_alpha,color_red,color_green,color_blue;
+public class DrawingActivity extends AppCompatActivity implements View.OnClickListener, StatusBarColor{
+    ImageView back,save,pallet,pencil,undo,redo,eraser,eyedropper;
     RelativeLayout drawView;
-    Bitmap bitmap,fill_bitmap;
+    Bitmap bitmap;
     DatabaseHelper databaseHelper;
     String previous;
     String selected_id;
     DrawingView dv;
     private Paint mPaint;
-    ColorSheet colorSheet;
-
     public static String MODE ="draw";
     public static int WIDTH,HEIGHT;
-    public static int[][] view_array;
+    public static int[] view_array;
     GradientDrawable gradientDrawable;
     RelativeLayout tool_box;
-
+    Bitmap layout_bitmap;
+    Toolbar toolbar;
+    ColorPickerDialog colorPickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,18 +71,17 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         setStatusBarColor(R.color.draw);
         previous=getIntent().getStringExtra("previous");
 
-        color_red=255;
-        color_blue=255;
-        color_green=255;
-        colorSheet=new ColorSheet();
-
+        toolbar=findViewById(R.id.toolbar);
         back=findViewById(R.id.button_back);
         save=findViewById(R.id.button_save);
         pallet=findViewById(R.id.pallet);
         pencil=findViewById(R.id.pencil);
-        paint_roller=findViewById(R.id.paint_roller);
         eraser=findViewById(R.id.eraser);
         tool_box=findViewById(R.id.toolbox);
+        undo=findViewById(R.id.undo);
+        redo=findViewById(R.id.redo);
+        eyedropper=findViewById(R.id.eyedropper);
+
 
         gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
         gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
@@ -90,18 +93,11 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
                 WIDTH=drawView.getWidth();
                 HEIGHT=drawView.getHeight();
                 System.out.println("MAIN:"+"WIDTH="+WIDTH+" HEIGHT="+HEIGHT);
-                view_array=new int[WIDTH+1][HEIGHT+1];
-                if (previous.equals("main")){
-
-                    for (int i=0;i<(WIDTH+1);i++){
-                        for (int j=0;j<(HEIGHT+1);j++){
-                            view_array[i][j]=0;
-                        }
-                    }
-
-                }else if (previous.equals("show")){
-                    System.out.println("FELAN HICHI");
-                }
+//                if (previous.equals("main")){
+//                    System.out.println("FELAN HICHI");
+//                }else if (previous.equals("show")){
+//                    System.out.println("FELAN HICHI");
+//                }
 
             }
         });
@@ -110,7 +106,6 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         if (previous.equals("main")){
 //            drawView.setBackgroundColor(Color.parseColor("#ffffff"));
 //            drawView.setBackgroundDrawable(getResources().getDrawable(R.drawable.default_bg));
-
         }else if (previous.equals("show")){
             selected_id=getIntent().getStringExtra("selected_id");
             System.out.println(selected_id);
@@ -118,39 +113,36 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
             drawView.setBackgroundDrawable(drawable);
         }
 
-
-
-        int defaultColorR=color_red;
-        int defaultColorG=color_green;
-        int defaultColorB=color_blue;
-        colorPicker=new ColorPicker(this,defaultColorR, defaultColorG, defaultColorB);
-        colorPicker.setCallback(new ColorPickerCallback() {
+        colorPickerDialog=new ColorPickerDialog(this);
+        colorPickerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
-            public void onColorChosen(int color) {
-                color_alpha=Color.alpha(color);
-                color_red=Color.red(color);
-                color_green=Color.green(color);
-                color_blue=Color.blue(color);
-//                selectedColor=Color.argb();
-                dv.setColor(color_red,color_green,color_blue);
-                colorPicker.dismiss();
+            public void onDismiss(DialogInterface dialog) {
+                int color=colorPickerDialog.getSelectedColor();
+                dv.setColor(color);
+                gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
+                gradientDrawable.setColor(color);
+                tool_box.setBackgroundDrawable(gradientDrawable);
             }
         });
+
 
         back.setOnClickListener(this::onClick);
         save.setOnClickListener(this::onClick);
         pallet.setOnClickListener(this::onClick);
         pencil.setOnClickListener(this::onClick);
-        paint_roller.setOnClickListener(this::onClick);
+        undo.setOnClickListener(this::onClick);
+        redo.setOnClickListener(this::onClick);
         eraser.setOnClickListener(this::onClick);
+        toolbar.setOnClickListener(this::onClick);
 
 
     }
 
-
     @Override
     public void onClick(View view) {
-        if (view.getId()==back.getId()){
+        if (view.getId()==toolbar.getId()){
+
+        } else if (view.getId()==back.getId()){
             finish();
         }else if (view.getId()==save.getId()){
             bitmap=drawView.getDrawingCache();
@@ -169,24 +161,24 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
             }else if (previous.equals("show")){
                 databaseHelper.UpdateViewData(DatabaseBitmapUtility.getBytes(bitmap),selected_id);
-//                Intent intent=new Intent(this,ShowActivity.class);
-//                intent.putExtra("selected_id",selected_id);
-//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                 finish();
             }
 
 
         }else if (view.getId()==pallet.getId()){
-            colorPicker.show();
+            colorPickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            colorPickerDialog.show();
         }else if (view.getId()==pencil.getId()){
             MODE ="draw";
             dv.setDefault();
-        }else if (view.getId()==paint_roller.getId()){
-
         }else if (view.getId()==eraser.getId()){
-            dv.setColor(255,255,255);
+            dv.setColor(Color.WHITE);
             MODE ="draw";
             dv.setDefault();
+        }else if (view.getId()==undo.getId()){
+            System.out.println("unDo");
+        }else if (view.getId()==redo.getId()){
+            System.out.println("reDo");
         }
     }
 
@@ -209,4 +201,8 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
+
+
 }

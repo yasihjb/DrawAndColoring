@@ -5,20 +5,15 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 
 public class ColorPickerDialog extends Dialog implements View.OnClickListener, View.OnTouchListener {
     int selected_color;
@@ -38,7 +33,7 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener, V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.new_colors_palette);
+        setContentView(R.layout.colors_palette_dialog);
         dark_red=findViewById(R.id.dark_red);
         red=findViewById(R.id.red);
         crimson=findViewById(R.id.crimson);

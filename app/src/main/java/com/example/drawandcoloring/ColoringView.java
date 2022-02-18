@@ -144,9 +144,9 @@ public class ColoringView extends View {
     }
 
     private void fillUnit(int x, int y, int color) {
-        if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT ) {
-            return;
-        }
+//        if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT ) {
+//            return;
+//        }
         int pixelColor = array_layout_pixels[x + y * WIDTH];
         if (pixelColor == color || pixelColor==BORDER_COLOR || pixelColor!=BACKGROUND_COLOR) {
             return;

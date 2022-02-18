@@ -38,8 +38,6 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     RelativeLayout paint_board;
     String paint_uri,previous,selected_id;
     ColoringView cw;
-    ColorPicker colorPicker;
-    int color_alpha,color_red,color_green,color_blue;
     static int WIDTH,HEIGHT;
     DatabaseHelper databaseHelper;
     Bitmap bitmap;
@@ -47,7 +45,6 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     public static String MODE="fill";//1-fill 2-eraser
     public static Stack<int[]> undo_array_stack;
     public static Stack<int[]> redo_array_stack;
-    public static List<int[]> fucking_undo,fucking_redo;
     public static RelativeLayout tool_box;
     GradientDrawable gradientDrawable;
     @Override
