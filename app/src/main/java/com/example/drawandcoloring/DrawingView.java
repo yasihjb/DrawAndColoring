@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +17,13 @@ import static com.example.drawandcoloring.DrawingActivity.MODE;
 import static com.example.drawandcoloring.DrawingActivity.WIDTH;
 import static com.example.drawandcoloring.DrawingActivity.HEIGHT;
 import static com.example.drawandcoloring.DrawingActivity.view_array;
+import static com.example.drawandcoloring.DrawingActivity.pencil_toolbox;
+import static com.example.drawandcoloring.DrawingActivity.tool_box;
+import static com.example.drawandcoloring.DrawingActivity.round_line;
+import static com.example.drawandcoloring.DrawingActivity.square_line;
+import static com.example.drawandcoloring.DrawingActivity.select_round;
+import static com.example.drawandcoloring.DrawingActivity.select_square;
+import static com.example.drawandcoloring.DrawingActivity.pencil_seekbar;
 
 
 import java.util.LinkedList;
@@ -29,6 +37,7 @@ public class DrawingView extends View {
     Paint   mBitmapPaint;
     Context context;
     RelativeLayout layout;
+    GradientDrawable gradientDrawable;
 
     public void setColor( int r, int g, int b){
         mPaint.setColor(Color.rgb(r,g,b));
@@ -45,7 +54,9 @@ public class DrawingView extends View {
     public void setStrokeWidth(float width){
         mPaint.setStrokeWidth(width);
     }
-
+    public float getStrokeWidth(){
+        return mPaint.getStrokeWidth();
+    }
     public void setStroke(){
         mPaint.setStyle(Paint.Style.STROKE);
     }
@@ -92,7 +103,7 @@ public class DrawingView extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
-        mPaint.setColor(Color.parseColor("#000000"));
+        mPaint.setColor(Color.parseColor("#DEDEE0"));
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -154,6 +165,10 @@ public class DrawingView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (pencil_toolbox.getVisibility()==VISIBLE && event.getAction()==MotionEvent.ACTION_DOWN){
+            pencil_toolbox.setVisibility(GONE);
+        }
+        if (pencil_toolbox.getVisibility()==GONE){
             float x = event.getX();
             float y = event.getY();
             int int_x = (int) (x / 1);
@@ -177,7 +192,39 @@ public class DrawingView extends View {
                         break;
                 }
                 Log.i("STATUS : ", MODE + " x :" + int_x + "| y :" + int_y);
+            }else if (MODE.equals("eyedropper") ){
+
+                Bitmap lb=layout.getDrawingCache();
+
+                int pixel=lb.getPixel(int_x,int_y);
+
+                setColor(pixel);
+
+                gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
+                gradientDrawable.setColor(pixel);
+                tool_box.setBackgroundDrawable(gradientDrawable);
+
+                gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.round_line);
+                gradientDrawable.setColor(pixel);
+                round_line.setBackgroundDrawable(gradientDrawable);
+
+                gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.square_line);
+                gradientDrawable.setColor(pixel);
+                square_line.setBackgroundDrawable(gradientDrawable);
+
+                gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.circle);
+                gradientDrawable.setColor(pixel);
+                select_round.setBackgroundDrawable(gradientDrawable);
+
+                gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.square);
+                gradientDrawable.setColor(pixel);
+                select_square.setBackgroundDrawable(gradientDrawable);
+
+                setStrokeWidth(pencil_seekbar.getProgress());
+
+                MODE="draw";
             }
+        }
         return true;
     }
 }

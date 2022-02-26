@@ -3,10 +3,13 @@ package com.example.drawandcoloring;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
@@ -15,12 +18,15 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -46,10 +52,13 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
     public static int WIDTH,HEIGHT;
     public static int[] view_array;
     GradientDrawable gradientDrawable;
-    RelativeLayout tool_box;
+    public static RelativeLayout tool_box;
     Bitmap layout_bitmap;
     Toolbar toolbar;
     ColorPickerDialog colorPickerDialog;
+    public static ConstraintLayout pencil_toolbox;
+    public static SeekBar pencil_seekbar;
+    public static RelativeLayout round_line,square_line,select_round,select_square;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +90,31 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         undo=findViewById(R.id.undo);
         redo=findViewById(R.id.redo);
         eyedropper=findViewById(R.id.eyedropper);
+        select_round=findViewById(R.id.select_circle);
+        select_square=findViewById(R.id.select_square);
+        pencil_toolbox=findViewById(R.id.pencil_toolbox);
+        pencil_toolbox.setVisibility(View.GONE);
+        pencil_seekbar=findViewById(R.id.pencil_seekbar);
+        round_line=findViewById(R.id.round_line);
+        round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) dv.getStrokeWidth()));
+        round_line.setVisibility(View.VISIBLE);
+        square_line=findViewById(R.id.square_line);
+        square_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) dv.getStrokeWidth()));
+        square_line.setVisibility(View.GONE);
 
+        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
+        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
+        select_round.setBackgroundDrawable(gradientDrawable);
+
+        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
+        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
+        select_square.setBackgroundDrawable(gradientDrawable);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            pencil_seekbar.setMin(1);
+        }
+        pencil_seekbar.setMax(100);
+        pencil_seekbar.setProgress((int) dv.getStrokeWidth());
 
         gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
         gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
@@ -93,11 +126,25 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
                 WIDTH=drawView.getWidth();
                 HEIGHT=drawView.getHeight();
                 System.out.println("MAIN:"+"WIDTH="+WIDTH+" HEIGHT="+HEIGHT);
-//                if (previous.equals("main")){
-//                    System.out.println("FELAN HICHI");
-//                }else if (previous.equals("show")){
-//                    System.out.println("FELAN HICHI");
-//                }
+            }
+        });
+
+        pencil_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                Log.i("SeekSize",""+progress);
+                dv.setStrokeWidth(progress);
+                round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) dv.getStrokeWidth()));
+                square_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) dv.getStrokeWidth()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
         });
@@ -119,9 +166,29 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
             public void onDismiss(DialogInterface dialog) {
                 int color=colorPickerDialog.getSelectedColor();
                 dv.setColor(color);
+
+
                 gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
                 gradientDrawable.setColor(color);
                 tool_box.setBackgroundDrawable(gradientDrawable);
+
+                gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.round_line);
+                gradientDrawable.setColor(color);
+                round_line.setBackgroundDrawable(gradientDrawable);
+
+                gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square_line);
+                gradientDrawable.setColor(color);
+                square_line.setBackgroundDrawable(gradientDrawable);
+
+                gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
+                gradientDrawable.setColor(color);
+                select_round.setBackgroundDrawable(gradientDrawable);
+
+                gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
+                gradientDrawable.setColor(color);
+                select_square.setBackgroundDrawable(gradientDrawable);
+
+                dv.setStrokeWidth(pencil_seekbar.getProgress());
             }
         });
 
@@ -134,6 +201,11 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         redo.setOnClickListener(this::onClick);
         eraser.setOnClickListener(this::onClick);
         toolbar.setOnClickListener(this::onClick);
+        eyedropper.setOnClickListener(this::onClick);
+        select_round.setOnClickListener(this::onClick);
+        select_square.setOnClickListener(this::onClick);
+
+        select_round.callOnClick();
 
 
     }
@@ -141,10 +213,12 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view.getId()==toolbar.getId()){
-
+            hidePencilToolbox();
         } else if (view.getId()==back.getId()){
+            hidePencilToolbox();
             finish();
         }else if (view.getId()==save.getId()){
+            hidePencilToolbox();
             bitmap=drawView.getDrawingCache();
             if(previous.equals("main")){
                 System.out.println(bitmap);
@@ -166,19 +240,58 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
 
 
         }else if (view.getId()==pallet.getId()){
+            hidePencilToolbox();
             colorPickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             colorPickerDialog.show();
         }else if (view.getId()==pencil.getId()){
+            if (pencil_toolbox.getVisibility()==View.GONE){
+                pencil_toolbox.setVisibility(View.VISIBLE);
+                pencil_toolbox.bringToFront();
+                pencil_toolbox.setTranslationZ(0);
+            }else if (pencil_toolbox.getVisibility()==View.VISIBLE){
+                hidePencilToolbox();
+            }
             MODE ="draw";
             dv.setDefault();
         }else if (view.getId()==eraser.getId()){
+            hidePencilToolbox();
             dv.setColor(Color.WHITE);
             MODE ="draw";
             dv.setDefault();
         }else if (view.getId()==undo.getId()){
+            hidePencilToolbox();
             System.out.println("unDo");
         }else if (view.getId()==redo.getId()){
+            hidePencilToolbox();
             System.out.println("reDo");
+        }else if(view.getId()==eyedropper.getId()){
+            hidePencilToolbox();
+            System.out.println("eyedropper");
+            MODE="eyedropper";
+        }else if (view.getId()==select_round.getId()){
+            dv.setStrokeCapRound();
+            dv.setStrokeWidth(pencil_seekbar.getProgress());
+            gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
+            gradientDrawable.setStroke(5,Color.parseColor("#FFDC04"));
+            select_round.setBackgroundDrawable(gradientDrawable);
+            gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
+            gradientDrawable.setStroke(0,dv.getColor());
+            select_square.setBackgroundDrawable(gradientDrawable);
+            square_line.setVisibility(View.GONE);
+            round_line.setVisibility(View.VISIBLE);
+
+        }else if(view.getId()==select_square.getId()){
+            dv.setStrokeSquare();
+            dv.setStrokeWidth(pencil_seekbar.getProgress());
+            gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
+            gradientDrawable.setStroke(5,Color.parseColor("#FFDC04"));
+            select_square.setBackgroundDrawable(gradientDrawable);
+            gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
+            gradientDrawable.setStroke(0,dv.getColor());
+            select_round.setBackgroundDrawable(gradientDrawable);
+            square_line.setVisibility(View.VISIBLE);
+            round_line.setVisibility(View.GONE);
+
         }
     }
 
@@ -202,7 +315,8 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
-
+    private void hidePencilToolbox(){
+        pencil_toolbox.setVisibility(View.GONE);
+    }
 
 }

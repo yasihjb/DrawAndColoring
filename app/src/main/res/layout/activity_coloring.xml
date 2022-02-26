@@ -76,7 +76,7 @@
                     android:layout_marginStart="0dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/img_pallete" />
+                    android:src="@drawable/img_palette" />
 
                 <ImageView
                     android:id="@+id/paint_roller"

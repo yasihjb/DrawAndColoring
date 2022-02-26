@@ -2,6 +2,7 @@ package com.example.drawandcoloring;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -47,6 +48,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     public static Stack<int[]> redo_array_stack;
     public static RelativeLayout tool_box;
     GradientDrawable gradientDrawable;
+    public static ActivityManager activityManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,8 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         paint_board.buildDrawingCache(true);
 
         databaseHelper=new DatabaseHelper(this);
+
+        activityManager= (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 
         save=findViewById(R.id.button_save);
         back=findViewById(R.id.button_back);

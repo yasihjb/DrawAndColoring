@@ -71,6 +71,8 @@
     <color name="dim_gray">#696969</color>
     <color name="dark_slate_gray">#2F4F4F</color>
 
+    <color name="transparent">#00FFFFFF</color>
+
 
 
 </resources>

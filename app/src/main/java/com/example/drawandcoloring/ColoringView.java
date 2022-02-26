@@ -1,5 +1,6 @@
 package com.example.drawandcoloring;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -23,6 +24,8 @@ import static com.example.drawandcoloring.ColoringActivity.MODE;
 import static com.example.drawandcoloring.ColoringActivity.redo_array_stack;
 import static com.example.drawandcoloring.ColoringActivity.undo_array_stack;
 import static com.example.drawandcoloring.ColoringActivity.tool_box;
+import static com.example.drawandcoloring.ColoringActivity.activityManager;
+
 
 import androidx.annotation.RequiresApi;
 
@@ -42,6 +45,7 @@ public class ColoringView extends View {
     public static int undo_size=1;
     int redo_size=0;
     GradientDrawable gradientDrawable;
+
 
     public int getColor(){
         return selected_color;
@@ -93,6 +97,72 @@ public class ColoringView extends View {
         return true;
     }
 
+    public void innerFloodFill(int[] layout_bitmap_array,int x,int y,int selected_color,int width,int height){
+        ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+        activityManager.getMemoryInfo(memInfo);
+//        double val=memInfo/(1024*1024*1024);
+        Log.i("myvalue",""+memInfo.availMem/(1024*1024));
+        System.gc();
+        if (layout_bitmap_array[x+(y*width)]!=selected_color){
+            MyFloodFill(layout_bitmap_array,x,y,width,height,selected_color);
+        }
+    }
+
+    public  void MyFloodFill(int[] layout_bitmap_array, int x, int y, int width, int height,int selected_color) {
+        System.gc();
+        while (true){
+            int ox=x,oy=y;
+            while (y!=0 && layout_bitmap_array[x+((y-1)*width)]!=BORDER_COLOR && y<height && y>0){
+                y--;
+            }
+            while (x!=0 && layout_bitmap_array[(x-1)+(y*width)]!=BORDER_COLOR && x<width && x>0){
+                x--;
+            }
+            if (x==ox && y==oy){
+                break;
+            }
+        }
+        FillCore(layout_bitmap_array,x,y,width,height,selected_color);
+    }
+
+    public void FillCore(int[] layout_bitmap_array, int x, int y, int width, int height, int selected_color) {
+        int lastRowLength = 0;
+        do {
+            int rowLength = 0, sx = x;
+            if(lastRowLength != 0 && layout_bitmap_array[x+(y*width)]==BORDER_COLOR){
+                do {
+                    if(--lastRowLength == 0){
+                        return;
+                    }
+                }while( layout_bitmap_array[(++x)+(y*width)]==BORDER_COLOR);
+                sx=x;
+            }else {
+                for (; x != 0 && layout_bitmap_array[(x-1)+(y*width)]!=BORDER_COLOR; rowLength++, lastRowLength++){
+                    layout_bitmap_array[(--x)+(y*width)]=selected_color;
+                    if(y != 0 && layout_bitmap_array[x+((y-1)*width)]!=BORDER_COLOR){
+                        MyFloodFill(layout_bitmap_array,x,y-1,width,height,selected_color);
+                    }
+                }
+            }
+            for(; sx < width && layout_bitmap_array[sx+(y*width)]!=BORDER_COLOR; rowLength++, sx++) {
+                layout_bitmap_array[sx+(y*width)]=selected_color;
+            }
+            if (rowLength<lastRowLength){
+                for (int end=x+lastRowLength;++sx<end;){
+                    if (layout_bitmap_array[sx+(y*width)]!=BORDER_COLOR){
+                        MyFloodFill(layout_bitmap_array,sx,y,width,height,selected_color);
+                    }
+                }
+            }else if (rowLength>lastRowLength && y!=0){
+                for (int ux=x+lastRowLength;++ux<sx;){
+                    if (layout_bitmap_array[ux+((y-1)*width)]!=BORDER_COLOR ){
+                        MyFloodFill(layout_bitmap_array,ux,y-1,width,height,selected_color);
+                    }
+                }
+            }
+            lastRowLength=rowLength;
+        }while (lastRowLength!=0 && ++y<height);
+    }
 
     public void unDo(){
 //        if (undo_size==undo_array_stack.size()){
@@ -250,6 +320,8 @@ public class ColoringView extends View {
         @Override
         protected Void doInBackground(Void... params) {
             fill(point.x,point.y,selectedColor);
+//            innerFloodFill(array_layout_pixels,point.x,point.y,selectedColor,WIDTH,HEIGHT);
+
             return null;
         }
 
