@@ -86,7 +86,7 @@ public class ColoringView extends View {
             }
             if (MODE.equals("eyedropper")){
                 Bitmap bitmap=layout.getDrawingCache();
-                int pixel=bitmap.getPixel(int_x,int_y);
+                int pixel=bitmap.getPixel(p.x,p.y);
                 setColor(pixel);
                 gradientDrawable= (GradientDrawable) getResources().getDrawable(R.drawable.toolbox_style);
                 gradientDrawable.setColor(pixel);

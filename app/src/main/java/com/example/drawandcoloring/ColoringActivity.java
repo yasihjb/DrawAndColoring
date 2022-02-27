@@ -81,6 +81,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
 
         gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
         gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
+        gradientDrawable.setStroke(5,getResources().getColor(R.color.paint));
         tool_box.setBackgroundDrawable(gradientDrawable);
 
         paint_board.post(new Runnable() {

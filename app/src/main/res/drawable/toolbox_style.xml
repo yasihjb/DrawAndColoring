@@ -6,5 +6,9 @@
         />
     <solid
         android:color="@color/toolbox"/>
+    <stroke
+        android:width="5px"
+        android:color="@color/draw"
+        />
 
 </shape>

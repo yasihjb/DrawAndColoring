@@ -30,12 +30,14 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Stack;
 
 import dev.sasikanth.colorsheet.ColorSheet;
 
@@ -59,6 +61,9 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
     public static ConstraintLayout pencil_toolbox;
     public static SeekBar pencil_seekbar;
     public static RelativeLayout round_line,square_line,select_round,select_square;
+    public static Stack<int[]> undo_array_stack;
+    public static Stack<int[]> redo_array_stack;
+    int pencil_last_color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +84,9 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
 
         setStatusBarColor(R.color.draw);
         previous=getIntent().getStringExtra("previous");
+
+        redo_array_stack=new Stack<>();
+        undo_array_stack=new Stack<>();
 
         toolbar=findViewById(R.id.toolbar);
         back=findViewById(R.id.button_back);
@@ -165,29 +173,8 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDismiss(DialogInterface dialog) {
                 int color=colorPickerDialog.getSelectedColor();
-                dv.setColor(color);
-
-
-                gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
-                gradientDrawable.setColor(color);
-                tool_box.setBackgroundDrawable(gradientDrawable);
-
-                gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.round_line);
-                gradientDrawable.setColor(color);
-                round_line.setBackgroundDrawable(gradientDrawable);
-
-                gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square_line);
-                gradientDrawable.setColor(color);
-                square_line.setBackgroundDrawable(gradientDrawable);
-
-                gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
-                gradientDrawable.setColor(color);
-                select_round.setBackgroundDrawable(gradientDrawable);
-
-                gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
-                gradientDrawable.setColor(color);
-                select_square.setBackgroundDrawable(gradientDrawable);
-
+                setPencilColor(color);
+                pencil_last_color=color;
                 dv.setStrokeWidth(pencil_seekbar.getProgress());
             }
         });
@@ -240,10 +227,12 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
 
 
         }else if (view.getId()==pallet.getId()){
+            MODE ="draw";
             hidePencilToolbox();
             colorPickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             colorPickerDialog.show();
         }else if (view.getId()==pencil.getId()){
+            setPencilColor(pencil_last_color);
             if (pencil_toolbox.getVisibility()==View.GONE){
                 pencil_toolbox.setVisibility(View.VISIBLE);
                 pencil_toolbox.bringToFront();
@@ -252,8 +241,9 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
                 hidePencilToolbox();
             }
             MODE ="draw";
-            dv.setDefault();
+//            dv.setDefault();
         }else if (view.getId()==eraser.getId()){
+            pencil_last_color=dv.getColor();
             hidePencilToolbox();
             dv.setColor(Color.WHITE);
             MODE ="draw";
@@ -261,9 +251,21 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         }else if (view.getId()==undo.getId()){
             hidePencilToolbox();
             System.out.println("unDo");
+            if (undo_array_stack.size()!=0){
+                dv.unDo();
+            }else if (undo_array_stack.size()==0){
+                Toast.makeText(this, "Stack is Empty", Toast.LENGTH_SHORT).show();
+            }
+
         }else if (view.getId()==redo.getId()){
             hidePencilToolbox();
             System.out.println("reDo");
+            if (redo_array_stack.size()!=0){
+                dv.reDo();
+            }else if (redo_array_stack.size()==0){
+                Toast.makeText(this, "Stack is Empty", Toast.LENGTH_SHORT).show();
+            }
+
         }else if(view.getId()==eyedropper.getId()){
             hidePencilToolbox();
             System.out.println("eyedropper");
@@ -271,24 +273,30 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         }else if (view.getId()==select_round.getId()){
             dv.setStrokeCapRound();
             dv.setStrokeWidth(pencil_seekbar.getProgress());
+
             gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
             gradientDrawable.setStroke(5,Color.parseColor("#FFDC04"));
             select_round.setBackgroundDrawable(gradientDrawable);
+
             gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
             gradientDrawable.setStroke(0,dv.getColor());
             select_square.setBackgroundDrawable(gradientDrawable);
+
             square_line.setVisibility(View.GONE);
             round_line.setVisibility(View.VISIBLE);
 
         }else if(view.getId()==select_square.getId()){
             dv.setStrokeSquare();
             dv.setStrokeWidth(pencil_seekbar.getProgress());
+
             gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
             gradientDrawable.setStroke(5,Color.parseColor("#FFDC04"));
             select_square.setBackgroundDrawable(gradientDrawable);
+
             gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
             gradientDrawable.setStroke(0,dv.getColor());
             select_round.setBackgroundDrawable(gradientDrawable);
+
             square_line.setVisibility(View.VISIBLE);
             round_line.setVisibility(View.GONE);
 
@@ -317,6 +325,29 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
 
     private void hidePencilToolbox(){
         pencil_toolbox.setVisibility(View.GONE);
+    }
+
+    private void setPencilColor(int color){
+        dv.setColor(color);
+        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
+        gradientDrawable.setColor(color);
+        tool_box.setBackgroundDrawable(gradientDrawable);
+
+        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.round_line);
+        gradientDrawable.setColor(color);
+        round_line.setBackgroundDrawable(gradientDrawable);
+
+        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square_line);
+        gradientDrawable.setColor(color);
+        square_line.setBackgroundDrawable(gradientDrawable);
+
+        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
+        gradientDrawable.setColor(color);
+        select_round.setBackgroundDrawable(gradientDrawable);
+
+        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
+        gradientDrawable.setColor(color);
+        select_square.setBackgroundDrawable(gradientDrawable);
     }
 
 }

@@ -13,7 +13,7 @@
         />
     <stroke
         android:color="@color/draw"
-        android:width="@dimen/_1sdp"
+        android:width="5px"
         />
 
 </shape>
