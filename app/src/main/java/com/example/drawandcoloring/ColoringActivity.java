@@ -177,6 +177,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     public void onClick(View view) {
         if (view.getId()==save.getId()){
             Toast.makeText(this, "Save", Toast.LENGTH_SHORT).show();
+            paint_board.setDrawingCacheEnabled(true);
             bitmap=paint_board.getDrawingCache();
             if (previous.equals("main")){
                 Calendar calendar=Calendar.getInstance(Locale.getDefault());
@@ -194,6 +195,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
                 databaseHelper.UpdateViewData(DatabaseBitmapUtility.getBytes(bitmap),selected_id);
                 finish();
             }
+            paint_board.setDrawingCacheEnabled(false);
 
         }else if (view.getId()==back.getId()){
             finish();

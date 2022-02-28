@@ -110,13 +110,17 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         square_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) dv.getStrokeWidth()));
         square_line.setVisibility(View.GONE);
 
-        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
-        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
-        select_round.setBackgroundDrawable(gradientDrawable);
+//        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
+//        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
+//        select_round.setBackgroundDrawable(gradientDrawable);
 
-        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
-        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
-        select_square.setBackgroundDrawable(gradientDrawable);
+//        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
+//        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
+//        select_square.setBackgroundDrawable(gradientDrawable);
+
+//        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
+//        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
+//        tool_box.setBackgroundDrawable(gradientDrawable);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             pencil_seekbar.setMin(1);
@@ -124,9 +128,7 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         pencil_seekbar.setMax(100);
         pencil_seekbar.setProgress((int) dv.getStrokeWidth());
 
-        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
-        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
-        tool_box.setBackgroundDrawable(gradientDrawable);
+        setPencilColor(getResources().getColor(R.color.toolbox));
 
         drawView.post(new Runnable() {
             @Override
@@ -173,6 +175,10 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDismiss(DialogInterface dialog) {
                 int color=colorPickerDialog.getSelectedColor();
+                System.out.println("This is Color= "+color);
+//                if(color==0){
+//                    color=getResources().getColor(R.color.white);
+//                }
                 setPencilColor(color);
                 pencil_last_color=color;
                 dv.setStrokeWidth(pencil_seekbar.getProgress());

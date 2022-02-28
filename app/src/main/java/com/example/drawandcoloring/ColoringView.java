@@ -85,8 +85,10 @@ public class ColoringView extends View {
                 new Fill(p,Color.parseColor("#ffffff")).execute();
             }
             if (MODE.equals("eyedropper")){
+                layout.setDrawingCacheEnabled(true);
                 Bitmap bitmap=layout.getDrawingCache();
                 int pixel=bitmap.getPixel(p.x,p.y);
+                layout.setDrawingCacheEnabled(false);
                 setColor(pixel);
                 gradientDrawable= (GradientDrawable) getResources().getDrawable(R.drawable.toolbox_style);
                 gradientDrawable.setColor(pixel);
@@ -98,11 +100,6 @@ public class ColoringView extends View {
     }
 
     public void innerFloodFill(int[] layout_bitmap_array,int x,int y,int selected_color,int width,int height){
-        ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
-        activityManager.getMemoryInfo(memInfo);
-//        double val=memInfo/(1024*1024*1024);
-        Log.i("myvalue",""+memInfo.availMem/(1024*1024));
-        System.gc();
         if (layout_bitmap_array[x+(y*width)]!=selected_color){
             MyFloodFill(layout_bitmap_array,x,y,width,height,selected_color);
         }
@@ -242,6 +239,7 @@ public class ColoringView extends View {
             pixels_for_redo=new int[WIDTH*HEIGHT];
             pixels_for_redo=redo_array_stack.pop();
             Log.i("Event1","reDo Size After Pop="+String.valueOf(undo_array_stack.size()));
+            layout.setDrawingCacheEnabled(true);
             layout_bitmap=layout.getDrawingCache();
             layout_bitmap.getPixels(pixels_for_undo,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
             undo_array_stack.push(pixels_for_undo);
@@ -255,6 +253,7 @@ public class ColoringView extends View {
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(layout_bitmap)));
             layout.setBackgroundDrawable(drawable);
             invalidate();
+            layout.setDrawingCacheEnabled(false);
         }
     }
 
@@ -275,6 +274,7 @@ public class ColoringView extends View {
             pixels_for_redo=new int[WIDTH*HEIGHT];
             pixels_for_undo=undo_array_stack.pop();
             Log.i("Event1","unDo Size After Pop ="+String.valueOf(undo_array_stack.size()));
+            layout.setDrawingCacheEnabled(true);
             layout_bitmap=layout.getDrawingCache();
             layout_bitmap.getPixels(pixels_for_redo,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
             redo_array_stack.push(pixels_for_redo);
@@ -288,6 +288,7 @@ public class ColoringView extends View {
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(layout_bitmap)));
             layout.setBackgroundDrawable(drawable);
             invalidate();
+            layout.setDrawingCacheEnabled(false);
         }
     }
 
@@ -303,6 +304,7 @@ public class ColoringView extends View {
         @Override
         protected void onPreExecute() {
             Log.i("Event1","Pre");
+            layout.setDrawingCacheEnabled(true);
             layout_bitmap = layout.getDrawingCache();
             array_layout_pixels=new int[layout_bitmap.getWidth()*layout_bitmap.getHeight()];
             layout_bitmap.getPixels(array_layout_pixels,0,layout_bitmap.getWidth(),0,0,WIDTH,HEIGHT);
@@ -333,6 +335,7 @@ public class ColoringView extends View {
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(layout_bitmap)));
             layout.setBackgroundDrawable(drawable);
             invalidate();
+            layout.setDrawingCacheEnabled(false);
         }
     }
 

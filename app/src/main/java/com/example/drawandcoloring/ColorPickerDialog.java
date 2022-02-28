@@ -34,6 +34,7 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener, V
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.colors_palette_dialog);
+
         dark_red=findViewById(R.id.dark_red);
         red=findViewById(R.id.red);
         crimson=findViewById(R.id.crimson);
@@ -72,8 +73,6 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener, V
         dark_slate_gray=findViewById(R.id.dark_slate_gray);
         rainbow_range=findViewById(R.id.rainbow_range);
         selected_color_frame=findViewById(R.id.sc);
-
-
 
         openRainbow=findViewById(R.id.rainbow);
         openRainbow.setVisibility(View.VISIBLE);
@@ -133,8 +132,6 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener, V
 
     }
 
-
-    @SuppressLint("Range")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -146,154 +143,154 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener, V
                 openRainbow.setVisibility(View.VISIBLE);
                 break;
             case R.id.rainbow:
-                System.out.println("this is rainbowwwww");
+                System.out.println("this is rainbow");
                 palette_layout.setVisibility(View.GONE);
                 rainbow_layout.setVisibility(View.VISIBLE);
                 openRainbow.setVisibility(View.GONE);
                 openPalette.setVisibility(View.VISIBLE);
                 break;
             case R.id.dark_slate_gray:
-                selected_color=Color.parseColor("#2F4F4F");
+                selected_color=context.getResources().getColor(R.color.dark_slate_gray);
                 dismiss();
                 break;
             case R.id.dim_gray:
-                selected_color=Color.parseColor("#696969");
+                selected_color=context.getResources().getColor(R.color.dim_gray);
                 dismiss();
                 break;
             case R.id.gray:
-                selected_color=Color.parseColor("#808080");
+                selected_color=context.getResources().getColor(R.color.gray);
                 dismiss();
                 break;
             case R.id.white:
-                selected_color=Color.parseColor("#ffffff");
+                selected_color=context.getResources().getColor(R.color.white);
                 dismiss();
                 break;
             case R.id.saddle_brown:
-                selected_color=Color.parseColor("#804000");
+                selected_color=context.getResources().getColor(R.color.saddle_brown);
                 dismiss();
                 break;
             case R.id.black:
-                selected_color=Color.parseColor("#000000");
+                selected_color=context.getResources().getColor(R.color.black);
                 dismiss();
                 break;
             case R.id.purple:
-                selected_color=Color.parseColor("#800080");
+                selected_color=context.getResources().getColor(R.color.purple);
                 dismiss();
                 break;
             case R.id.medium_orchid:
-                selected_color=Color.parseColor("#BA55D3");
+                selected_color=context.getResources().getColor(R.color.medium_orchid);
                 dismiss();
                 break;
             case R.id.violet:
-                selected_color=Color.parseColor("#FF99FF");
+                selected_color=context.getResources().getColor(R.color.violet);
                 dismiss();
                 break;
             case R.id.pink:
-                selected_color=Color.parseColor("#FFC0CB");
+                selected_color=context.getResources().getColor(R.color.pink);
                 dismiss();
                 break;
             case R.id.dark_red:
-                selected_color=Color.parseColor("#8B0000");
+                selected_color=context.getResources().getColor(R.color.dark_red);
                 dismiss();
                 break;
             case R.id.red:
-                selected_color=Color.parseColor("#ff0000");
+                selected_color=context.getResources().getColor(R.color.red);
                 dismiss();
                 break;
             case R.id.crimson:
-                selected_color=Color.parseColor("#DC143C");
+                selected_color=context.getResources().getColor(R.color.crimson);
                 dismiss();
                 break;
             case R.id.light_coral:
-                selected_color=Color.parseColor("#F08080");
+                selected_color=context.getResources().getColor(R.color.light_coral);
                 dismiss();
                 break;
             case R.id.salmon:
-                selected_color=Color.parseColor("#FA8072");
+                selected_color=context.getResources().getColor(R.color.salmon);
                 dismiss();
                 break;
             case R.id.light_salmon1:
-                selected_color=Color.parseColor("#FFA07A");
+                selected_color=context.getResources().getColor(R.color.light_salmon);
                 dismiss();
                 break;
             case R.id.orange:
-                selected_color=Color.parseColor("#FFA500");
+                selected_color=context.getResources().getColor(R.color.orange);
                 dismiss();
                 break;
             case R.id.golden_rod:
-                selected_color=Color.parseColor("#DAA520");
+                selected_color=context.getResources().getColor(R.color.golden_rod);
                 dismiss();
                 break;
             case R.id.yellow:
-                selected_color=Color.parseColor("#ffff00");
+                selected_color=context.getResources().getColor(R.color.yellow);
                 dismiss();
                 break;
             case R.id.moccasin:
-                selected_color=Color.parseColor("#FFE4B5");
+                selected_color=context.getResources().getColor(R.color.moccasin);
                 dismiss();
                 break;
             case R.id.khaki1:
-                selected_color=Color.parseColor("#BDB76B");
+                selected_color=context.getResources().getColor(R.color.khaki);
                 dismiss();
                 break;
             case R.id.dark_khaki1:
-                selected_color=Color.parseColor("#F0E68C");
+                selected_color=context.getResources().getColor(R.color.dark_khaki);
                 dismiss();
                 break;
             case R.id.dark_green:
-                selected_color=Color.parseColor("#006400");
+                selected_color=context.getResources().getColor(R.color.dark_green);
                 dismiss();
                 break;
             case R.id.islamic_green:
-                selected_color=Color.parseColor("#00B300");
+                selected_color=context.getResources().getColor(R.color.islamic_green);
                 dismiss();
                 break;
             case R.id.chartreuse:
-                selected_color=Color.parseColor("#80ff00");
+                selected_color=context.getResources().getColor(R.color.chartreuse);
                 dismiss();
                 break;
             case R.id.spring_green:
-                selected_color=Color.parseColor("#00ff80");
+                selected_color=context.getResources().getColor(R.color.spring_green);
                 dismiss();
                 break;
             case R.id.screaming_green1:
-                selected_color=Color.parseColor("#66FF66");
+                selected_color=context.getResources().getColor(R.color.screaming_green);
                 dismiss();
                 break;
             case R.id.olive_drab1:
-                selected_color=Color.parseColor("#6B8E23");
+                selected_color=context.getResources().getColor(R.color.olive_drab);
                 dismiss();
                 break;
             case R.id.midnight_blue:
-                selected_color=Color.parseColor("#191970");
+                selected_color=context.getResources().getColor(R.color.midnight_blue);
                 dismiss();
                 break;
             case R.id.blue:
-                selected_color=Color.parseColor("#0000FF");
+                selected_color=context.getResources().getColor(R.color.blue);
                 dismiss();
                 break;
             case R.id.deep_sky_blue:
-                selected_color=Color.parseColor("#00BFFF");
+                selected_color=context.getResources().getColor(R.color.deep_sky_blue);
                 dismiss();
                 break;
             case R.id.turquoise:
-                selected_color=Color.parseColor("#40E0D0");
+                selected_color=context.getResources().getColor(R.color.turquoise);
                 dismiss();
                 break;
             case R.id.aquamarine:
-                selected_color=Color.parseColor("#7FFFD4");
+                selected_color=context.getResources().getColor(R.color.aquamarine);
                 dismiss();
                 break;
             case R.id.light_cyan:
-                selected_color=Color.parseColor("#E0FFFF");
+                selected_color=context.getResources().getColor(R.color.light_cyan);
                 dismiss();
                 break;
             case R.id.medium_violet_red:
-                selected_color=Color.parseColor("#C71585");
+                selected_color=context.getResources().getColor(R.color.medium_violet_red);
                 dismiss();
                 break;
             case R.id.hot_pink:
-                selected_color=Color.parseColor("#FF69B4");
+                selected_color=context.getResources().getColor(R.color.hot_pink);
                 dismiss();
                 break;
         }
@@ -306,31 +303,19 @@ public class ColorPickerDialog extends Dialog implements View.OnClickListener, V
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (v.getId()==rainbow_range.getId()){
-//            rainbow_range.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    int width=rainbow_range.getWidth();
-//                    int height=rainbow_range.getHeight();
-//                    int left=rainbow_range.getLeft();
-//                    int top=rainbow_range.getTop();
-//                    int bottom=rainbow_range.getBottom();
-//                    int right=rainbow_range.getRight();
-//                    Log.i("Hello","Width="+width+" Height="+height+" Left="+left+" Top="+top+" Right="+right+" Bottom="+bottom);
-//
-//                }
-//            });
+            rainbow_range.setDrawingCacheEnabled(true);
             Bitmap b = rainbow_range.getDrawingCache();
             int x= (int) event.getX();
             int y= (int) event.getY();
-            Log.i("Hello",""+x+"<"+b.getWidth()+"|"+y+"<"+b.getHeight());
 
             if (x>=0 && x<b.getWidth() && y>=0 && y<b.getHeight()){
                 int pixel=b.getPixel(x,y);
-                selected_color=pixel;
-                selected_color_frame.setBackgroundColor(selected_color);
-                Log.i("Hello",""+selected_color);
+                if (pixel!=0){
+                    selected_color=pixel;
+                    selected_color_frame.setBackgroundColor(selected_color);
+                }
             }
-
+            rainbow_range.setDrawingCacheEnabled(false);
         }
         return true;
     }
