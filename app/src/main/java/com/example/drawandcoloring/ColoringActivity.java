@@ -43,7 +43,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     DatabaseHelper databaseHelper;
     Bitmap bitmap;
     ColorPickerDialog colorPickerDialog;
-    public static String MODE="fill";//1-fill 2-eraser
+    public static String MODE="fill";
     public static Stack<int[]> undo_array_stack;
     public static Stack<int[]> redo_array_stack;
     public static RelativeLayout tool_box;
@@ -89,6 +89,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
             public void run() {
                 WIDTH=paint_board.getWidth();
                 HEIGHT=paint_board.getHeight();
+                pushBackgroundIntoUndoStack();
             }
         });
 
@@ -124,26 +125,6 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
 
             }
         });
-
-//        color_red=255;
-//        color_blue=255;
-//        color_green=255;
-//        int defaultColorR=color_red;
-//        int defaultColorG=color_green;
-//        int defaultColorB=color_blue;
-//        colorPicker=new ColorPicker(this,defaultColorR, defaultColorG, defaultColorB);
-//        colorPicker.setCallback(new ColorPickerCallback() {
-//            @Override
-//            public void onColorChosen(int color) {
-//                MODE="fill";
-//                color_alpha= Color.alpha(color);
-//                color_red=Color.red(color);
-//                color_green=Color.green(color);
-//                color_blue=Color.blue(color);
-//                cw.setColor(color_red,color_green,color_blue);
-//                colorPicker.dismiss();
-//            }
-//        });
 
         save.setOnClickListener(this::onClick);
         back.setOnClickListener(this::onClick);
@@ -210,7 +191,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
 
         }else if(view.getId()==undo.getId()){
             Log.i("Event1","UNDO");
-            if (undo_array_stack.size()!=0) {
+           if (undo_array_stack.size()!=0 ){
                 cw.unDo();
             }else {
                 undo_size=1;
@@ -228,6 +209,15 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         }else if(view.getId()==eyedropper.getId()){
             MODE="eyedropper";
         }
+    }
+
+    private void pushBackgroundIntoUndoStack(){
+        paint_board.setDrawingCacheEnabled(true);
+        Bitmap bitmap=paint_board.getDrawingCache();
+        int[] array=new int[bitmap.getWidth()*bitmap.getHeight()];
+        bitmap.getPixels(array,0,bitmap.getWidth(),0,0,bitmap.getWidth(),bitmap.getHeight());
+        undo_array_stack.push(array);
+        paint_board.setDrawingCacheEnabled(false);
     }
 
 }

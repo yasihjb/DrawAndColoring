@@ -73,9 +73,9 @@ public class ColoringView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float x=event.getX();
         float y=event.getY();
-        int int_x=(int)(x/1);
-        int int_y=(int) (y/1);
-        Point p=new Point(int_x,int_y);
+//        int int_x=(int)(x/1);
+//        int int_y=(int) (y/1);
+        Point p=new Point((int)x,(int)y);
         int action=event.getAction();
         if (action==MotionEvent.ACTION_DOWN){
             if (MODE.equals("fill")){
@@ -237,13 +237,15 @@ public class ColoringView extends View {
             System.out.println("reDo");
             pixels_for_undo=new int[WIDTH*HEIGHT];
             pixels_for_redo=new int[WIDTH*HEIGHT];
+            Log.i("redo-undo","redo size BEFORE pop= "+ redo_array_stack.size());
             pixels_for_redo=redo_array_stack.pop();
-            Log.i("Event1","reDo Size After Pop="+String.valueOf(undo_array_stack.size()));
+            Log.i("redo-undo","redo size AFTER pop= "+ redo_array_stack.size());
             layout.setDrawingCacheEnabled(true);
             layout_bitmap=layout.getDrawingCache();
             layout_bitmap.getPixels(pixels_for_undo,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
+            Log.i("redo-undo","undo size BEFORE push= "+ undo_array_stack.size());
             undo_array_stack.push(pixels_for_undo);
-            Log.i("Event1","unDo Size After Push ="+String.valueOf(undo_array_stack.size()));
+            Log.i("redo-undo","undo size AFTER push= "+ undo_array_stack.size());
             return null;
         }
 
@@ -272,13 +274,15 @@ public class ColoringView extends View {
         protected Void doInBackground(Void... voids) {
             pixels_for_undo=new int[WIDTH*HEIGHT];
             pixels_for_redo=new int[WIDTH*HEIGHT];
+            Log.i("redo-undo","undo size BEFORE pop= "+ undo_array_stack.size());
             pixels_for_undo=undo_array_stack.pop();
-            Log.i("Event1","unDo Size After Pop ="+String.valueOf(undo_array_stack.size()));
+            Log.i("redo-undo","undo size AFTER pop= "+ undo_array_stack.size());
             layout.setDrawingCacheEnabled(true);
             layout_bitmap=layout.getDrawingCache();
             layout_bitmap.getPixels(pixels_for_redo,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
+            Log.i("redo-undo","redo size BEFORE push= "+ redo_array_stack.size());
             redo_array_stack.push(pixels_for_redo);
-            Log.i("Event1","reDo Size After Push="+String.valueOf(redo_array_stack.size()));
+            Log.i("redo-undo","redo size AFTER push= "+ redo_array_stack.size());
             return null;
         }
 
@@ -311,9 +315,10 @@ public class ColoringView extends View {
 //            if (undo_array_stack.size()==0){
 //                undo_array_stack.push(array_layout_pixels);
 //            }
+            Log.i("redo-undo","undo size BEFORE push= "+ undo_array_stack.size());
             undo_array_stack.push(array_layout_pixels);
             undo_size++;
-            Log.i("Event1","unDo Size After Push="+String.valueOf(undo_array_stack.size()));
+            Log.i("redo-undo","undo size AFTER push= "+ undo_array_stack.size());
         }
 
         @Override

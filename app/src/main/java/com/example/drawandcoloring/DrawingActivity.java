@@ -136,6 +136,7 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
                 WIDTH=drawView.getWidth();
                 HEIGHT=drawView.getHeight();
                 System.out.println("MAIN:"+"WIDTH="+WIDTH+" HEIGHT="+HEIGHT);
+                pushBackgroundIntoUndoStack();
             }
         });
 
@@ -161,13 +162,13 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
 
 
         if (previous.equals("main")){
-//            drawView.setBackgroundColor(Color.parseColor("#ffffff"));
-//            drawView.setBackgroundDrawable(getResources().getDrawable(R.drawable.default_bg));
+            drawView.setBackgroundColor(Color.WHITE);
         }else if (previous.equals("show")){
             selected_id=getIntent().getStringExtra("selected_id");
             System.out.println(selected_id);
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(databaseHelper.getViewData(selected_id)));
             drawView.setBackgroundDrawable(drawable);
+
         }
 
         colorPickerDialog=new ColorPickerDialog(this);
@@ -175,10 +176,6 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDismiss(DialogInterface dialog) {
                 int color=colorPickerDialog.getSelectedColor();
-                System.out.println("This is Color= "+color);
-//                if(color==0){
-//                    color=getResources().getColor(R.color.white);
-//                }
                 setPencilColor(color);
                 pencil_last_color=color;
                 dv.setStrokeWidth(pencil_seekbar.getProgress());
@@ -231,7 +228,6 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
                 databaseHelper.UpdateViewData(DatabaseBitmapUtility.getBytes(bitmap),selected_id);
                 finish();
             }
-
             drawView.setDrawingCacheEnabled(false);
         }else if (view.getId()==pallet.getId()){
             MODE ="draw";
@@ -355,6 +351,16 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
         gradientDrawable.setColor(color);
         select_square.setBackgroundDrawable(gradientDrawable);
+    }
+
+    private void pushBackgroundIntoUndoStack(){
+        drawView.setDrawingCacheEnabled(true);
+        Bitmap bitmap=drawView.getDrawingCache();
+        System.out.println("width= "+bitmap.getWidth());
+        int[] array=new int[bitmap.getWidth()*bitmap.getHeight()];
+        bitmap.getPixels(array,0,bitmap.getWidth(),0,0,bitmap.getWidth(),bitmap.getHeight());
+        undo_array_stack.push(array);
+        drawView.setDrawingCacheEnabled(false);
     }
 
 }

@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -40,6 +41,7 @@ public class DrawingView extends View {
     int[] array_undo;
     int[] array_redo;
     Bitmap layout_bitmap;
+
 
 
     public void setColor( int r, int g, int b){
@@ -116,9 +118,14 @@ public class DrawingView extends View {
         mBitmapPaint = new Paint();
         mBitmapPaint.setColor(Color.RED);
         this.layout=layout;
+//        Bitmap bitmap=Bitmap.createBitmap(WIDTH,HEIGHT, Bitmap.Config.ARGB_8888);
+//        Canvas canvas=new Canvas(bitmap);
+//        canvas.drawColor(Color.WHITE);
         this.layout.setDrawingCacheEnabled(true);
         this.layout.buildDrawingCache(true);
-
+//        Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(bitmap)));
+//        this.layout.setBackgroundDrawable(drawable);
+        invalidate();
     }
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -187,21 +194,21 @@ public class DrawingView extends View {
         protected Void doInBackground(Void... voids) {
             array_undo=new int[WIDTH*HEIGHT];
             array_redo=new int[WIDTH*HEIGHT];
-            System.out.println("a redo Size="+redo_array_stack.size());
+            Log.i("redo-undo","redo size BEFORE pop= "+redo_array_stack.size());
             array_redo=redo_array_stack.pop();
-            System.out.println("b redo Size="+redo_array_stack.size());
+            Log.i("redo-undo","redo size AFTER pop= "+redo_array_stack.size());
             layout.setDrawingCacheEnabled(true);
-            layout_bitmap =layout.getDrawingCache(true);
-            layout_bitmap.getPixels(array_undo,0, layout_bitmap.getWidth(),0,0, layout_bitmap.getWidth(), layout_bitmap.getHeight());
-            System.out.println("a undo Size="+undo_array_stack.size());
+            layout_bitmap =layout.getDrawingCache();
+            layout_bitmap.getPixels(array_undo,0, WIDTH,0,0, WIDTH, HEIGHT);
+            Log.i("redo-undo","undo size BEFORE push= "+undo_array_stack.size());
             undo_array_stack.push(array_undo);
-            System.out.println("b undo Size="+undo_array_stack.size());
+            Log.i("redo-undo","undo size AFTER push= "+undo_array_stack.size());
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
-            layout_bitmap.setPixels(array_redo,0, layout_bitmap.getWidth(),0,0, layout_bitmap.getWidth(), layout_bitmap.getHeight());
+            layout_bitmap.setPixels(array_redo,0, WIDTH,0,0, WIDTH, HEIGHT);
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(layout_bitmap)));
             layout.setBackgroundDrawable(drawable);
             invalidate();
@@ -219,21 +226,21 @@ public class DrawingView extends View {
         protected Void doInBackground(Void... voids) {
             array_undo=new int[WIDTH*HEIGHT];
             array_redo=new int[WIDTH*HEIGHT];
-            System.out.println("a undo Size="+undo_array_stack.size());
+            Log.i("redo-undo","undo size BEFORE pop= "+undo_array_stack.size());
             array_undo=undo_array_stack.pop();
-            System.out.println("b undo Size="+undo_array_stack.size());
+            Log.i("redo-undo","undo size AFTER pop= "+undo_array_stack.size());
             layout.setDrawingCacheEnabled(true);
             layout_bitmap =layout.getDrawingCache();
-            layout_bitmap.getPixels(array_redo,0, layout_bitmap.getWidth(),0,0, layout_bitmap.getWidth(), layout_bitmap.getHeight());
-            System.out.println("a redo Size="+redo_array_stack.size());
+            layout_bitmap.getPixels(array_redo,0, WIDTH,0,0, WIDTH, HEIGHT);
+            Log.i("redo-undo","redo size BEFORE push= "+redo_array_stack.size());
             redo_array_stack.push(array_redo);
-            System.out.println("b redo Size="+redo_array_stack.size());
+            Log.i("redo-undo","redo size AFTER push= "+redo_array_stack.size());
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
-            layout_bitmap.setPixels(array_undo,0, layout_bitmap.getWidth(),0,0, layout_bitmap.getWidth(), layout_bitmap.getHeight());
+            layout_bitmap.setPixels(array_undo,0,WIDTH,0,0,WIDTH,HEIGHT);
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(layout_bitmap)));
             layout.setBackgroundDrawable(drawable);
             invalidate();
@@ -246,24 +253,23 @@ public class DrawingView extends View {
         int action=event.getAction();
         float x = event.getX();
         float y = event.getY();
-        int int_x = (int) (x / 1);
-        int int_y = (int) (y / 1);
-        Log.i("STATUS : ", MODE + " x :" + int_x + "| y :" + int_y);
+        Point p=new Point((int)x,(int)y);
+        Log.i("STATUS : ", MODE + " x :" + p.x + "| y :" + p.y);
         if (action==MotionEvent.ACTION_DOWN){
             if (pencil_toolbox.getVisibility()==VISIBLE){
                 pencil_toolbox.setVisibility(GONE);
             }
             if (pencil_toolbox.getVisibility()==GONE){
                 if (MODE.equals("draw")){
+                    System.out.println("draw :");
+                    array_undo=new int[WIDTH*HEIGHT];
                     layout.setDrawingCacheEnabled(true);
                     layout_bitmap =layout.getDrawingCache();
-                    array_undo=new int[WIDTH*HEIGHT];
-                    layout_bitmap.getPixels(array_undo,0, layout_bitmap.getWidth(),0,0, layout_bitmap.getWidth(), layout_bitmap.getHeight());
+                    layout_bitmap.getPixels(array_undo,0, WIDTH,0,0, WIDTH,HEIGHT);
                     layout.setDrawingCacheEnabled(false);
-                    System.out.println("draw :");
-                    System.out.println("a undo Size="+undo_array_stack.size());
+                    Log.i("redo-undo","undo size BEFORE push= "+undo_array_stack.size());
                     undo_array_stack.push(array_undo);
-                    System.out.println("b undo Size="+undo_array_stack.size());
+                    Log.i("redo-undo","undo size AFTER push= "+undo_array_stack.size());
                     System.out.println("START");
                     touch_start(x, y);
                     invalidate();
@@ -276,13 +282,10 @@ public class DrawingView extends View {
                     bitmap.getPixels(pixels,0,WIDTH,0,0,WIDTH,HEIGHT);
                     layout.setDrawingCacheEnabled(false);
 
-                    int pixel= pixels[int_x+int_y*WIDTH];
+                    int pixel= pixels[p.x+p.y*WIDTH];
 
                     System.out.println("this is color="+pixel);
 
-                    if (pixel==0){
-                        pixel=getResources().getColor(R.color.white);
-                    }
 
                     setStrokeWidth(pencil_seekbar.getProgress());
 
