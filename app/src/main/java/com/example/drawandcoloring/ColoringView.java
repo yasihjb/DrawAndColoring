@@ -242,6 +242,7 @@ public class ColoringView extends View {
             pixels_for_redo=new int[WIDTH*HEIGHT];
             pixels_for_redo=redo_array_stack.pop();
             Log.i("Event1","reDo Size After Pop="+String.valueOf(undo_array_stack.size()));
+            layout_bitmap=layout.getDrawingCache();
             layout_bitmap.getPixels(pixels_for_undo,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
             undo_array_stack.push(pixels_for_undo);
             Log.i("Event1","unDo Size After Push ="+String.valueOf(undo_array_stack.size()));
@@ -274,6 +275,7 @@ public class ColoringView extends View {
             pixels_for_redo=new int[WIDTH*HEIGHT];
             pixels_for_undo=undo_array_stack.pop();
             Log.i("Event1","unDo Size After Pop ="+String.valueOf(undo_array_stack.size()));
+            layout_bitmap=layout.getDrawingCache();
             layout_bitmap.getPixels(pixels_for_redo,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
             redo_array_stack.push(pixels_for_redo);
             Log.i("Event1","reDo Size After Push="+String.valueOf(redo_array_stack.size()));

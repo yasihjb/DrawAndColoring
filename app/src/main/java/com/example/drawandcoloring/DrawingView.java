@@ -190,9 +190,9 @@ public class DrawingView extends View {
             System.out.println("a redo Size="+redo_array_stack.size());
             array_redo=redo_array_stack.pop();
             System.out.println("b redo Size="+redo_array_stack.size());
+            layout.setDrawingCacheEnabled(true);
             layout_bitmap =layout.getDrawingCache(true);
             layout_bitmap.getPixels(array_undo,0, layout_bitmap.getWidth(),0,0, layout_bitmap.getWidth(), layout_bitmap.getHeight());
-
             System.out.println("a undo Size="+undo_array_stack.size());
             undo_array_stack.push(array_undo);
             System.out.println("b undo Size="+undo_array_stack.size());
@@ -205,6 +205,7 @@ public class DrawingView extends View {
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(layout_bitmap)));
             layout.setBackgroundDrawable(drawable);
             invalidate();
+            layout.setDrawingCacheEnabled(false);
         }
     }
 
@@ -221,7 +222,8 @@ public class DrawingView extends View {
             System.out.println("a undo Size="+undo_array_stack.size());
             array_undo=undo_array_stack.pop();
             System.out.println("b undo Size="+undo_array_stack.size());
-            layout_bitmap =layout.getDrawingCache(true);
+            layout.setDrawingCacheEnabled(true);
+            layout_bitmap =layout.getDrawingCache();
             layout_bitmap.getPixels(array_redo,0, layout_bitmap.getWidth(),0,0, layout_bitmap.getWidth(), layout_bitmap.getHeight());
             System.out.println("a redo Size="+redo_array_stack.size());
             redo_array_stack.push(array_redo);
@@ -235,7 +237,7 @@ public class DrawingView extends View {
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(layout_bitmap)));
             layout.setBackgroundDrawable(drawable);
             invalidate();
-
+            layout.setDrawingCacheEnabled(false);
         }
     }
 
@@ -253,9 +255,11 @@ public class DrawingView extends View {
             }
             if (pencil_toolbox.getVisibility()==GONE){
                 if (MODE.equals("draw")){
-                    layout_bitmap =layout.getDrawingCache(true);
+                    layout.setDrawingCacheEnabled(true);
+                    layout_bitmap =layout.getDrawingCache();
                     array_undo=new int[WIDTH*HEIGHT];
                     layout_bitmap.getPixels(array_undo,0, layout_bitmap.getWidth(),0,0, layout_bitmap.getWidth(), layout_bitmap.getHeight());
+                    layout.setDrawingCacheEnabled(false);
                     System.out.println("draw :");
                     System.out.println("a undo Size="+undo_array_stack.size());
                     undo_array_stack.push(array_undo);
@@ -265,13 +269,24 @@ public class DrawingView extends View {
                     invalidate();
                 }
                 if (MODE.equals("eyedropper")){
-                    layout_bitmap =layout.getDrawingCache(true);
+                    int[] pixels=new int[WIDTH*HEIGHT];
 
-                    int pixel= layout_bitmap.getPixel(int_x,int_y);
+                    layout.setDrawingCacheEnabled(true);
+                    Bitmap bitmap =layout.getDrawingCache();
+                    bitmap.getPixels(pixels,0,WIDTH,0,0,WIDTH,HEIGHT);
+                    layout.setDrawingCacheEnabled(false);
+
+                    int pixel= pixels[int_x+int_y*WIDTH];
+
+                    System.out.println("this is color="+pixel);
+
+                    if (pixel==0){
+                        pixel=getResources().getColor(R.color.white);
+                    }
 
                     setStrokeWidth(pencil_seekbar.getProgress());
 
-                    setColor(Color.red(pixel),Color.green(pixel),Color.blue(pixel));
+                    setColor(pixel);
 
                     gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
                     gradientDrawable.setColor(getColor());
@@ -313,76 +328,6 @@ public class DrawingView extends View {
                 invalidate();
             }
         }
-//        if (pencil_toolbox.getVisibility()==VISIBLE && event.getAction()==MotionEvent.ACTION_DOWN){
-//            pencil_toolbox.setVisibility(GONE);
-//        }
-//        if (pencil_toolbox.getVisibility()==GONE){
-//            float x = event.getX();
-//            float y = event.getY();
-//            int int_x = (int) (x / 1);
-//            int int_y = (int) (y / 1);
-//            if (MODE.equals("draw")) {
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-////                        layout_bitmap =layout.getDrawingCache();
-////                        array_undo=new int[WIDTH*HEIGHT];
-////                        layout_bitmap.getPixels(array_undo,0, layout_bitmap.getWidth(),0,0, layout_bitmap.getWidth(), layout_bitmap.getHeight());
-////                        System.out.println("draw :");
-////                        System.out.println("a undo Size="+undo_array_stack.size());
-////                        undo_array_stack.push(array_undo);
-////                        System.out.println("b undo Size="+undo_array_stack.size());
-//                        System.out.println("START:");
-//                        touch_start(x, y);
-//                        invalidate();
-//                        break;
-//                    case MotionEvent.ACTION_MOVE:
-//                        System.out.println("MOVE:");
-//                        touch_move(x, y);
-//                        invalidate();
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        System.out.println("END:");
-//                        touch_up();
-//                        invalidate();
-//                        break;
-//                }
-//                Log.i("STATUS : ", MODE + " x :" + int_x + "| y :" + int_y);
-////                return true;
-//            }
-//            if (MODE.equals("eyedropper") ){
-//
-//                Bitmap lb=layout.getDrawingCache();
-//
-//                int pixel=lb.getPixel(int_x,int_y);
-//
-//                setStrokeWidth(pencil_seekbar.getProgress());
-//
-//                setColor(Color.red(pixel),Color.green(pixel),Color.blue(pixel));
-//
-//                gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
-//                gradientDrawable.setColor(getColor());
-//                tool_box.setBackgroundDrawable(gradientDrawable);
-//
-//                gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.round_line);
-//                gradientDrawable.setColor(getColor());
-//                round_line.setBackgroundDrawable(gradientDrawable);
-//
-//                gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.square_line);
-//                gradientDrawable.setColor(getColor());
-//                square_line.setBackgroundDrawable(gradientDrawable);
-//
-//                gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.circle);
-//                gradientDrawable.setColor(getColor());
-//                select_round.setBackgroundDrawable(gradientDrawable);
-//
-//                gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.square);
-//                gradientDrawable.setColor(getColor());
-//                select_square.setBackgroundDrawable(gradientDrawable);
-//
-//                MODE="draw";
-////                return false;
-//            }
-//        }
         return true;
     }
 }

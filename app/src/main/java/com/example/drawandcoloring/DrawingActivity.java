@@ -206,6 +206,7 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
             finish();
         }else if (view.getId()==save.getId()){
             hidePencilToolbox();
+            drawView.setDrawingCacheEnabled(true);
             bitmap=drawView.getDrawingCache();
             if(previous.equals("main")){
                 System.out.println(bitmap);
@@ -225,7 +226,7 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
             }
 
-
+            drawView.setDrawingCacheEnabled(false);
         }else if (view.getId()==pallet.getId()){
             MODE ="draw";
             hidePencilToolbox();
