@@ -2,18 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.drawandcoloring">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/draw_main"
         android:label="Draw and Paint"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DrawAndColoring"
-        android:largeHeap="true"
-        android:requestLegacyExternalStorage="true">
+        android:theme="@style/Theme.DrawAndColoring">
+        <activity
+            android:name=".DrawingActivity"
+            android:exported="false" />
         <activity
             android:name=".PaintsActivity"
             android:exported="false" />
@@ -24,8 +27,7 @@
             android:name=".GalleryActivity"
             android:exported="false" />
         <activity android:name=".ColoringActivity" />
-        <activity android:name=".DrawingActivity" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
