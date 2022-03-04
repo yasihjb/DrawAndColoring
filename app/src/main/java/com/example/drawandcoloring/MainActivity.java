@@ -34,13 +34,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view.getId()==button_draw.getId()){
             Intent intent_draw=new Intent(this, DrawingActivity.class);
             intent_draw.putExtra("previous","main");
-            startActivity(intent_draw.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+            intent_draw.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_draw.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent_draw);
         }else if (view.getId()==button_paint.getId()){
             Intent intent_paint=new Intent(this, PaintsActivity.class);
-            startActivity(intent_paint.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+            intent_paint.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent_paint.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent_paint);
         }else if (view.getId()==button_gallery.getId()){
             Intent intent_gallery=new Intent(this,GalleryActivity.class);
-            startActivity(intent_gallery.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+            intent_gallery.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent_gallery.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent_gallery);
         }
     }
 

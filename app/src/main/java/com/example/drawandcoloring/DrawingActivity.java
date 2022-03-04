@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
@@ -18,31 +16,23 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
-
-import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
-import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Stack;
 
-import dev.sasikanth.colorsheet.ColorSheet;
-
 public class DrawingActivity extends AppCompatActivity implements View.OnClickListener, StatusBarColor{
-    ImageView back,save,pallet,pencil,undo,redo,eraser,eyedropper;
+    ImageView back,save,pallet,pencil,undo,redo,eraser,eyedropper,clear_view;
     RelativeLayout drawView;
     Bitmap bitmap;
     DatabaseHelper databaseHelper;
@@ -58,12 +48,15 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
     Bitmap layout_bitmap;
     Toolbar toolbar;
     ColorPickerDialog colorPickerDialog;
-    public static ConstraintLayout pencil_toolbox;
-    public static SeekBar pencil_seekbar;
-    public static RelativeLayout round_line,square_line,select_round,select_square;
+    public static ConstraintLayout pencil_toolbox,eraser_toolbox;
+    public static SeekBar pencil_seekbar,eraser_seekbar;
+    public static RelativeLayout pencil_round_line, pencil_square_line,select_round,select_square,eraser_round_line;
     public static Stack<int[]> undo_array_stack;
     public static Stack<int[]> redo_array_stack;
     int pencil_last_color;
+    int eraser_size=10;
+    int pencil_size=10;
+    int[] array_undo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +81,7 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         redo_array_stack=new Stack<>();
         undo_array_stack=new Stack<>();
 
+
         toolbar=findViewById(R.id.toolbar);
         back=findViewById(R.id.button_back);
         save=findViewById(R.id.button_save);
@@ -100,27 +94,22 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         eyedropper=findViewById(R.id.eyedropper);
         select_round=findViewById(R.id.select_circle);
         select_square=findViewById(R.id.select_square);
+        eraser_toolbox=findViewById(R.id.eraser_toolbox);
+        eraser_toolbox.setVisibility(View.GONE);
         pencil_toolbox=findViewById(R.id.pencil_toolbox);
         pencil_toolbox.setVisibility(View.GONE);
         pencil_seekbar=findViewById(R.id.pencil_seekbar);
-        round_line=findViewById(R.id.round_line);
-        round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) dv.getStrokeWidth()));
-        round_line.setVisibility(View.VISIBLE);
-        square_line=findViewById(R.id.square_line);
-        square_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) dv.getStrokeWidth()));
-        square_line.setVisibility(View.GONE);
-
-//        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
-//        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
-//        select_round.setBackgroundDrawable(gradientDrawable);
-
-//        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
-//        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
-//        select_square.setBackgroundDrawable(gradientDrawable);
-
-//        gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.toolbox_style);
-//        gradientDrawable.setColor(getResources().getColor(R.color.toolbox));
-//        tool_box.setBackgroundDrawable(gradientDrawable);
+        eraser_seekbar=findViewById(R.id.eraser_seekbar);
+        pencil_round_line =findViewById(R.id.round_line);
+        pencil_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) pencil_size));
+        pencil_round_line.setVisibility(View.VISIBLE);
+        pencil_square_line =findViewById(R.id.square_line);
+        pencil_square_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) pencil_size));
+        pencil_square_line.setVisibility(View.GONE);
+        eraser_round_line=findViewById(R.id.eraser_round_line);
+        eraser_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,eraser_size));
+        eraser_round_line.setVisibility(View.VISIBLE);
+        clear_view=findViewById(R.id.clear_bg);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             pencil_seekbar.setMin(1);
@@ -128,7 +117,14 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         pencil_seekbar.setMax(100);
         pencil_seekbar.setProgress((int) dv.getStrokeWidth());
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            eraser_seekbar.setMin(1);
+        }
+        eraser_seekbar.setMax(100);
+        eraser_seekbar.setProgress(eraser_size);
+
         setPencilColor(getResources().getColor(R.color.toolbox));
+        pencil_last_color=getResources().getColor(R.color.toolbox);
 
         drawView.post(new Runnable() {
             @Override
@@ -140,13 +136,34 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+        eraser_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                Log.i("EraserSeekSize",""+progress);
+                dv.setStrokeWidth(progress);
+                eraser_size=progress;
+                eraser_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
         pencil_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Log.i("SeekSize",""+progress);
+                Log.i("PencilSeekSize",""+progress);
                 dv.setStrokeWidth(progress);
-                round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) dv.getStrokeWidth()));
-                square_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) dv.getStrokeWidth()));
+                pencil_size=progress;
+                pencil_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) dv.getStrokeWidth()));
+                pencil_square_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) dv.getStrokeWidth()));
             }
 
             @Override
@@ -194,21 +211,34 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         eyedropper.setOnClickListener(this::onClick);
         select_round.setOnClickListener(this::onClick);
         select_square.setOnClickListener(this::onClick);
+        clear_view.setOnClickListener(this::onClick);
 
         select_round.callOnClick();
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId()==toolbar.getId()){
             hidePencilToolbox();
+            hideEraserToolbox();
         } else if (view.getId()==back.getId()){
             hidePencilToolbox();
+            hideEraserToolbox();
             finish();
         }else if (view.getId()==save.getId()){
             hidePencilToolbox();
+            hideEraserToolbox();
             drawView.setDrawingCacheEnabled(true);
             bitmap=drawView.getDrawingCache();
             if(previous.equals("main")){
@@ -232,10 +262,13 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         }else if (view.getId()==pallet.getId()){
             MODE ="draw";
             hidePencilToolbox();
+            hideEraserToolbox();
             colorPickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             colorPickerDialog.show();
         }else if (view.getId()==pencil.getId()){
+            hideEraserToolbox();
             setPencilColor(pencil_last_color);
+            dv.setStrokeWidth(pencil_size);
             if (pencil_toolbox.getVisibility()==View.GONE){
                 pencil_toolbox.setVisibility(View.VISIBLE);
                 pencil_toolbox.bringToFront();
@@ -251,26 +284,36 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
             dv.setColor(Color.WHITE);
             MODE ="draw";
             dv.setDefault();
+            if (eraser_toolbox.getVisibility()==View.GONE){
+                eraser_toolbox.setVisibility(View.VISIBLE);
+                eraser_toolbox.bringToFront();
+                eraser_toolbox.setTranslationZ(0);
+            }else if(eraser_toolbox.getVisibility()==View.VISIBLE){
+                hideEraserToolbox();
+            }
         }else if (view.getId()==undo.getId()){
             hidePencilToolbox();
+            hideEraserToolbox();
             System.out.println("unDo");
             if (undo_array_stack.size()!=0){
                 dv.unDo();
             }else if (undo_array_stack.size()==0){
-                Toast.makeText(this, "Stack is Empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, ":(", Toast.LENGTH_SHORT).show();
             }
 
         }else if (view.getId()==redo.getId()){
             hidePencilToolbox();
+            hideEraserToolbox();
             System.out.println("reDo");
             if (redo_array_stack.size()!=0){
                 dv.reDo();
             }else if (redo_array_stack.size()==0){
-                Toast.makeText(this, "Stack is Empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, ":(", Toast.LENGTH_SHORT).show();
             }
 
         }else if(view.getId()==eyedropper.getId()){
             hidePencilToolbox();
+            hideEraserToolbox();
             System.out.println("eyedropper");
             MODE="eyedropper";
         }else if (view.getId()==select_round.getId()){
@@ -285,24 +328,37 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
             gradientDrawable.setStroke(0,dv.getColor());
             select_square.setBackgroundDrawable(gradientDrawable);
 
-            square_line.setVisibility(View.GONE);
-            round_line.setVisibility(View.VISIBLE);
+            pencil_square_line.setVisibility(View.GONE);
+            pencil_round_line.setVisibility(View.VISIBLE);
 
-        }else if(view.getId()==select_square.getId()){
+        }else if(view.getId()==select_square.getId()) {
             dv.setStrokeSquare();
+            Paint paint = new Paint();
             dv.setStrokeWidth(pencil_seekbar.getProgress());
 
-            gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
-            gradientDrawable.setStroke(5,Color.parseColor("#FFDC04"));
+            gradientDrawable = (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square);
+            gradientDrawable.setStroke(5, Color.parseColor("#FFDC04"));
             select_square.setBackgroundDrawable(gradientDrawable);
 
-            gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
-            gradientDrawable.setStroke(0,dv.getColor());
+            gradientDrawable = (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
+            gradientDrawable.setStroke(0, dv.getColor());
             select_round.setBackgroundDrawable(gradientDrawable);
 
-            square_line.setVisibility(View.VISIBLE);
-            round_line.setVisibility(View.GONE);
-
+            pencil_square_line.setVisibility(View.VISIBLE);
+            pencil_round_line.setVisibility(View.GONE);
+        }else if (view.getId()==clear_view.getId()){
+            array_undo=new int[WIDTH*HEIGHT];
+            drawView.setDrawingCacheEnabled(true);
+            bitmap=drawView.getDrawingCache();
+            bitmap.getPixels(array_undo,0,WIDTH,0,0,WIDTH,HEIGHT);
+            Log.i("redo-undo","undo size BEFORE push= "+undo_array_stack.size());
+            undo_array_stack.push(array_undo);
+            Log.i("redo-undo","undo size AFTER push= "+undo_array_stack.size());
+            drawView.removeAllViews();
+            dv=new DrawingView(this,drawView);
+            drawView.setBackgroundColor(Color.WHITE);
+            drawView.addView(dv);
+            drawView.invalidate();
         }
     }
 
@@ -329,6 +385,9 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
     private void hidePencilToolbox(){
         pencil_toolbox.setVisibility(View.GONE);
     }
+    private void hideEraserToolbox(){
+        eraser_toolbox.setVisibility(View.GONE);
+    }
 
     private void setPencilColor(int color){
         dv.setColor(color);
@@ -338,11 +397,11 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
 
         gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.round_line);
         gradientDrawable.setColor(color);
-        round_line.setBackgroundDrawable(gradientDrawable);
+        pencil_round_line.setBackgroundDrawable(gradientDrawable);
 
         gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.square_line);
         gradientDrawable.setColor(color);
-        square_line.setBackgroundDrawable(gradientDrawable);
+        pencil_square_line.setBackgroundDrawable(gradientDrawable);
 
         gradientDrawable= (GradientDrawable) getApplicationContext().getResources().getDrawable(R.drawable.circle);
         gradientDrawable.setColor(color);
@@ -362,5 +421,6 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         undo_array_stack.push(array);
         drawView.setDrawingCacheEnabled(false);
     }
+
 
 }

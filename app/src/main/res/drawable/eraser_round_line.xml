@@ -5,10 +5,13 @@
         android:color="@color/white"
         />
     <corners
-        android:radius="@dimen/_5sdp"/>
-    <size
-        android:width="@dimen/_170sdp"
-        android:height="@dimen/_1sdp"
+        android:radius="@dimen/_120sdp"
         />
-
+    <size
+        android:height="100px"
+        />
+    <stroke
+        android:color="@color/draw"
+        android:width="1px"
+        />
 </shape>

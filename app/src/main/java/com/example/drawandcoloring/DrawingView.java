@@ -20,14 +20,16 @@ import static com.example.drawandcoloring.DrawingActivity.MODE;
 import static com.example.drawandcoloring.DrawingActivity.WIDTH;
 import static com.example.drawandcoloring.DrawingActivity.HEIGHT;
 import static com.example.drawandcoloring.DrawingActivity.pencil_toolbox;
+import static com.example.drawandcoloring.DrawingActivity.eraser_toolbox;
 import static com.example.drawandcoloring.DrawingActivity.tool_box;
-import static com.example.drawandcoloring.DrawingActivity.round_line;
-import static com.example.drawandcoloring.DrawingActivity.square_line;
+import static com.example.drawandcoloring.DrawingActivity.pencil_round_line;
+import static com.example.drawandcoloring.DrawingActivity.pencil_square_line;
 import static com.example.drawandcoloring.DrawingActivity.select_round;
 import static com.example.drawandcoloring.DrawingActivity.select_square;
 import static com.example.drawandcoloring.DrawingActivity.pencil_seekbar;
 import static com.example.drawandcoloring.DrawingActivity.redo_array_stack;
 import static com.example.drawandcoloring.DrawingActivity.undo_array_stack;
+
 
 public class DrawingView extends View {
     Paint   mPaint;
@@ -101,6 +103,7 @@ public class DrawingView extends View {
         mPaint.setStrokeWidth(10);
     }
 
+
     public DrawingView(Context context, RelativeLayout layout) {
         super(context);
         this.context=context;
@@ -118,13 +121,8 @@ public class DrawingView extends View {
         mBitmapPaint = new Paint();
         mBitmapPaint.setColor(Color.RED);
         this.layout=layout;
-//        Bitmap bitmap=Bitmap.createBitmap(WIDTH,HEIGHT, Bitmap.Config.ARGB_8888);
-//        Canvas canvas=new Canvas(bitmap);
-//        canvas.drawColor(Color.WHITE);
         this.layout.setDrawingCacheEnabled(true);
         this.layout.buildDrawingCache(true);
-//        Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(bitmap)));
-//        this.layout.setBackgroundDrawable(drawable);
         invalidate();
     }
     @Override
@@ -184,7 +182,7 @@ public class DrawingView extends View {
         new reDo().execute();
     }
 
-    class reDo extends AsyncTask<Void,Integer,Void>{
+    class reDo extends AsyncTask<Void,Void,Void>{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -210,17 +208,20 @@ public class DrawingView extends View {
         protected void onPostExecute(Void result) {
             layout_bitmap.setPixels(array_redo,0, WIDTH,0,0, WIDTH, HEIGHT);
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(layout_bitmap)));
-            layout.setBackgroundDrawable(drawable);
+            layout.setBackground(drawable);
+            layout.invalidate();
             invalidate();
             layout.setDrawingCacheEnabled(false);
+            
         }
     }
 
-    class unDo extends AsyncTask<Void,Integer,Void>{
+    class unDo extends AsyncTask<Void,Void,Void>{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -232,19 +233,24 @@ public class DrawingView extends View {
             layout.setDrawingCacheEnabled(true);
             layout_bitmap =layout.getDrawingCache();
             layout_bitmap.getPixels(array_redo,0, WIDTH,0,0, WIDTH, HEIGHT);
+//            System.out.println("sth redo="+Arrays.stream(array_redo).sum());
             Log.i("redo-undo","redo size BEFORE push= "+redo_array_stack.size());
             redo_array_stack.push(array_redo);
             Log.i("redo-undo","redo size AFTER push= "+redo_array_stack.size());
             return null;
         }
 
+
         @Override
         protected void onPostExecute(Void result) {
             layout_bitmap.setPixels(array_undo,0,WIDTH,0,0,WIDTH,HEIGHT);
+//            System.out.println("sth undo="+ Arrays.stream(array_undo).sum());
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(layout_bitmap)));
-            layout.setBackgroundDrawable(drawable);
+            layout.setBackground(drawable);
+            layout.invalidate();
             invalidate();
             layout.setDrawingCacheEnabled(false);
+
         }
     }
 
@@ -259,8 +265,12 @@ public class DrawingView extends View {
             if (pencil_toolbox.getVisibility()==VISIBLE){
                 pencil_toolbox.setVisibility(GONE);
             }
+            if (eraser_toolbox.getVisibility()==VISIBLE){
+                eraser_toolbox.setVisibility(GONE);
+            }
             if (pencil_toolbox.getVisibility()==GONE){
                 if (MODE.equals("draw")){
+                    redo_array_stack.clear();
                     System.out.println("draw :");
                     array_undo=new int[WIDTH*HEIGHT];
                     layout.setDrawingCacheEnabled(true);
@@ -286,7 +296,6 @@ public class DrawingView extends View {
 
                     System.out.println("this is color="+pixel);
 
-
                     setStrokeWidth(pencil_seekbar.getProgress());
 
                     setColor(pixel);
@@ -297,11 +306,11 @@ public class DrawingView extends View {
 
                     gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.round_line);
                     gradientDrawable.setColor(getColor());
-                    round_line.setBackgroundDrawable(gradientDrawable);
+                    pencil_round_line.setBackgroundDrawable(gradientDrawable);
 
                     gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.square_line);
                     gradientDrawable.setColor(getColor());
-                    square_line.setBackgroundDrawable(gradientDrawable);
+                    pencil_square_line.setBackgroundDrawable(gradientDrawable);
 
                     gradientDrawable= (GradientDrawable) context.getApplicationContext().getResources().getDrawable(R.drawable.circle);
                     gradientDrawable.setColor(getColor());

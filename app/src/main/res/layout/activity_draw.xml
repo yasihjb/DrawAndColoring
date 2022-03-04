@@ -51,16 +51,71 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true">
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/eraser_toolbox"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:background="@drawable/eraser_popup_dialog_shape"
+            android:layout_above="@id/toolbox"
+            android:layout_marginEnd="@dimen/_100sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:padding="@dimen/_5sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible">
+            <SeekBar
+                android:id="@+id/eraser_seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints"
+                android:max="100"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:progressDrawable="@drawable/eraser_seekbar_style"
+                android:thumb="@drawable/eraser_thumb"
+                android:indeterminate="false"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/eraser_seekbar"
+                app:layout_constraintBottom_toTopOf="@id/clear_bg"
+                android:paddingHorizontal="@dimen/_12sdp">
+                <RelativeLayout
+                    android:id="@+id/eraser_round_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="10px"
+                    android:layout_weight="1"
+                    android:background="@drawable/eraser_round_line"
+                    android:visibility="visible"
+                    >
+                </RelativeLayout>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/clear_bg"
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_38sdp"
+                android:src="@drawable/ic_clear_bg_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                android:clickable="true"
+                android:focusable="true"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/pencil_toolbox"
             android:layout_width="@dimen/_180sdp"
             android:layout_height="@dimen/_150sdp"
-            android:background="@drawable/popup_dialog_shape"
+            android:background="@drawable/pencil_popup_dialog_shape"
             android:layout_above="@id/toolbox"
             android:layout_marginStart="@dimen/_95sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:padding="@dimen/_5sdp"
             android:focusable="true"
             android:clickable="true"
+            android:visibility="gone"
             >
             <SeekBar
                 android:id="@+id/pencil_seekbar"
@@ -70,8 +125,8 @@
                 android:layout_marginTop="@dimen/_15sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 android:progress="0"
-                android:progressDrawable="@drawable/seekbar_style"
-                android:thumb="@drawable/thumb"
+                android:progressDrawable="@drawable/pencil_seekbar_style"
+                android:thumb="@drawable/pencil_thumb"
                 android:indeterminate="false"
                 tools:ignore="MissingConstraints" />
             <LinearLayout

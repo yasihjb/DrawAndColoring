@@ -65,6 +65,7 @@ public class RecyclerViewAdapter_Paints extends RecyclerView.Adapter<RecyclerVie
                     Intent intent=new Intent(context,ColoringActivity.class);
                     intent.putExtra("paint",name.getText());
                     intent.putExtra("previous","main");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);
                 }
             });

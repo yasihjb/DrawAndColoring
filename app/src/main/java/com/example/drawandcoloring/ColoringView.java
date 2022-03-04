@@ -45,6 +45,7 @@ public class ColoringView extends View {
     public static int undo_size=1;
     int redo_size=0;
     GradientDrawable gradientDrawable;
+    int pixel_fill_count=0;
 
 
     public int getColor(){
@@ -106,7 +107,6 @@ public class ColoringView extends View {
     }
 
     public  void MyFloodFill(int[] layout_bitmap_array, int x, int y, int width, int height,int selected_color) {
-        System.gc();
         while (true){
             int ox=x,oy=y;
             while (y!=0 && layout_bitmap_array[x+((y-1)*width)]!=BORDER_COLOR && y<height && y>0){
@@ -329,7 +329,7 @@ public class ColoringView extends View {
         @Override
         protected Void doInBackground(Void... params) {
             fill(point.x,point.y,selectedColor);
-//            innerFloodFill(array_layout_pixels,point.x,point.y,selectedColor,WIDTH,HEIGHT);
+            //innerFloodFill(array_layout_pixels,point.x,point.y,selectedColor,WIDTH,HEIGHT);
 
             return null;
         }

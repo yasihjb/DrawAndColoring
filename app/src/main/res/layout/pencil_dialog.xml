@@ -2,6 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/_150sdp"
     android:layout_height="@dimen/_60sdp"
-    android:background="@drawable/popup_dialog_shape">
+    android:background="@drawable/pencil_popup_dialog_shape">
 
 </RelativeLayout>
