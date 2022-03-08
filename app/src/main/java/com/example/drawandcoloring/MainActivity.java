@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_paint=findViewById(R.id.paint);
         button_gallery=findViewById(R.id.gallery);
         setStatusBarColor(R.color.cute_blue);
-//        setStatusBarColor(R.color.cute_color);
         button_draw.setOnClickListener(this::onClick);
         button_paint.setOnClickListener(this::onClick);
         button_gallery.setOnClickListener(this::onClick);

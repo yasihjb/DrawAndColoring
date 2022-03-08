@@ -64,6 +64,167 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
 
         databaseHelper=new DatabaseHelper(this);
 
+        findViews();
+        
+        setViewsVisibilityStatus();
+
+
+        rainbow_range.getDrawingCache(true);
+        rainbow_range.setDrawingCacheEnabled(true);
+        rainbow_range.buildDrawingCache(true);
+        rainbow_range.setOnTouchListener(this);
+
+      
+
+
+        pencil_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) pencil_size));
+        pencil_square_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) pencil_size));
+        eraser_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,eraser_size));
+
+
+
+        setStrokeWidth(pencil_size);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            pencil_seekbar.setMin(1);
+        }
+        pencil_seekbar.setMax(100);
+        pencil_seekbar.setProgress(pencil_size);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            eraser_seekbar.setMin(1);
+        }
+        eraser_seekbar.setMax(100);
+        eraser_seekbar.setProgress(eraser_size);
+
+        setPencilColor(getResources().getColor(R.color.toolbox));
+        pencil_last_color=getResources().getColor(R.color.toolbox);
+
+        eraser_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                setStrokeWidth(progress);
+                eraser_size=progress;
+                eraser_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        pencil_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                setStrokeWidth(progress);
+                pencil_size=progress;
+                pencil_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) progress));
+                pencil_square_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        if (previous.equals("main")){
+            drawView.setBackgroundColor(Color.WHITE);
+        }else if (previous.equals("show")){
+            selected_id=getIntent().getStringExtra("selected_id");
+            System.out.println(selected_id);
+            Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(databaseHelper.getViewData(selected_id)));
+            drawView.setBackgroundDrawable(drawable);
+
+        }
+
+        clickListener();
+
+        select_round.callOnClick();
+
+    }
+
+    private void clickListener() {
+        back.setOnClickListener(this::onClick);
+        undo.setOnClickListener(this::onClick);
+        redo.setOnClickListener(this::onClick);
+        palette.setOnClickListener(this::onClick);
+        pencil.setOnClickListener(this::onClick);
+        eraser.setOnClickListener(this::onClick);
+        save.setOnClickListener(this::onClick);
+        eyedropper.setOnClickListener(this::onClick);
+        select_round.setOnClickListener(this::onClick);
+        select_square.setOnClickListener(this::onClick);
+        clear_view.setOnClickListener(this::onClick);
+
+        openPalette.setOnClickListener(this::onClick);
+        openRainbow.setOnClickListener(this::onClick);
+        dark_slate_gray.setOnClickListener(this::onClick);
+        dim_gray.setOnClickListener(this::onClick);
+        gray.setOnClickListener(this::onClick);
+        white.setOnClickListener(this::onClick);
+        saddle_brown.setOnClickListener(this::onClick);
+        black.setOnClickListener(this::onClick);
+        dark_red.setOnClickListener(this::onClick);
+        red.setOnClickListener(this::onClick);
+        crimson.setOnClickListener(this::onClick);
+        light_coral.setOnClickListener(this::onClick);
+        salmon.setOnClickListener(this::onClick);
+        light_salmon.setOnClickListener(this::onClick);
+        orange.setOnClickListener(this::onClick);
+        golden_rod.setOnClickListener(this::onClick);
+        yellow.setOnClickListener(this::onClick);
+        moccasin.setOnClickListener(this::onClick);
+        khaki.setOnClickListener(this::onClick);
+        dark_khaki.setOnClickListener(this::onClick);
+        dark_green.setOnClickListener(this::onClick);
+        islamic_green.setOnClickListener(this::onClick);
+        chartreuse.setOnClickListener(this::onClick);
+        spring_green.setOnClickListener(this::onClick);
+        screaming_green.setOnClickListener(this::onClick);
+        olive_drab.setOnClickListener(this::onClick);
+        midnight_blue.setOnClickListener(this::onClick);
+        blue.setOnClickListener(this::onClick);
+        deep_sky_blue.setOnClickListener(this::onClick);
+        turquoise.setOnClickListener(this::onClick);
+        aquamarine.setOnClickListener(this::onClick);
+        light_cyan.setOnClickListener(this::onClick);
+        medium_violet_red.setOnClickListener(this::onClick);
+        hot_pink.setOnClickListener(this::onClick);
+        pink.setOnClickListener(this::onClick);
+        violet.setOnClickListener(this::onClick);
+        medium_orchid.setOnClickListener(this::onClick);
+        purple.setOnClickListener(this::onClick);
+    }
+
+    private void setViewsVisibilityStatus() {
+        openRainbow.setVisibility(View.VISIBLE);
+        palette_layout.setVisibility(View.VISIBLE);
+        rainbow_layout.setVisibility(View.GONE);
+        openPalette.setVisibility(View.GONE);
+
+        eraser_toolbox.setVisibility(View.GONE);
+        pencil_toolbox.setVisibility(View.GONE);
+
+        pencil_round_line.setVisibility(View.VISIBLE);
+        pencil_square_line.setVisibility(View.GONE);
+        eraser_round_line.setVisibility(View.VISIBLE);
+        color_palette.setVisibility(View.GONE);
+
+
+    }
+
+    private void findViews() {
         toolbar=findViewById(R.id.toolbar);
         back=findViewById(R.id.button_back);
         save=findViewById(R.id.button_save);
@@ -115,166 +276,26 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         selected_color_frame=findViewById(R.id.sc);
 
         openRainbow=findViewById(R.id.open_rainbow);
-        openRainbow.setVisibility(View.VISIBLE);
+
         palette_layout=findViewById(R.id.layout_palette);
-        palette_layout.setVisibility(View.VISIBLE);
-
         rainbow_layout=findViewById(R.id.layout_rainbow);
-        rainbow_layout.setVisibility(View.GONE);
         openPalette=findViewById(R.id.open_palette);
-        openPalette.setVisibility(View.GONE);
-
-        rainbow_range.getDrawingCache(true);
-        rainbow_range.setDrawingCacheEnabled(true);
-        rainbow_range.buildDrawingCache(true);
-
-        rainbow_range.setOnTouchListener(this);
 
         select_round=findViewById(R.id.select_circle);
         select_square=findViewById(R.id.select_square);
         eraser_toolbox=findViewById(R.id.eraser_toolbox);
-        eraser_toolbox.setVisibility(View.GONE);
+
         pencil_toolbox=findViewById(R.id.pencil_toolbox);
-        pencil_toolbox.setVisibility(View.GONE);
+
         pencil_seekbar=findViewById(R.id.pencil_seekbar);
         eraser_seekbar=findViewById(R.id.eraser_seekbar);
         pencil_round_line =findViewById(R.id.round_line);
 
-        pencil_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) pencil_size));
-        pencil_round_line.setVisibility(View.VISIBLE);
         pencil_square_line =findViewById(R.id.square_line);
-        pencil_square_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) pencil_size));
-        pencil_square_line.setVisibility(View.GONE);
         eraser_round_line=findViewById(R.id.eraser_round_line);
-        eraser_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,eraser_size));
-        eraser_round_line.setVisibility(View.VISIBLE);
         clear_view=findViewById(R.id.clear_board);
         color_palette=findViewById(R.id.color_palette_bubble);
-        color_palette.setVisibility(View.GONE);
-
-
-        setStrokeWidth(pencil_size);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            pencil_seekbar.setMin(1);
-        }
-        pencil_seekbar.setMax(100);
-        pencil_seekbar.setProgress(pencil_size);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            eraser_seekbar.setMin(1);
-        }
-        eraser_seekbar.setMax(100);
-        eraser_seekbar.setProgress(eraser_size);
-
-        setPencilColor(getResources().getColor(R.color.toolbox));
-        pencil_last_color=getResources().getColor(R.color.toolbox);
-
-
-        eraser_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Log.i("EraserSeekSize",""+progress);
-                setStrokeWidth(progress);
-                eraser_size=progress;
-                eraser_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,progress));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        pencil_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Log.i("PencilSeekSize",""+progress);
-                setStrokeWidth(progress);
-                pencil_size=progress;
-                pencil_round_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) progress));
-                pencil_square_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) progress));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        if (previous.equals("main")){
-            drawView.setBackgroundColor(Color.WHITE);
-        }else if (previous.equals("show")){
-            selected_id=getIntent().getStringExtra("selected_id");
-            System.out.println(selected_id);
-            Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(databaseHelper.getViewData(selected_id)));
-            drawView.setBackgroundDrawable(drawable);
-
-        }
-
-
-        back.setOnClickListener(this::onClick);
-        undo.setOnClickListener(this::onClick);
-        redo.setOnClickListener(this::onClick);
-        palette.setOnClickListener(this::onClick);
-        pencil.setOnClickListener(this::onClick);
-        eraser.setOnClickListener(this::onClick);
-        save.setOnClickListener(this::onClick);
-        eyedropper.setOnClickListener(this::onClick);
-        select_round.setOnClickListener(this::onClick);
-        select_square.setOnClickListener(this::onClick);
-        clear_view.setOnClickListener(this::onClick);
-
-        openPalette.setOnClickListener(this::onClick);
-        openRainbow.setOnClickListener(this::onClick);
-        dark_slate_gray.setOnClickListener(this::onClick);
-        dim_gray.setOnClickListener(this::onClick);
-        gray.setOnClickListener(this::onClick);
-        white.setOnClickListener(this::onClick);
-        saddle_brown.setOnClickListener(this::onClick);
-        black.setOnClickListener(this::onClick);
-        dark_red.setOnClickListener(this::onClick);
-        red.setOnClickListener(this::onClick);
-        crimson.setOnClickListener(this::onClick);
-        light_coral.setOnClickListener(this::onClick);
-        salmon.setOnClickListener(this::onClick);
-        light_salmon.setOnClickListener(this::onClick);
-        orange.setOnClickListener(this::onClick);
-        golden_rod.setOnClickListener(this::onClick);
-        yellow.setOnClickListener(this::onClick);
-        moccasin.setOnClickListener(this::onClick);
-        khaki.setOnClickListener(this::onClick);
-        dark_khaki.setOnClickListener(this::onClick);
-        dark_green.setOnClickListener(this::onClick);
-        islamic_green.setOnClickListener(this::onClick);
-        chartreuse.setOnClickListener(this::onClick);
-        spring_green.setOnClickListener(this::onClick);
-        screaming_green.setOnClickListener(this::onClick);
-        olive_drab.setOnClickListener(this::onClick);
-        midnight_blue.setOnClickListener(this::onClick);
-        blue.setOnClickListener(this::onClick);
-        deep_sky_blue.setOnClickListener(this::onClick);
-        turquoise.setOnClickListener(this::onClick);
-        aquamarine.setOnClickListener(this::onClick);
-        light_cyan.setOnClickListener(this::onClick);
-        medium_violet_red.setOnClickListener(this::onClick);
-        hot_pink.setOnClickListener(this::onClick);
-        pink.setOnClickListener(this::onClick);
-        violet.setOnClickListener(this::onClick);
-        medium_orchid.setOnClickListener(this::onClick);
-        purple.setOnClickListener(this::onClick);
-
-        select_round.callOnClick();
-
+        
     }
 
     @Override
@@ -415,14 +436,12 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
                 setPencilColor(pencil_last_color);
                 break;
             case R.id.open_palette:
-                System.out.println("this is palette");
                 palette_layout.setVisibility(View.VISIBLE);
                 rainbow_layout.setVisibility(View.GONE);
                 openPalette.setVisibility(View.GONE);
                 openRainbow.setVisibility(View.VISIBLE);
                 break;
             case R.id.open_rainbow:
-                System.out.println("this is rainbow");
                 palette_layout.setVisibility(View.GONE);
                 rainbow_layout.setVisibility(View.VISIBLE);
                 openRainbow.setVisibility(View.GONE);
@@ -542,6 +561,7 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         }
 
     }
+
     private void setPencilFullColor(int color){
         setPencilColor(color);
         pencil_last_color=color;

@@ -34,11 +34,9 @@ public class RecyclerViewAdapter_Gallery extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        Log.i("length",String.valueOf(all.getCount()));
         if (all.getCount()!=0){
             all.moveToPosition(position);
             byte[] data=all.getBlob(0);
-//            Log.i("output",data.toString());
             holder.draw.setImageBitmap(DatabaseBitmapUtility.getView(data));
             holder.id.setText(all.getString(1));
         }else if (all.getCount()==0){
@@ -66,7 +64,6 @@ public class RecyclerViewAdapter_Gallery extends RecyclerView.Adapter<RecyclerVi
             parent_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Toast.makeText(context.getApplicationContext(), String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(context.getApplicationContext(),ShowActivity.class);
                     intent.putExtra("selected_id",id.getText());
                     context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));

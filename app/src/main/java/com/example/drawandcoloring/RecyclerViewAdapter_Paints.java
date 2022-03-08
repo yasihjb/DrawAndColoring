@@ -57,7 +57,6 @@ public class RecyclerViewAdapter_Paints extends RecyclerView.Adapter<RecyclerVie
             parent_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Toast.makeText(context, "this is selected="+paint.getBackground(), Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(context, ColoringActivity.class);
                     intent.putExtra("paint",name.getText());
                     intent.putExtra("previous","main");

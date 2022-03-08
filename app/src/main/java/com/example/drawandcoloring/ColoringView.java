@@ -68,9 +68,7 @@ public class ColoringView extends View {
                     layout.setDrawingCacheEnabled(true);
                     layout_bitmap = layout.getDrawingCache();
                     layout_bitmap.getPixels(array_layout_pixels,0,layout_bitmap.getWidth(),0,0,WIDTH,HEIGHT);
-                    Log.i("redo-undo","undo size BEFORE push= "+ undo_array_stack.size());
                     undo_array_stack.push(array_layout_pixels);
-                    Log.i("redo-undo","undo size AFTER push= "+ undo_array_stack.size());
                     layout.destroyDrawingCache();
                 }
                 new Fill(p,selected_color).execute();
@@ -221,18 +219,13 @@ public class ColoringView extends View {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            System.out.println("reDo");
             pixels_for_undo=new int[WIDTH*HEIGHT];
             pixels_for_redo=new int[WIDTH*HEIGHT];
-            Log.i("redo-undo","redo size BEFORE pop= "+ redo_array_stack.size());
             pixels_for_redo=redo_array_stack.pop();
-            Log.i("redo-undo","redo size AFTER pop= "+ redo_array_stack.size());
             layout.setDrawingCacheEnabled(true);
             layout_bitmap=layout.getDrawingCache();
             layout_bitmap.getPixels(pixels_for_undo,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
-            Log.i("redo-undo","undo size BEFORE push= "+ undo_array_stack.size());
             undo_array_stack.push(pixels_for_undo);
-            Log.i("redo-undo","undo size AFTER push= "+ undo_array_stack.size());
             return null;
         }
 
@@ -261,15 +254,11 @@ public class ColoringView extends View {
         protected Void doInBackground(Void... voids) {
             pixels_for_undo=new int[WIDTH*HEIGHT];
             pixels_for_redo=new int[WIDTH*HEIGHT];
-            Log.i("redo-undo","undo size BEFORE pop= "+ undo_array_stack.size());
             pixels_for_undo=undo_array_stack.pop();
-            Log.i("redo-undo","undo size AFTER pop= "+ undo_array_stack.size());
             layout.setDrawingCacheEnabled(true);
             layout_bitmap=layout.getDrawingCache();
             layout_bitmap.getPixels(pixels_for_redo,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
-            Log.i("redo-undo","redo size BEFORE push= "+ redo_array_stack.size());
             redo_array_stack.push(pixels_for_redo);
-            Log.i("redo-undo","redo size AFTER push= "+ redo_array_stack.size());
             return null;
         }
 
@@ -294,15 +283,11 @@ public class ColoringView extends View {
 
         @Override
         protected void onPreExecute() {
-            Log.i("Event1","Pre");
             layout.setDrawingCacheEnabled(true);
             layout_bitmap = layout.getDrawingCache();
-            Log.i("redo-undo","Touch");
             array_layout_pixels=new int[layout_bitmap.getWidth()*layout_bitmap.getHeight()];
             layout_bitmap.getPixels(array_layout_pixels,0,layout_bitmap.getWidth(),0,0,WIDTH,HEIGHT);
-            Log.i("redo-undo","undo size BEFORE push= "+ undo_array_stack.size());
             undo_array_stack.push(array_layout_pixels);
-            Log.i("redo-undo","undo size AFTER push= "+ undo_array_stack.size());
             flag=1;
         }
 

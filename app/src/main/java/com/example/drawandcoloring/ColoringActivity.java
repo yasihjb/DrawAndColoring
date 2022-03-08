@@ -37,7 +37,6 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     public static String MODE="fill";
     public static Stack<int[]> undo_array_stack;
     public static Stack<int[]> redo_array_stack;
-    public static ActivityManager activityManager;
     public static int flag=1;
 
     ImageView dark_red,red,crimson,light_coral,salmon,light_salmon,orange,golden_rod,yellow,
@@ -61,9 +60,61 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
 
         databaseHelper=new DatabaseHelper(this);
 
-        activityManager= (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        color_palette=findViewById(R.id.color_palette_bubble);
+        findViews();
+
+        setViewsVisibilityStatus();
+        
+        rainbow_range.getDrawingCache(true);
+        rainbow_range.setDrawingCacheEnabled(true);
+        rainbow_range.buildDrawingCache(true);
+        rainbow_range.setOnTouchListener(this);
+
+        undo_array_stack=new Stack<>();
+        redo_array_stack=new Stack<>();
+
+        setColor_palette(R.color.toolbox);
+
+        paint_board.post(new Runnable() {
+            @Override
+            public void run() {
+                WIDTH=paint_board.getWidth();
+                HEIGHT=paint_board.getHeight();
+                pushBackgroundIntoUndoStack();
+            }
+        });
+
+        if (previous.equals("show")){
+            selected_id=getIntent().getStringExtra("selected_id");
+            Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(databaseHelper.getViewData(selected_id)));
+            paint_board.setBackground(drawable);
+        }else if (previous.equals("main")){
+            paint_uri=getIntent().getStringExtra("paint");
+            try {
+                InputStream inputStream=getContentResolver().openInputStream(Uri.parse(paint_uri));
+                Drawable drawable=Drawable.createFromStream(inputStream,paint_uri);
+                paint_board.setBackground(drawable);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        clickListener();
+
+    }
+
+    private void setViewsVisibilityStatus() {
         color_palette.setVisibility(View.GONE);
+
+        openRainbow.setVisibility(View.VISIBLE);
+        palette_layout=findViewById(R.id.layout_palette);
+        palette_layout.setVisibility(View.VISIBLE);
+
+        rainbow_layout.setVisibility(View.GONE);
+        openPalette.setVisibility(View.GONE);
+    }
+
+    private void findViews() {
+        color_palette=findViewById(R.id.color_palette_bubble);
         save=findViewById(R.id.button_save);
         back=findViewById(R.id.button_back);
         pallet=findViewById(R.id.pallet);
@@ -114,49 +165,13 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         selected_color_frame=findViewById(R.id.sc);
 
         openRainbow=findViewById(R.id.open_rainbow);
-        openRainbow.setVisibility(View.VISIBLE);
-        palette_layout=findViewById(R.id.layout_palette);
-        palette_layout.setVisibility(View.VISIBLE);
 
         rainbow_layout=findViewById(R.id.layout_rainbow);
-        rainbow_layout.setVisibility(View.GONE);
         openPalette=findViewById(R.id.open_palette);
-        openPalette.setVisibility(View.GONE);
 
-        rainbow_range.getDrawingCache(true);
-        rainbow_range.setDrawingCacheEnabled(true);
-        rainbow_range.buildDrawingCache(true);
+    }
 
-        rainbow_range.setOnTouchListener(this);
-
-        undo_array_stack=new Stack<>();
-        redo_array_stack=new Stack<>();
-        
-        paint_board.post(new Runnable() {
-            @Override
-            public void run() {
-                WIDTH=paint_board.getWidth();
-                HEIGHT=paint_board.getHeight();
-                pushBackgroundIntoUndoStack();
-            }
-        });
-
-        if (previous.equals("show")){
-            selected_id=getIntent().getStringExtra("selected_id");
-//            image_bitmap =DatabaseBitmapUtility.getView(databaseHelper.getViewData(selected_id));
-            Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(databaseHelper.getViewData(selected_id)));
-            paint_board.setBackground(drawable);
-        }else if (previous.equals("main")){
-            paint_uri=getIntent().getStringExtra("paint");
-            try {
-                InputStream inputStream=getContentResolver().openInputStream(Uri.parse(paint_uri));
-                Drawable drawable=Drawable.createFromStream(inputStream,paint_uri);
-                paint_board.setBackground(drawable);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-
+    private void clickListener() {
         save.setOnClickListener(this::onClick);
         back.setOnClickListener(this::onClick);
         paint_roller.setOnClickListener(this::onClick);
@@ -205,7 +220,6 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         violet.setOnClickListener(this::onClick);
         medium_orchid.setOnClickListener(this::onClick);
         purple.setOnClickListener(this::onClick);
-
     }
 
     @Override
@@ -224,7 +238,6 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
         switch (view.getId()){
             case R.id.button_save:
                 hideColorPalette();
-                Toast.makeText(this, "Save", Toast.LENGTH_SHORT).show();
                 paint_board.setDrawingCacheEnabled(true);
                 bitmap=paint_board.getDrawingCache();
                 if (previous.equals("main")){
@@ -267,20 +280,14 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
                 break;
             case R.id.undo:
                 hideColorPalette();
-                Log.i("Event1","UNDO");
                 if (undo_array_stack.size()!=0){
                     cw.unDo();
-                }else {
-                    Toast.makeText(this, "Stack is Empty ", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.redo:
                 hideColorPalette();
-                Log.i("Event1","reDo");
                 if (redo_array_stack.size()!=0){
                     cw.reDo();
-                }else {
-                    Toast.makeText(this, "Stack is Empty", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.eyedropper:
@@ -288,14 +295,12 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
                 MODE="eyedropper";
                 break;
             case R.id.open_palette:
-                System.out.println("this is palette");
                 palette_layout.setVisibility(View.VISIBLE);
                 rainbow_layout.setVisibility(View.GONE);
                 openPalette.setVisibility(View.GONE);
                 openRainbow.setVisibility(View.VISIBLE);
                 break;
             case R.id.open_rainbow:
-                System.out.println("this is rainbow");
                 palette_layout.setVisibility(View.GONE);
                 rainbow_layout.setVisibility(View.VISIBLE);
                 openRainbow.setVisibility(View.GONE);

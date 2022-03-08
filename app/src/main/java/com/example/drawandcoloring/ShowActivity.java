@@ -116,7 +116,6 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
         }
         else if (view.getId()==button_save_in_gallery.getId()){
             Save(selected_id);
-            Toast.makeText(this, "SAVED", Toast.LENGTH_SHORT).show();
         }
     }
 

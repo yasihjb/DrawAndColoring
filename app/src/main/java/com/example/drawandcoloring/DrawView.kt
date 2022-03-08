@@ -28,7 +28,9 @@ import com.example.drawandcoloring.DrawingActivity.eraser_toolbox
 import com.example.drawandcoloring.DrawingActivity.color_palette
 import com.example.drawandcoloring.DrawingActivity.pencil_last_color
 
-
+/*official source = "https://github.com/divyanshub024/AndroidDraw"
+* i needed some extra features for this why i had to copied this class and then import other
+* features! */
 class DrawView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     var mPaths = LinkedHashMap<MyPath, PaintOptions>()
 
@@ -51,7 +53,6 @@ class DrawView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             color = mPaintOptions.color
             style = Paint.Style.STROKE
             strokeJoin = Paint.Join.ROUND
-//            strokeCap = Paint.Cap.ROUND
             strokeCap = mPaintOptions.strokeCap
             strokeWidth = mPaintOptions.strokeWidth
             isAntiAlias = true
