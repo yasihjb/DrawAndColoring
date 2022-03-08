@@ -6,20 +6,24 @@
     android:paddingLeft="@dimen/_10sdp"
     android:paddingRight="@dimen/_10sdp"
     android:layout_margin="@dimen/_10sdp"
-    android:id="@+id/parent_layout">
+    android:id="@+id/parent_layout"
+    >
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/_10sdp"
         app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_20sdp"
+        android:elevation="0dp"
         >
+<!--        android:layout_width="@dimen/_120sdp"-->
+<!--        android:layout_height="@dimen/_150sdp"-->
         <RelativeLayout
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_170sdp">
+            android:layout_width="@dimen/_110sdp"
+            android:layout_height="@dimen/_148sdp">
             <ImageView
                 android:id="@+id/paint"
-                android:layout_width="@dimen/_120sdp"
-                android:layout_height="@dimen/_170sdp"
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_148sdp"
                 />
             <TextView
                 android:id="@+id/paint_name"

@@ -9,14 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter_Paints extends RecyclerView.Adapter<RecyclerViewAdapter_Paints.ViewHolder> {
@@ -62,7 +58,7 @@ public class RecyclerViewAdapter_Paints extends RecyclerView.Adapter<RecyclerVie
                 @Override
                 public void onClick(View v) {
                     //Toast.makeText(context, "this is selected="+paint.getBackground(), Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(context,ColoringActivity.class);
+                    Intent intent=new Intent(context, ColoringActivity.class);
                     intent.putExtra("paint",name.getText());
                     intent.putExtra("previous","main");
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

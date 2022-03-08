@@ -24,20 +24,24 @@ public class PaintsActivity extends AppCompatActivity implements StatusBarColor,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paints);
-        setStatusBarColor(R.color.paint);
+        setStatusBarColor(R.color.white);
         back=findViewById(R.id.back);
         recycler_view_paints =findViewById(R.id.recycler_view_paints);
 
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p2).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p4).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.cute_bird).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.snake).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.train).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.air_plane).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.bus).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.bee).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.kitty).toString());
-        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.shorti2).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_cute_bird).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_snake).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_train).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_air_plane).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_bus).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_bee).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_kitty).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_tree).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_mountain).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_sun).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_grape).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_car).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_flying_saucer).toString());
+        listOfPaints.add(Uri.parse("android.resource://"+BuildConfig.APPLICATION_ID+"/"+R.drawable.p_my_sticker).toString());
 
         RecyclerViewAdapter_Paints paints_adapter=new RecyclerViewAdapter_Paints(this,listOfPaints);
         recycler_view_paints.setAdapter(paints_adapter);
@@ -54,9 +58,7 @@ public class PaintsActivity extends AppCompatActivity implements StatusBarColor,
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(this.getResources().getColor(color));
-            window.setNavigationBarColor(this.getResources().getColor(R.color.white));
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
     }
 

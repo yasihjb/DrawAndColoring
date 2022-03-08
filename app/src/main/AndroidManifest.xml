@@ -7,16 +7,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/draw_main"
+        android:icon="@drawable/app_icon"
         android:label="Draw and Paint"
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DrawAndColoring">
-        <activity
-            android:name=".DrawingActivity"
-            android:exported="false" />
         <activity
             android:name=".PaintsActivity"
             android:exported="false" />
@@ -26,6 +23,8 @@
         <activity
             android:name=".GalleryActivity"
             android:exported="false" />
+        <activity android:name=".DrawingActivity"
+            android:exported="false"/>
         <activity android:name=".ColoringActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

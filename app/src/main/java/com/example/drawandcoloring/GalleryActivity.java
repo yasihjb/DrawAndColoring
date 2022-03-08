@@ -28,15 +28,11 @@ public class GalleryActivity extends AppCompatActivity implements StatusBarColor
         gallery_recycler_view.setVisibility(View.VISIBLE);
         empty=findViewById(R.id.empty);
         empty.setVisibility(View.GONE);
-        setStatusBarColor(R.color.gallery);
+        setStatusBarColor(R.color.cute_blue);
         getWindow().setBackgroundDrawableResource(R.color.white);
         back.setOnClickListener(this);
 
         ShowData();
-
-
-
-
     }
 
     private void ShowData() {
@@ -75,7 +71,6 @@ public class GalleryActivity extends AppCompatActivity implements StatusBarColor
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-
             case R.id.back:
                 finish();
                 break;

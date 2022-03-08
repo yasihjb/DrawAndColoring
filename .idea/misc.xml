@@ -3,8 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable-xhdpi/eraser_seekbar_style_new.xml" value="0.1555" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable-xhdpi/eraser_thumb_new.xml" value="0.1555" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable-xhdpi/ic_back_blue.xml" value="0.1555" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable-xhdpi/ic_save_blue.xml" value="0.1555" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable-xhdpi/main_page_draw2_button.xml" value="0.1555" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable-xhdpi/pencil_seekbar_style.xml" value="0.1555" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable-xhdpi/pencil_seekbar_style_new.xml" value="0.1555" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable-xhdpi/pencil_thumb.xml" value="0.1555" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable-xhdpi/pencil_thumb_new.xml" value="0.1555" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/circle.xml" value="0.1815" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/color_palette_bubble.xml" value="0.1555" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/default_bg.xml" value="0.20260416666666667" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/eraser_bubble.xml" value="0.1555" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/eraser_popup_dialog_shape.xml" value="0.1815" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/eraser_round_line.xml" value="0.1815" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/eraser_seekbar_style.xml" value="0.1815" />
@@ -19,11 +30,15 @@
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_palette_black.xml" value="0.1545" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_palette_foreground.xml" value="0.20260416666666667" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_redo.xml" value="0.1545" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_save.xml" value="0.1555" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_save_in_gallery.xml" value="0.20260416666666667" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_square.xml" value="0.1815" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_square2_foreground.xml" value="0.1815" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/ic_undo.xml" value="0.1545" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/items_background.xml" value="0.1555" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/main_page_draw_button.xml" value="0.1555" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/main_page_gallery_button.xml" value="0.20260416666666667" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/palette_bubble.xml" value="0.1555" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/pencil_oval.xml" value="0.1545" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/pencil_popup_dialog_shape.xml" value="0.1815" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/pencil_seekbar_style.xml" value="0.1815" />
@@ -38,17 +53,24 @@
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/thumb.xml" value="0.1815" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/toolbox_style.xml" value="0.1545" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/drawable/white_bg.xml" value="0.1815" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-land/activity_coloring.xml" value="0.25" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-land/activity_main.xml" value="0.12291666666666666" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-land/new_colors_palette.xml" value="0.15784832451499117" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-large-land/activity_coloring.xml" value="0.18" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-large-land/activity_main.xml" value="0.1" />
-        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-large-port/activity_main.xml" value="0.1" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-large-port/activity_coloring.xml" value="0.13984375" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout-large-port/activity_main.xml" value="0.14" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_check.xml" value="0.18645833333333334" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_coloring.xml" value="0.22" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_coloring2.xml" value="0.18645833333333334" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_draw.xml" value="0.25" />
-        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_drawing2.xml" value="0.18645833333333334" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_drawing.xml" value="0.18645833333333334" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_drawing2.xml" value="0.25" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_gallery.xml" value="0.18645833333333334" />
-        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_main.xml" value="0.15" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_main2.xml" value="0.22" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_paint.xml" value="0.18" />
+        <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_paints.xml" value="0.18" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/activity_show.xml" value="0.18645833333333334" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/color_picker_dialog.xml" value="0.33" />
         <entry key="..\:/android studio projects/DrawAndColoring/app/src/main/res/layout/colors_palette.xml" value="0.25" />

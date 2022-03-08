@@ -23,9 +23,10 @@ import com.example.drawandcoloring.DrawingActivity.pencil_round_line
 import com.example.drawandcoloring.DrawingActivity.pencil_square_line
 import com.example.drawandcoloring.DrawingActivity.select_round
 import com.example.drawandcoloring.DrawingActivity.select_square
-import com.example.drawandcoloring.DrawingActivity.tool_box
 import com.example.drawandcoloring.DrawingActivity.pencil_toolbox
 import com.example.drawandcoloring.DrawingActivity.eraser_toolbox
+import com.example.drawandcoloring.DrawingActivity.color_palette
+import com.example.drawandcoloring.DrawingActivity.pencil_last_color
 
 
 class DrawView(context: Context, attrs: AttributeSet) : View(context, attrs) {
@@ -203,6 +204,9 @@ class DrawView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 if (eraser_toolbox.visibility== VISIBLE){
                     eraser_toolbox.visibility= GONE
                 }
+                if(color_palette.visibility== VISIBLE){
+                    color_palette.visibility= GONE
+                }
                 if(MODE.equals("draw")){
                 mStartX = x
                 mStartY = y
@@ -213,11 +217,9 @@ class DrawView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                     val selected_pixel= eyedropper_bitmap.getPixel(x.roundToInt(), y.roundToInt())
                     drawView.destroyDrawingCache()
                     drawView.setColor(selected_pixel)
-                    var gradientDrawable=(context.resources.getDrawable(R.drawable.toolbox_style) as GradientDrawable).mutate()
-                    (gradientDrawable as GradientDrawable).setColor(selected_pixel)
-                    tool_box.setBackgroundDrawable(gradientDrawable)
+                    pencil_last_color=selected_pixel
 
-                    gradientDrawable=(context.resources.getDrawable(R.drawable.round_line) as GradientDrawable).mutate()
+                    var gradientDrawable=(context.resources.getDrawable(R.drawable.round_line) as GradientDrawable).mutate()
                     (gradientDrawable as GradientDrawable).setColor(selected_pixel)
                     pencil_round_line.setBackgroundDrawable(gradientDrawable)
 
@@ -225,7 +227,7 @@ class DrawView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                     (gradientDrawable as GradientDrawable).setColor(selected_pixel)
                     pencil_square_line.setBackgroundDrawable(gradientDrawable)
 
-                    gradientDrawable=(context.resources.getDrawable(R.drawable.circle) as GradientDrawable).mutate()
+                    gradientDrawable=(context.resources.getDrawable(R.drawable.round) as GradientDrawable).mutate()
                     (gradientDrawable as GradientDrawable).setColor(selected_pixel)
                     select_round.setBackgroundDrawable(gradientDrawable)
 

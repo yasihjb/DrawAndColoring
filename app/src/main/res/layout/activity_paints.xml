@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PaintsActivity"
-    android:background="@color/white">
+    android:background="@color/cute_blue">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_45sdp"
-        android:background="@color/paint">
+        android:layout_height="@dimen/_43sdp"
+        android:background="@color/white">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/back"
-                android:layout_width="@dimen/_34sdp"
-                android:layout_height="@dimen/_34sdp"
-                android:src="@drawable/ic_arrow_back"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_back_cute_blue"
                 android:layout_centerVertical="true"
                 android:scaleType="centerCrop"
                 android:clickable="true"
@@ -31,12 +31,47 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_30sdp">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_paints"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            />
 
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/layout_clouds_in_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:translationZ="0dp"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:background="@drawable/clouds_in_sky"
+            tools:ignore="ContentDescription" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/layout_clouds_in_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:translationZ="0dp"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/clouds_in_bottom"
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -4,14 +4,15 @@
     <solid
         android:color="@color/white"
         />
+
+    <stroke
+        android:color="@color/cute_blue"
+        android:width="10px"
+        />
+
     <corners
-        android:radius="@dimen/_120sdp"
+        android:topRightRadius="30dp"
+        android:topLeftRadius="30dp"
+        android:bottomRightRadius="30dp"
         />
-    <size
-        android:height="100px"
-        />
-<!--    <stroke-->
-<!--        android:color="@color/draw"-->
-<!--        android:width="1px"-->
-<!--        />-->
 </shape>

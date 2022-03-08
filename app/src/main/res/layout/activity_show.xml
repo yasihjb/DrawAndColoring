@@ -5,40 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ShowActivity"
-    android:background="@color/white">
-    <Toolbar
+    android:background="@color/cute_blue">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_130sdp"
+        android:background="@drawable/clouds_activity_show"
+        android:layout_alignParentTop="true"
+        />
+    <ImageView
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@drawable/little_cloud_show_activity"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        />
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_45sdp"
-        android:background="@color/gallery">
+        android:layout_height="@dimen/_43sdp"
+        >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <ImageView
                 android:id="@+id/back"
-                android:layout_width="@dimen/_34sdp"
-                android:layout_height="@dimen/_34sdp"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="start"
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_arrow_back" />
+                android:src="@drawable/ic_back_cute_blue" />
         </RelativeLayout>
-    </Toolbar>
+    </androidx.appcompat.widget.Toolbar>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
         >
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_30sdp"
+            android:layout_centerInParent="true"
+            app:cardBackgroundColor="@color/white"
+            android:layout_above="@id/buttons_layout"
+            android:elevation="0dp"
+            android:foregroundTint="@color/transparent"
+            >
+            <ImageView
+                android:id="@+id/show_view"
+                android:layout_width="@dimen/_208sdp"
+                android:layout_height="@dimen/_280sdp"
+                android:layout_above="@id/buttons_layout"
+                android:scaleType="fitXY"
+                />
+        </androidx.cardview.widget.CardView>
+
         <LinearLayout
             android:id="@+id/buttons_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_30sdp"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/_30sdp"
             android:paddingRight="@dimen/_30sdp">
@@ -70,13 +102,7 @@
                 android:layout_weight="1"
                 />
         </LinearLayout>
-        <ImageView
-            android:id="@+id/show_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/buttons_layout"
-            android:layout_margin="@dimen/_5sdp"
-            />
+
 
     </RelativeLayout>
 

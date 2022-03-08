@@ -9,20 +9,23 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener , StatusBarColor {
-    Button button_draw,button_paint,button_gallery,check;
     DatabaseHelper databaseHelper;
+    RelativeLayout button_draw,button_paint,button_gallery;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         databaseHelper=new DatabaseHelper(this);
 
-        button_draw=findViewById(R.id.button_draw);
-        button_paint=findViewById(R.id.button_paint);
-        button_gallery=findViewById(R.id.button_gallery);
-        setStatusBarColor(R.color.white);
+        button_draw=findViewById(R.id.draw);
+        button_paint=findViewById(R.id.paint);
+        button_gallery=findViewById(R.id.gallery);
+        setStatusBarColor(R.color.cute_blue);
+//        setStatusBarColor(R.color.cute_color);
         button_draw.setOnClickListener(this::onClick);
         button_paint.setOnClickListener(this::onClick);
         button_gallery.setOnClickListener(this::onClick);
@@ -57,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(this.getResources().getColor(color));
+            window.setNavigationBarColor(this.getResources().getColor(R.color.white));
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
     }
 }

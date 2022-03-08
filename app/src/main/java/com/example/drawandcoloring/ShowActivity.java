@@ -27,7 +27,7 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
-        setStatusBarColor(R.color.gallery);
+        setStatusBarColor(R.color.cute_blue);
         selected_id=getIntent().getExtras().getString("selected_id");
         databaseHelper=new DatabaseHelper(this);
         type=databaseHelper.getType(selected_id);
@@ -104,7 +104,7 @@ public class ShowActivity extends AppCompatActivity implements StatusBarColor, V
                 intent.putExtra("selected_id",selected_id);
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
             }else if (type.equals("paint")){
-                Intent intent=new Intent(this,ColoringActivity.class);
+                Intent intent=new Intent(this, ColoringActivity.class);
                 intent.putExtra("previous","show");
                 intent.putExtra("selected_id",selected_id);
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
