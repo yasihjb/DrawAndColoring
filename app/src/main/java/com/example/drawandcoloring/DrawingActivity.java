@@ -434,6 +434,7 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
                 hideEraserToolbox();
                 drawView.clearCanvas();
                 setPencilColor(pencil_last_color);
+                setStrokeWidth(pencil_size);
                 break;
             case R.id.open_palette:
                 palette_layout.setVisibility(View.VISIBLE);
