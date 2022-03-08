@@ -13,20 +13,27 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DrawAndColoring">
+        android:theme="@style/Theme.DrawAndColoring"
+        >
         <activity
             android:name=".PaintsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ShowActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".GalleryActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity android:name=".DrawingActivity"
-            android:exported="false"/>
-        <activity android:name=".ColoringActivity" />
-        <activity android:name=".MainActivity">
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ColoringActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

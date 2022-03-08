@@ -55,7 +55,6 @@ public class ColoringView extends View {
         this.layout.buildDrawingCache(true);
         this.context=context;
     }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x=event.getX();
@@ -63,10 +62,17 @@ public class ColoringView extends View {
         Point p=new Point((int)x,(int)y);
         int action=event.getAction();
         if (action==MotionEvent.ACTION_DOWN){
-            if (MODE.equals("fill")){
-                new Fill(p,selected_color).execute();
-            }
-            if (MODE.equals("eraser")){
+            if (MODE.equals("fill") || MODE.equals("eraser")){
+                if (flag==0){
+                    array_layout_pixels=new int[layout_bitmap.getWidth()*layout_bitmap.getHeight()];
+                    layout.setDrawingCacheEnabled(true);
+                    layout_bitmap = layout.getDrawingCache();
+                    layout_bitmap.getPixels(array_layout_pixels,0,layout_bitmap.getWidth(),0,0,WIDTH,HEIGHT);
+                    Log.i("redo-undo","undo size BEFORE push= "+ undo_array_stack.size());
+                    undo_array_stack.push(array_layout_pixels);
+                    Log.i("redo-undo","undo size AFTER push= "+ undo_array_stack.size());
+                    layout.destroyDrawingCache();
+                }
                 new Fill(p,selected_color).execute();
             }
             if (MODE.equals("eyedropper")){
@@ -147,13 +153,12 @@ public class ColoringView extends View {
 
     public void unDo(){
         if (flag==1){
-            new unDo().execute();
+            undo_array_stack.pop();
             new unDo().execute();
             flag=0;
         }else {
             new unDo().execute();
         }
-
     }
 
     public void reDo(){
@@ -236,8 +241,8 @@ public class ColoringView extends View {
             layout_bitmap.setPixels(pixels_for_redo,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(layout_bitmap)));
             layout.setBackgroundDrawable(drawable);
-            layout.setDrawingCacheEnabled(false);
             invalidate();
+            layout.setDrawingCacheEnabled(false);
         }
     }
 
@@ -292,6 +297,7 @@ public class ColoringView extends View {
             Log.i("Event1","Pre");
             layout.setDrawingCacheEnabled(true);
             layout_bitmap = layout.getDrawingCache();
+            Log.i("redo-undo","Touch");
             array_layout_pixels=new int[layout_bitmap.getWidth()*layout_bitmap.getHeight()];
             layout_bitmap.getPixels(array_layout_pixels,0,layout_bitmap.getWidth(),0,0,WIDTH,HEIGHT);
             Log.i("redo-undo","undo size BEFORE push= "+ undo_array_stack.size());
@@ -309,13 +315,11 @@ public class ColoringView extends View {
         protected Void doInBackground(Void... params) {
             fill(point.x,point.y,selectedColor);
 //            innerFloodFill(array_layout_pixels,point.x,point.y,selectedColor,WIDTH,HEIGHT);
-
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
-            layout.setDrawingCacheEnabled(true);
             layout_bitmap.setPixels(array_layout_pixels,0,layout_bitmap.getWidth(),0,0,layout_bitmap.getWidth(),layout_bitmap.getHeight());
             Drawable drawable=new BitmapDrawable(DatabaseBitmapUtility.getView(DatabaseBitmapUtility.getBytes(layout_bitmap)));
             layout.setBackgroundDrawable(drawable);

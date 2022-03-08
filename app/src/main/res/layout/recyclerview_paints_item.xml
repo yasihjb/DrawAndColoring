@@ -5,6 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="@dimen/_10sdp"
     android:paddingRight="@dimen/_10sdp"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
     android:layout_margin="@dimen/_10sdp"
     android:id="@+id/parent_layout"
     >

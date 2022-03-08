@@ -38,7 +38,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     public static Stack<int[]> undo_array_stack;
     public static Stack<int[]> redo_array_stack;
     public static ActivityManager activityManager;
-    public static int flag=0;
+    public static int flag=1;
 
     ImageView dark_red,red,crimson,light_coral,salmon,light_salmon,orange,golden_rod,yellow,
             moccasin,khaki,dark_khaki,dark_green,islamic_green,chartreuse,spring_green,screaming_green,
@@ -268,7 +268,7 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
             case R.id.undo:
                 hideColorPalette();
                 Log.i("Event1","UNDO");
-                if (undo_array_stack.size()!=0 ){
+                if (undo_array_stack.size()!=0){
                     cw.unDo();
                 }else {
                     Toast.makeText(this, "Stack is Empty ", Toast.LENGTH_SHORT).show();
