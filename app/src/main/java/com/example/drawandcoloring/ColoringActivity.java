@@ -37,7 +37,6 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     public static String MODE="fill";
     public static Stack<int[]> undo_array_stack;
     public static Stack<int[]> redo_array_stack;
-    public static int flag=1;
 
     ImageView dark_red,red,crimson,light_coral,salmon,light_salmon,orange,golden_rod,yellow,
             moccasin,khaki,dark_khaki,dark_green,islamic_green,chartreuse,spring_green,screaming_green,
@@ -79,7 +78,6 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
             public void run() {
                 WIDTH=paint_board.getWidth();
                 HEIGHT=paint_board.getHeight();
-                pushBackgroundIntoUndoStack();
             }
         });
 
@@ -421,15 +419,6 @@ public class ColoringActivity extends AppCompatActivity implements StatusBarColo
     private void setColor_palette(int color_id){
         cw.setColor(getApplicationContext().getResources().getColor(color_id));
         hideColorPalette();
-    }
-
-    private void pushBackgroundIntoUndoStack(){
-        paint_board.setDrawingCacheEnabled(true);
-        Bitmap bitmap=paint_board.getDrawingCache();
-        int[] array=new int[bitmap.getWidth()*bitmap.getHeight()];
-        bitmap.getPixels(array,0,bitmap.getWidth(),0,0,bitmap.getWidth(),bitmap.getHeight());
-        undo_array_stack.push(array);
-        paint_board.setDrawingCacheEnabled(false);
     }
 
     private void hideColorPalette(){

@@ -6,7 +6,6 @@ import static com.example.drawandcoloring.ColoringActivity.WIDTH;
 import static com.example.drawandcoloring.ColoringActivity.redo_array_stack;
 import static com.example.drawandcoloring.ColoringActivity.undo_array_stack;
 import static com.example.drawandcoloring.ColoringActivity.color_palette;
-import static com.example.drawandcoloring.ColoringActivity.flag;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -63,14 +62,12 @@ public class ColoringView extends View {
         int action=event.getAction();
         if (action==MotionEvent.ACTION_DOWN){
             if (MODE.equals("fill") || MODE.equals("eraser")){
-                if (flag==0){
-                    array_layout_pixels=new int[layout_bitmap.getWidth()*layout_bitmap.getHeight()];
-                    layout.setDrawingCacheEnabled(true);
-                    layout_bitmap = layout.getDrawingCache();
-                    layout_bitmap.getPixels(array_layout_pixels,0,layout_bitmap.getWidth(),0,0,WIDTH,HEIGHT);
-                    undo_array_stack.push(array_layout_pixels);
-                    layout.destroyDrawingCache();
-                }
+                layout.setDrawingCacheEnabled(true);
+                layout_bitmap = layout.getDrawingCache();
+                array_layout_pixels=new int[layout_bitmap.getWidth()*layout_bitmap.getHeight()];
+                layout_bitmap.getPixels(array_layout_pixels,0,layout_bitmap.getWidth(),0,0,WIDTH,HEIGHT);
+                undo_array_stack.push(array_layout_pixels);
+                layout.destroyDrawingCache();
                 new Fill(p,selected_color).execute();
             }
             if (MODE.equals("eyedropper")){
@@ -150,13 +147,7 @@ public class ColoringView extends View {
 //    }
 
     public void unDo(){
-        if (flag==1){
-            undo_array_stack.pop();
-            new unDo().execute();
-            flag=0;
-        }else {
-            new unDo().execute();
-        }
+        new unDo().execute();
     }
 
     public void reDo(){
@@ -287,8 +278,6 @@ public class ColoringView extends View {
             layout_bitmap = layout.getDrawingCache();
             array_layout_pixels=new int[layout_bitmap.getWidth()*layout_bitmap.getHeight()];
             layout_bitmap.getPixels(array_layout_pixels,0,layout_bitmap.getWidth(),0,0,WIDTH,HEIGHT);
-            undo_array_stack.push(array_layout_pixels);
-            flag=1;
         }
 
         @Override
